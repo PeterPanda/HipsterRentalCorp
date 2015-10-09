@@ -14,5 +14,5 @@ function init(){
 
 /*  */
 function initLogin(){
-    document.getElementById('divLogin').innerHTML='<object type="text/html" data="Login.html" ></object>';
+    document.getElementById('divLogin').innerHTML=Date();
 }
