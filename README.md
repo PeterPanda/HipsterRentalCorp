@@ -7,3 +7,5 @@ You will need: NetBeans IDE
 http://download.netbeans.org/netbeans/8.1/rc/
 
 GitHub setup available under https://netbeans.org/kb/docs/ide/github_nb_screencast.html. In short: Click->Team->Git->Clone --> Paste https://github.com/PeterPanda/HipsterRentalCorp and enter credentials.
+
+Switch to 'development'-Branch.
