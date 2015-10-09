@@ -1,7 +1,7 @@
 # HipsterRentalCorp
 Gruppe 5 [JK, PK, SB, LB, JH]
 
-# Participators
+# Collaborators 
 You will need: NetBeans IDE
                with Tomcat 8.0.26.0.
 http://download.netbeans.org/netbeans/8.1/rc/
