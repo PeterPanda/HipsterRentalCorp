@@ -1,0 +1,66 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07.10.2015, 10:23:49
+    Author     : janFk
+*/
+
+html, body{
+    width: 100%;
+    height: 100%;
+}
+
+#tableMain{
+    
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+}
+
+#cellShopName{
+    text-align:left;
+    width:300px;
+    height: 50px;
+    background-color: blue;
+}
+
+#tableSearchAndLogin{
+        table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%;
+}
+
+#cellSearch{
+    text-align: center;
+}
+
+#complete-field{
+    text-align: left;
+}
+
+#cellMainContent{
+    background-color: violet;
+}
+
+#buttonSearch{
+    
+}
+
+#buttonLogin{
+    width: 100%;
+    height:100%;
+}
+
+#divLogin{
+    background-color: greenyellow;
+}
+
+#cellNavigation{
+    vertical-align: top;
+    text-align: left;
+}
