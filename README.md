@@ -2,7 +2,7 @@
 Gruppe 5 [JK, PK, SB, LB, JH]
 
 # Collaborators 
-You will need: NetBeans IDE
+You will need: NetBeans IDE (EE Version)
                with Tomcat 8.0.26.0.
 http://download.netbeans.org/netbeans/8.1/rc/
 
