@@ -4,15 +4,16 @@
  * and open the template in the editor.
  */
 /* 
-    Created on : 07.10.2015, 11:46:39 
-    Author     : janFk
-*/
+ Created on : 07.10.2015, 11:46:39 
+ Author     : janFk
+ */
 
-function init(){
+function init() {
     document.getElementById('buttonLogin').addEventListener("click", initLogin);
 }
 
-/*  */
-function initLogin(){
-    document.getElementById('divLogin').innerHTML=Date();
+/* Initialize the Loginfunction/overlay */
+function initLogin() {
+    var loginForm = "<object type='text/html' data='LoginForm.jsp' ></object>";
+    document.getElementById('divLogin').innerHTML = loginForm;
 }
