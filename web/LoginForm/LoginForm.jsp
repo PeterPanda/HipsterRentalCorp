@@ -9,7 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="stylesheetLoginForm.css">
+        <link rel="stylesheet" type="text/css" href="stylesheetLoginForm.css">      
+        <script type="text/javascript" src="javascriptLoginForm.js"></script>
         <title>LoginForm</title>
     </head>
     <body>
@@ -22,11 +23,11 @@
                     </tr> 
                     <tr>
                         <td>Passwort</td>
-                        <td><input type='text' id='inputPassword'> </td>
+                        <td><input type='password' id='inputPassword' onkeydown="checkEnter(event.keyCode);"> </td>
                     </tr> 
                     <tr> 
                         <td></td>
-                        <td> Neukunde? <button class='link' id='buttonRegisterNewUser'>registrieren</button></td>
+                        <td> Neukunde? <button class='link' id='buttonRegisterNewUser' onclick="loadRegistrationForm();">registrieren</button></td>
                     </tr>
                 </tbody>
             </table>
