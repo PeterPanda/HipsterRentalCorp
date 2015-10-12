@@ -10,7 +10,7 @@
 
 function init(){
     document.getElementById('buttonLogin').addEventListener("click", initLogin);
-}
+} 
 
 /*  */
 function initLogin(){
