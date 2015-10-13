@@ -10,10 +10,23 @@
 
 function init() {
     document.getElementById('buttonLogin').addEventListener("click", initLogin);
+    initCategory();
 }
 
 /* Initialize the Loginfunction/overlay */
 function initLogin() {
     var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' ></object>";
     document.getElementById('divLogin').innerHTML = loginForm;
+}
+
+function initCategory() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var data = xhr.responseText;
+            document.getElementById('divNavigation').innerHTML = data;
+        }
+    };
+    xhr.open('GET', '/HipsterRentalCorp/CategoryServlet', true);
+    xhr.send(null);
 }

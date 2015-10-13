@@ -9,6 +9,10 @@ package de.wak.hrcg5.structure;
  *
  * @author janFk
  */
-public class Customer {
+public class Produkt {
+    
+
+    
+    private Kategorie kategorie;
     
 }

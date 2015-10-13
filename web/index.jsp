@@ -32,9 +32,9 @@
                                     </th>
                                     <th id="cellLogin">
                                         <div id="divLogin">
-                                        <button id="buttonLogin" type="button" class="btn btn-default" onclick="initLogin">Anmelden</button>
+                                            <button id="buttonLogin" type="button" class="btn btn-default" onclick="initLogin">Anmelden</button>
                                         </div>
-                                        </th>
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
@@ -45,7 +45,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td id="cellNavigation"><p id="demo">Navigation</p></td>
+                    <td>
+                        <!-- <form action="/HipsterRentalCorp/loginServlet" method="post"> -->
+                            <div id="divNavigation">
+                                test
+                            </div>
+                        <!-- </form> -->
+                    </td>
                     <td id="cellMainContent">2</td>
                 </tr>
             </tbody>

@@ -7,8 +7,8 @@ package de.wak.hrcg5.structure;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-public class Product {
+class Kategorie {
     
 }
