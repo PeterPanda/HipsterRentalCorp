@@ -5,10 +5,10 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
-import de.wak.hrcg5.structure.Kategorie;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import javafx.scene.control.Alert;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jan
  */
-@WebServlet(name = "categoryServlet", urlPatterns = {"/CategoryServlet"})
-public class CategoryServlet extends HttpServlet {
+@WebServlet(name = "ProductsByCategoryServlet", urlPatterns = {"/ProductsByCategoryServlet"})
+public class ProductsByCategoryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class CategoryServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CategoryServlet</title>");
+            out.println("<title>Servlet ProductsByCategoryServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CategoryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProductsByCategoryServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,22 +60,7 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        StringBuilder data = new StringBuilder();
-        data.append("<div>\n");
-        for(Kategorie c:Categories.getCategories()){
-            data.append("<button type='submit' value='");
-            data.append(c.getKategorieNR());
-            data.append("' name='");
-            data.append(c.getName());
-            data.append("'>");
-            data.append(c.getName());
-            data.append("</button>\n");
-        }
-        data.append("</div>");
-        
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(data.toString());
+        processRequest(request, response);
     }
 
     /**
@@ -89,7 +74,14 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String category = request.getParameterNames().nextElement();
+        
+        if (category != null) {
+            String categorynumber = request.getParameter(category);
+            
+        }
+
     }
 
     /**

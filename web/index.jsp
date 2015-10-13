@@ -46,11 +46,11 @@
             <tbody>
                 <tr>
                     <td>
-                        <!-- <form action="/HipsterRentalCorp/loginServlet" method="post"> -->
+                        <form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">
                             <div id="divNavigation">
-                                test
+                                Navigation
                             </div>
-                        <!-- </form> -->
+                        </form>
                     </td>
                     <td id="cellMainContent">2</td>
                 </tr>

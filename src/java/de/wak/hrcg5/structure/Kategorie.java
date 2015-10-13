@@ -9,6 +9,39 @@ package de.wak.hrcg5.structure;
  *
  * @author Jan
  */
-class Kategorie {
-    
+public class Kategorie {
+
+    private final String kategorieNR;
+    private final String name;
+    private String fotoNR;
+
+    public Kategorie(String kategorieNR, String name) {
+        this.kategorieNR = kategorieNR;
+        this.name = name;
+    }
+
+    public void setFotoNR(String fotoNR) {
+        this.fotoNR = fotoNR;
+    }
+
+    /**
+     * @return the kategorieNR
+     */
+    public String getKategorieNR() {
+        return kategorieNR;
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return the fotoNR
+     */
+    public String getFotoNR() {
+        return fotoNR;
+    }
 }
