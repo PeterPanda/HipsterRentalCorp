@@ -14,23 +14,29 @@
         <title>LoginForm</title>
     </head>
     <body>
+
         <div id="divMain"> 
-            <table>
-                <tbody>
-                    <tr>
-                        <td> Benutzername</td> 
-                        <td><input type='text' id='inputUsername'> </td>
-                    </tr> 
-                    <tr>
-                        <td>Passwort</td>
-                        <td><input type='password' id='inputPassword' onkeydown="checkEnter(event.keyCode);"> </td>
-                    </tr> 
-                    <tr> 
-                        <td></td>
-                        <td> Neukunde? <button class='link' id='buttonRegisterNewUser' onclick="loadRegistrationForm();">registrieren</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <form action="/HipsterRentalCorp/loginServlet" method="post">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td> E-Mail</td> 
+                            <td><input type='text' name='inputEmail'> </td>
+                        </tr> 
+                        <tr>
+                            <td>Passwort</td>
+                            <td><input type='password' name='inputPassword' onkeydown="checkEnter(event.keyCode);"> </td>
+                        </tr> 
+                        <tr> 
+                            <td></td>
+                            <td> Neukunde? <button class='link' id='buttonRegisterNewUser' onclick="loadRegistrationForm();">registrieren</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <input type="submit" value="login"/>
+            </form>
+
         </div>
     </body>
 </html>

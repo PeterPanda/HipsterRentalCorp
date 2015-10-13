@@ -5,8 +5,10 @@
  */
 package de.wak.hrcg5.servlet;
 
+import de.wak.hrcg5.database.User;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author janFk
  */
-@WebServlet("/LoginServlet")
+@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -37,7 +39,7 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
@@ -72,7 +74,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        String email = request.getParameter("inputEmail");
+        String pass = request.getParameter("inputPassword");
+
+        if (User.checkUser(email, pass)) {
+            RequestDispatcher rs = request.getRequestDispatcher("Welcome");
+            rs.forward(request, response);
+        } else {
+            out.println("Username or Password incorrect");
+            RequestDispatcher rs = request.getRequestDispatcher("index.html");
+            rs.include(request, response);
+        }
     }
 
     /**
