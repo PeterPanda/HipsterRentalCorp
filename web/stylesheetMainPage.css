@@ -43,8 +43,10 @@ html, body{
     text-align: left;
 }
 
-#cellMainContent{
+#divContent{
     background-color: violet;
+    width: 100%;
+    height: 100%;
 }
 
 #buttonSearch{

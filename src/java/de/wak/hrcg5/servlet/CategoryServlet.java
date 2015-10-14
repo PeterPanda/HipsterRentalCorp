@@ -63,11 +63,11 @@ public class CategoryServlet extends HttpServlet {
         StringBuilder data = new StringBuilder();
         data.append("<div>\n");
         for(Kategorie c:Categories.getCategories()){
-            data.append("<button type='submit' value='");
+            data.append("<button type='button' value='");
             data.append(c.getKategorieNR());
             data.append("' name='");
             data.append(c.getName());
-            data.append("'>");
+            data.append("' onclick='getProducts();'>");
             data.append(c.getName());
             data.append("</button>\n");
         }

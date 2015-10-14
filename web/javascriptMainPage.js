@@ -30,3 +30,16 @@ function initCategory() {
     xhr.open('GET', '/HipsterRentalCorp/CategoryServlet', true);
     xhr.send(null);
 }
+
+function getProducts(categoryNumber){
+    alert(categoryNumber);
+        var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var data = xhr.responseText;
+            document.getElementById('divContent').innerHTML = data;
+        }
+    };
+    xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet', true);
+    xhr.send(categoryNumber);
+}

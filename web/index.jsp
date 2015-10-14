@@ -46,13 +46,17 @@
             <tbody>
                 <tr>
                     <td>
-                        <form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">
+                        <!--<form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">-->
                             <div id="divNavigation">
                                 Navigation
                             </div>
-                        </form>
+                        <!--</form>-->
                     </td>
-                    <td id="cellMainContent">2</td>
+                    <td>
+                        <div id="divContent">
+                        Content
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
