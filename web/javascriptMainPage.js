@@ -19,6 +19,7 @@ function initLogin() {
     document.getElementById('divLogin').innerHTML = loginForm;
 }
 
+/* Initializes the product-category-navigation via servlet */
 function initCategory() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -31,8 +32,8 @@ function initCategory() {
     xhr.send(null);
 }
 
-function getProducts(categoryNumber){
-    alert(categoryNumber);
+/* Retrieves the products within the clicked category and places them in the 'divContent'. */
+function getProducts(categorynumber){
         var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
@@ -40,6 +41,6 @@ function getProducts(categoryNumber){
             document.getElementById('divContent').innerHTML = data;
         }
     };
-    xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet', true);
-    xhr.send(categoryNumber);
+    xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet?categorynumber='+categorynumber, true);
+    xhr.send(null);
 }

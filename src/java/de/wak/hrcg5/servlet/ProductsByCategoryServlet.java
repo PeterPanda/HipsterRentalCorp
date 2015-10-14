@@ -53,6 +53,7 @@ public class ProductsByCategoryServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
+     * Gets the Products within the parameter-specified product-category. Returns values as html.
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -63,14 +64,12 @@ public class ProductsByCategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String category;
+        String categorynumber;
         List<Produkt> products;
         
         /* Get the categoryname from request sender */
-        category = request.getParameterNames().nextElement();
-        if (category != null) {
-            /* Get categorynumber from request sender parameter */
-            String categorynumber = request.getParameter(category);
+        categorynumber = request.getParameter("categorynumber");
+        if (categorynumber != null) {
             /* Get all Products assigned to the categorynumber */
             products = Products.getProductsByCategory(categorynumber);
             /* Visualize the products */
