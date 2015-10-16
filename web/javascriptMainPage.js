@@ -8,7 +8,7 @@
  Author     : janFk
  */
 
-function init() {
+function init() { 
     document.getElementById('buttonLogin').addEventListener("click", initLogin);
     initCategory();
 }
