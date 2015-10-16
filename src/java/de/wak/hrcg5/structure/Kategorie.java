@@ -14,10 +14,13 @@ public class Kategorie {
     private final String kategorieNR;
     private final String name;
     private String fotoNR;
+    private final String unterkategorie;
 
-    public Kategorie(String kategorieNR, String name) {
+    public Kategorie(String kategorieNR, String name, String fotoNR, String unterkategorie) {
         this.kategorieNR = kategorieNR;
         this.name = name;
+        this.fotoNR=fotoNR;
+        this.unterkategorie=unterkategorie;
     }
 
     /**
@@ -46,5 +49,12 @@ public class Kategorie {
      */
     public void setFotoNR(String fotoNR) {
         this.fotoNR = fotoNR;
+    }
+
+    /**
+     * @return the unterkategorie
+     */
+    public String getUnterkategorie() {
+        return unterkategorie;
     }
 }

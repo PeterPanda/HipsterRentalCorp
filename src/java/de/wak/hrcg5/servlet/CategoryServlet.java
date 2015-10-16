@@ -69,7 +69,7 @@ public class CategoryServlet extends HttpServlet {
             data.append(c.getName());
             data.append("' onclick='getProducts(this.value);'>");
             data.append(c.getName());
-            data.append("</button>\n");
+            data.append("</button><br>\n");
         }
         data.append("</div>");
         

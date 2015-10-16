@@ -34,7 +34,28 @@ public abstract class Categories {
                 PreparedStatement ps = con.prepareStatement("select * from KATEGORIE");
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    cat.add(new Kategorie(rs.getString(1), rs.getString(2)));
+                    cat.add(new Kategorie(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return cat;
+    }
+    
+        public static Kategorie getCategory(String categoryNumber) {
+        Kategorie cat = null;
+        ResultSet rs;
+
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from KATEGORIE k where k.KATEGORIENR=?");
+                ps.setString(1, categoryNumber);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    cat = new Kategorie(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4));
                 }
 
             } catch (Exception e) {

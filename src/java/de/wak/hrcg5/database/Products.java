@@ -5,6 +5,7 @@
  */
 package de.wak.hrcg5.database;
 
+import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Produkt;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public abstract class Products {
 
     /**
      * Returns all products from table PRODUKT assigned to the given category
-     * number.
+     * number. Gets also the products of the subcategory.
      *
      * @param categoryNumber Identifier of a category.
      * @return Returns a list of products.
@@ -47,9 +48,25 @@ public abstract class Products {
                 e.printStackTrace();
             }
         }
+
+        /* Adding the products from the subcategories */
+        List<Produkt> sub = new ArrayList<>();
+        for (Produkt p : productsByCategory) {
+            Kategorie cat = Categories.getCategory(p.getKategorieNR());
+            if (cat.getUnterkategorie() != null || !cat.getUnterkategorie().equals("")) {
+                sub.addAll(getProductsByCategory(cat.getUnterkategorie()));
+            }
+        }
+        productsByCategory.addAll(productsByCategory.size(), sub);
+
         return productsByCategory;
     }
 
+    /**
+     * Gets a product by productnumber.
+     * @param productNumber
+     * @return Product.
+     */
     public static Produkt getProduct(String productNumber) {
         Produkt product = null;
         ResultSet rs;
@@ -60,8 +77,9 @@ public abstract class Products {
                 ps.setString(1, productNumber);
                 rs = ps.executeQuery();
 
-                while (rs.next()) 
-                    product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));    
+                while (rs.next()) {
+                    product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
