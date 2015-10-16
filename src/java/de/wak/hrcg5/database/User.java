@@ -6,7 +6,6 @@
 package de.wak.hrcg5.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -14,27 +13,31 @@ import java.sql.ResultSet;
  *
  * @author Jan
  */
-public class User {
+public abstract class User {
 
+    /**
+     * Checks if the given user data can be found in the table USER.
+     * @param email User-email.
+     * @param pass User-password.
+     * @return True, if email and password correct.
+     */
     public static boolean checkUser(String email, String pass) {
-        boolean st = false;
-        try {
+        boolean userFound = false;
 
-            //loading drivers for mysql
-            Class.forName("com.mysql.jdbc.Driver");
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from user where email=? and passwort=?");
+                ps.setString(1, email);
+                ps.setString(2, pass);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                userFound = rs.next();
 
-            //creating connection with the database 
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hipsterrentalcorp", "root", "");
-            PreparedStatement ps = con.prepareStatement("select * from user where email=? and passwort=?");
-            ps.setString(1, email);
-            ps.setString(2, pass);
-            ResultSet rs;
-            rs = ps.executeQuery();
-            st = rs.next();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return st;
+        return userFound;
     }
 }

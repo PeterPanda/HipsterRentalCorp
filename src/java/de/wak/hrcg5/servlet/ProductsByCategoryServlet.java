@@ -53,8 +53,8 @@ public class ProductsByCategoryServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Gets the Products within the parameter-specified product-category. Returns values as html.
-     * Handles the HTTP <code>GET</code> method.
+     * Gets the Products within the parameter-specified product-category.
+     * Returns values as html. Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -64,31 +64,35 @@ public class ProductsByCategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String categorynumber;
+        String categoryNumber;
         List<Produkt> products;
-        
-        /* Get the categoryname from request sender */
-        categorynumber = request.getParameter("categorynumber");
-        if (categorynumber != null) {
+
+        /* Get the categoryNumber from request sender */
+        categoryNumber = request.getParameter("categoryNumber");
+        if (categoryNumber != null) {
             /* Get all Products assigned to the categorynumber */
-            products = Products.getProductsByCategory(categorynumber);
+            products = Products.getProductsByCategory(categoryNumber);
             /* Visualize the products */
             if (products != null) {
                 StringBuilder data = new StringBuilder();
+                data.append("<div>\n");
                 for (Produkt p : products) {
-                    data.append("<div>\n");
+                    data.append("<button type='button' value='");
+                    data.append(p.getProduktNR());
+                    data.append("' name='");
                     data.append(p.getBezeichnung());
-                    data.append("</div>");
+                    data.append("' onclick='loadProduct(this.value);'>");
+                    data.append(p.getBezeichnung());
+                    data.append("</button>\n");
                 }
-                
-                //request.setAttribute("#divContent",data.toString());
-                
+                data.append("</div>");
+
                 response.setContentType("text/html");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(data.toString());
             }
         }
-  
+
     }
 
     /**
@@ -102,9 +106,9 @@ public class ProductsByCategoryServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-       processRequest(request, response);
-        
+
+        processRequest(request, response);
+
     }
 
     /**

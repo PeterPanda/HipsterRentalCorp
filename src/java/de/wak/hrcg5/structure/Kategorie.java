@@ -20,10 +20,6 @@ public class Kategorie {
         this.name = name;
     }
 
-    public void setFotoNR(String fotoNR) {
-        this.fotoNR = fotoNR;
-    }
-
     /**
      * @return the kategorieNR
      */
@@ -43,5 +39,12 @@ public class Kategorie {
      */
     public String getFotoNR() {
         return fotoNR;
+    }
+
+    /**
+     * @param fotoNR the fotoNR to set
+     */
+    public void setFotoNR(String fotoNR) {
+        this.fotoNR = fotoNR;
     }
 }
