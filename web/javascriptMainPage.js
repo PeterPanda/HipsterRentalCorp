@@ -16,7 +16,7 @@ function init() {
 /* Initialize the Loginfunction/overlay */
 function initLogin() {
     var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' ></object>";
-    document.getElementById('divLogin').innerHTML = loginForm;
+    document.getElementById('divLogin').innerHTML = loginForm; 
 }
 
 /* Initializes the product-category-navigation via servlet */
