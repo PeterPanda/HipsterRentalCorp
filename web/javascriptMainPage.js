@@ -10,13 +10,20 @@
 
 function init() { 
     document.getElementById('buttonLogin').addEventListener("click", initLogin);
-    initCategory();
+    initCategory(); 
+    document.getElementById("pShoppingCartCount").innerHTML = "0";
 }
 
 /* Initialize the Loginfunction/overlay */
 function initLogin() {
     var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' ></object>";
     document.getElementById('divLogin').innerHTML = loginForm; 
+}
+
+function loadShoppingCart(){
+    alert("peter");
+    var warenkorb = "<object type='text/html' data='ShoppingCart/ShoppingCart.jsp' ></object>";
+    document.getElementById('divContent').innerHTML=warenkorb;  
 }
 
 /* Initializes the product-category-navigation via servlet */

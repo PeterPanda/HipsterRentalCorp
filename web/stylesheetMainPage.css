@@ -67,3 +67,17 @@ html, body{
     vertical-align: top;
     text-align: left;
 }
+
+#divShoppingCart{
+    cursor: pointer;
+    vertical-align: top;
+}
+
+#divShoppingCart:hover {
+    background-color:#efefef;
+}
+
+#imgShoppingCart{
+    width: 90px;
+    height: 90px;
+}

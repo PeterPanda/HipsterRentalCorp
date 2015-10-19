@@ -10,12 +10,12 @@ package de.wak.hrcg5.structure;
  * @author janFk
  */
 public class Kunde {
-        
+    private String kundenNR;
     private String vorname;
     private String nachname;
     private String email;
     private String organisationsname;      
-    private String starsse;
+    private String strasse;
     private String hausnummer;
     private String plz;
     private String telefonNR;     

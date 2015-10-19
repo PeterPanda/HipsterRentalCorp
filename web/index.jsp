@@ -35,6 +35,12 @@
                                             <button id="buttonLogin" type="button" class="btn btn-default" onclick="initLogin">Anmelden</button>
                                         </div>
                                     </th>
+                                    <th>
+                                        <div id="divShoppingCart" onclick="loadShoppingCart();">
+                                            <img id="imgShoppingCart" src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/shoppingcart.png" alt="shoppingcart" >
+                                            <p id="pShoppingCartCount"></p>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                         </table>
