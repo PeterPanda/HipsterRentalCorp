@@ -193,7 +193,7 @@ INSERT INTO KATEGORIE VALUES('KATNR00012','Funk','FNR0000002', 'KATNR00013');
 INSERT INTO KATEGORIE VALUES('KATNR00013','Funkgeräte','FNR0000002', '');
 
 /* PRODUKT */
-INSERT INTO PRODUKT VALUES('PNR0000001','SAR-24 Nebelmaschine','SAR technologies','Diese Nebelmaschine der Spitzenklasse lÃ¤sst ihre Party zu einem echten Hit werden.','Eine Nebelmaschine','15,00','KATNR00003', 'PNR0000003');
+INSERT INTO PRODUKT VALUES('PNR0000001','SAR-24 Nebelmaschine','SAR technologies','Diese Nebelmaschine der Spitzenklasse lÃ¤sst ihre Party zu einem echten Hit werden. Ohne Witz. Und ohne übertriebenes Waffengelaber.','Eine Nebelmaschine','15,00','KATNR00003', 'PNR0000003');
 INSERT INTO PRODUKT VALUES('PNR0000002','Dunst-Nebelmschine Soflar 500','Soflar','Ein transparenter Dunst erzeugt eine tolle AtmosphÃ¤re ohne den Raum zu vernebeln.','Eine Nebelmaschine', '15,00','KATNR00003', 'PNR0000003');
 INSERT INTO PRODUKT VALUES('PNR0000003','Smoke Factory Hazer','Smoke Factory','Professionelles GerÃ¤t fÃ¼r die perfekte AtmosphÃ¤re auf ihrer Party.','Eine Nebelmaschine', '24,00','KATNR00003', '');
 INSERT INTO PRODUKT VALUES('PNR0000004','SAR-78 Scheinwerfer','Sar technologies','Ein absoluter Klassiker und den modernen Beleuchtungsanlagen.','Ein Scheinwerfer', '7,00','KATNR00002', 'PNR0000005');
