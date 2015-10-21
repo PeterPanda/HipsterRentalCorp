@@ -68,7 +68,9 @@
                     </tr>
                 </tbody>
             </table>
-            <button  value="${requestScope.product.getProduktNR()}" onclick="addProductToShoppingCart(this.value);">Zum Warenkorb hinzufügen</button>
+            <form action="/HipsterRentalCorp/AddProductToShoppingCartServlet" method="post">
+                <button type="submit" name="buttonAddToShoppingCart" value="${requestScope.product.getProduktNR()}">Zum Warenkorb hinzufügen</button>
+            </form>
         </div>
     </body>
 </html>

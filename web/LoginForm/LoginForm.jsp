@@ -16,7 +16,6 @@
     <body>
 
         <div id="divMain"> 
-            <form action="/HipsterRentalCorp/loginServlet" method="post">
                 <table>
                     <tbody>
                         <tr>
@@ -25,7 +24,7 @@
                         </tr> 
                         <tr>
                             <td>Passwort</td>
-                            <td><input type='password' name='inputPassword' onkeydown="checkEnter(event.keyCode);"> </td>
+                            <td><input type='password' name='inputPassword'> </td>
                         </tr> 
                         <tr> 
                             <td></td>
@@ -34,6 +33,7 @@
                     </tbody>
                 </table>
 
+            <form action="/HipsterRentalCorp/loginServlet" method="post">
                 <input type="submit" value="login"/>
             </form>
 

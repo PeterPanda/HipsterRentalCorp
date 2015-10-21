@@ -21,9 +21,15 @@ function initLogin() {
 }
 
 function loadShoppingCart(){
-    alert("peter");
-    var warenkorb = "<object type='text/html' data='ShoppingCart/ShoppingCart.jsp' ></object>";
-    document.getElementById('divContent').innerHTML=warenkorb;  
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            var data = xhr.responseText;
+            document.getElementById('divContent').innerHTML = data;
+        }
+    };
+    xhr.open('GET', '/HipsterRentalCorp/LoadShoppingCartServlet', true);
+    xhr.send(null);
 }
 
 /* Initializes the product-category-navigation via servlet */

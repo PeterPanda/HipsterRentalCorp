@@ -7,6 +7,8 @@
 
 function addProductToShoppingCart(productNumber) {
     
+    alert('<%= session.getAttribute("User") %>');
+    alert(productNumber);
 }
 
 function loadAlternative(productNumber){

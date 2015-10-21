@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
-function loadRegistrationForm(){
-    alert("Linus :)")
+function userLogout(){
+    alert('<%= session.getAttribute("User") %>');
+    alert('@Request.RequestContext.HttpContext.Session["User"]');
 }

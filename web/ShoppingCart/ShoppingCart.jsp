@@ -16,18 +16,18 @@
             <tbody>
                 <tr>
                     <td>
-                        Hallo.
+                        Produkte:
                     </td>
                     <td>
-                        Ich bin ein warenkorb.
+                        ${requestScope.shoppingCart.getProduktView()}
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        TestProduktbla
+                        Pakete:
                     </td>
                     <td>
-                        bla
+                        ${requestScope.shoppingCart.getPaketView()}
                     </td>
                 </tr>
             </tbody>

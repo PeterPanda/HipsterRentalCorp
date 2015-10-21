@@ -12,11 +12,67 @@ import java.util.List;
  *
  * @author janFk
  */
-public abstract class Warenkorb {
-    private static List<Produkt> produkte = new ArrayList<>();
-    
-    public static void addProdukt(Produkt produkt){
-        produkte.add(produkt);
+public class Warenkorb {
+
+    private List<Produkt> produkte = new ArrayList<>();
+    private List<Paket> pakete = new ArrayList<>();
+
+    /**
+     * @return the warenkorbProdukt
+     */
+    public List<Produkt> getProdukte() {
+        return produkte;
     }
-    
+
+    /**
+     * @return the warenkorbPaket
+     */
+    public List<Paket> getPakete() {
+        return pakete;
+    }
+
+    public String getProduktView() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div>");
+        sb.append("<table>");
+        sb.append("<tbody>");
+        for (Produkt p : produkte) {
+            sb.append("<tr>");
+            sb.append("<td>");
+            sb.append(p.getBezeichnung());
+            sb.append("</td>");
+            sb.append("<td>");
+            sb.append("<button value='").append(p.getProduktNR()).append("'>Löschen</button>");
+            sb.append("</td>");
+            sb.append("</tr>");
+        }
+        sb.append("</tbody>");
+        sb.append("</table>");
+        sb.append("</div>");
+
+        return sb.toString();
+    }
+
+    public String getPaketView() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div>");
+        sb.append("<table>");
+        sb.append("<tbody>");
+        for (Paket p : pakete) {
+            sb.append("<tr>");
+            sb.append("<td>");
+            sb.append(p.getBezeichnung());
+            sb.append("</td>");
+            sb.append("<td>");
+            sb.append("<button value='").append(p.getPaketNR()).append("'>Löschen</button>");
+            sb.append("</td>");
+            sb.append("</tr>");
+        }
+        sb.append("</tbody>");
+        sb.append("</table>");
+        sb.append("</div>");
+
+        return sb.toString();
+    }
+
 }
