@@ -16,11 +16,6 @@ import java.sql.ResultSet;
  */
 public abstract class User {
 
-    private static final String KUNDENNR = "KNR0000000";
-    
-    public static String getKUNDENNR(){
-        return KUNDENNR;
-    }
     /**
      * Checks if the given user data can be found in the table USER.
      * @param email User-email.
@@ -66,5 +61,33 @@ public abstract class User {
         }
         return k;
         
+    }
+
+    static Kunde createDummyUser() {
+        Kunde c = null;
+        c = new Kunde(NumberHelper.getNextKUNDENNR(), "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("insert into KUNDE values (?, ? , ?, ? ,? ,? ,? ,? ,? ,?)");
+                ps.setString(1, c.getKundenNR());
+                ps.setString(2, c.getVorname());
+                ps.setString(3, c.getNachname());
+                ps.setString(4, c.getEmail());
+                ps.setString(5, c.getOrganisationsname());
+                ps.setString(6, c.getStrasse());
+                ps.setString(7, c.getHausnummer());
+                ps.setString(8, c.getPlz());
+                ps.setString(9, c.getTelefonNR());
+                ps.setString(10, c.getHandynummer());
+                
+                
+                ps.executeQuery();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return c;
     }
 }

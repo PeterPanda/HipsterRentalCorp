@@ -62,17 +62,19 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         StringBuilder data = new StringBuilder();
         data.append("<div>\n");
-        for(Kategorie c:Categories.getCategories()){
-            data.append("<button type='button' value='");
-            data.append(c.getKategorieNR());
-            data.append("' name='");
-            data.append(c.getName());
-            data.append("' onclick='getProducts(this.value);'>");
-            data.append(c.getName());
-            data.append("</button><br>\n");
+        for (Kategorie c : Categories.getCategories()) {
+            if (!data.toString().contains(c.getKategorieNR())) {
+                data.append("<button type='button' value='");
+                data.append(c.getKategorieNR());
+                data.append("' name='");
+                data.append(c.getName());
+                data.append("' onclick='getProducts(this.value);'>");
+                data.append(c.getName());
+                data.append("</button><br>\n");
+            }
         }
         data.append("</div>");
-        
+
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data.toString());

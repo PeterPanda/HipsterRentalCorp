@@ -15,7 +15,8 @@
     </head>
     <body>
 
-        <div id="divMain"> 
+        <form action="/HipsterRentalCorp/loginServlet" method="post">
+            <div id="divMain"> 
                 <table>
                     <tbody>
                         <tr>
@@ -33,10 +34,10 @@
                     </tbody>
                 </table>
 
-            <form action="/HipsterRentalCorp/loginServlet" method="post">
                 <input type="submit" value="login"/>
-            </form>
 
-        </div>
+            </div>
+        </form>
+
     </body>
 </html>
