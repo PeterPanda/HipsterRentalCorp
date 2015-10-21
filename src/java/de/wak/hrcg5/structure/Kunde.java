@@ -31,7 +31,7 @@ public class Kunde {
         this.hausnummer=hausnummer;
         this.plz=plz;
         this.telefonNR=telefonNR;
-        this.hausnummer=hausnummer;
+        this.handynummer=handynummer;
     }
 
     /**

@@ -65,7 +65,7 @@ public abstract class User {
 
     static Kunde createDummyUser() {
         Kunde c = null;
-        c = new Kunde(NumberHelper.getNextKUNDENNR(), "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy");
+        c = new Kunde(NumberHelper.getNextKUNDENNR(), "dummy", "dummy", null, "dummy", "dummy", "dummy", null, "dummy", "dummy");
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -81,13 +81,63 @@ public abstract class User {
                 ps.setString(9, c.getTelefonNR());
                 ps.setString(10, c.getHandynummer());
                 
-                
-                ps.executeQuery();
+                ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         
         return c;
+    }
+
+    static Kunde getDummyUser() {
+        Kunde c = null;
+        
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from KUNDE where VORNAME=? and NACHNAME=? and EMAIL is ? and ORGANISATIONSNAME=? AND STRASSE=? AND HAUSNUMMER =? AND PLZ is ? and TELEFONNR=? and HANDYNR=?");
+                ps.setString(1, "dummy");
+                ps.setString(2, "dummy");
+                ps.setString(3, null);
+                ps.setString(4, "dummy");
+                ps.setString(5, "dummy");
+                ps.setString(6, "dummy");
+                ps.setString(7, null);
+                ps.setString(8, "dummy");
+                ps.setString(9, "dummy");
+                ResultSet rs;
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    c = new Kunde(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        if(c==null)
+            c= createDummyUser();
+        return c;
+    }
+    
+    public static boolean hasShoppingCart(String customerNumber){
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("select * from KUNDE k where k.KUNDENNR =? AND k.KUNDENNR IN (select KUNDENNR from WARENKORB)");
+                ps.setString(1, customerNumber);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                
+                return rs.next();
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 }

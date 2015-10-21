@@ -75,7 +75,7 @@ public class LoadShoppingCartServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("User");
-
+        
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
 

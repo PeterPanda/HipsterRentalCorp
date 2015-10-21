@@ -23,7 +23,7 @@ public abstract class NumberHelper {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select MAX(WARENKORBPRODUKTNR) from WARENKORBPRODUKT");
+                PreparedStatement ps = con.prepareStatement("select MAX(KUNDENNR) from KUNDE");
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -44,7 +44,7 @@ public abstract class NumberHelper {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select MAX(KUNDENNR) from KUNDE");
+                PreparedStatement ps = con.prepareStatement("select MAX(WARENKORBPRODUKTNR) from WARENKORBPRODUKT");
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {

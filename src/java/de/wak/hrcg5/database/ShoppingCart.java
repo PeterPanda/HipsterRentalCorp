@@ -20,23 +20,33 @@ public abstract class ShoppingCart {
     public static void addProduct(String userEmail, String productNumber) {
         Kunde k = User.getCustomer(userEmail);
         if (k == null) {
-            k = User.createDummyUser();
+            k = User.getDummyUser();
+        }
+        // Fehler --- Nur neue Nummer holen, wenn noch kein Warenkorb vorhanden --- Produkte müssen immer an die selbe nummer, zu dem selben Kunden gehören
+        if(User.hasShoppingCart(k.getKundenNR())){
+            // Fall, wenn Bereits Warenkorb zugewiesen.
+            // --> Nur noch warenkorbproduktnr getten (nicht next) und neues produkt einfg 
+        }
+        else{
+            // das übliche
         }
         String nextWARENKORBPRODUKTNR = NumberHelper.getNextWARENKORBPRODUKTNR();
 
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
+
                 PreparedStatement ps = con.prepareStatement("insert into WARENKORBPRODUKT values (?, ?)");
                 ps.setString(1, nextWARENKORBPRODUKTNR);
                 ps.setString(2, productNumber);
-                ps.executeQuery();
+                ps.executeUpdate();
 
                 ps = con.prepareStatement("insert into WARENKORB values (?, ?, ?)");
                 ps.setString(1, k.getKundenNR());
                 ps.setString(2, nextWARENKORBPRODUKTNR);
                 ps.setString(3, null);
-                ps.executeQuery();
+                ps.executeUpdate();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,7 +56,7 @@ public abstract class ShoppingCart {
     public static Warenkorb getShoppingCart(String userEmail) {
         Kunde k = User.getCustomer(userEmail);
         if (k == null) {
-            k = User.createDummyUser();
+            k = User.getDummyUser();
         }
         Warenkorb shoppingCart = new Warenkorb();
 
