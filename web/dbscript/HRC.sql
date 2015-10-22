@@ -152,24 +152,24 @@ INSERT INTO ORTE VALUES('18055', 'Rostock');
 /* KUNDE */
 Insert into KUNDE Values('KNR000001', 'Peter', 'Panda', 'sunnyboy@knute.de', 'JohnnyCottenIndustries', 'Holzweg', '13a', '24106', '0431 666514', '0171 80666737');
 Insert into KUNDE Values('KNR000002', 'Ulrich', 'Haseldorf', 'ulrich.haseldorf@web.de', 'Hifi-Ulrich', 'Ravensburger StraÃŸe', '22', '18055', '0672 49421', '02121 8214537');
-Insert into KUNDE Values('KNR000003', 'RÃ¼diger', 'Schmidt', 'rÃ¼diger@knute.de', 'DJHamburg', 'Stor Allee', '70b', '20357', '0751 25514', '0241 806134');
+Insert into KUNDE Values('KNR000003', 'RÃ¼diger', 'Schmidt', 'ruedigerhrc@web.de', 'DJHamburg', 'Stor Allee', '70b', '20357', '0751 25514', '0241 806134');
 Insert into KUNDE Values('KNR000004', 'Susanne', 'Jorgsch', 'susanne.jorsch@web.de', 'OldrichtDJs', 'UlbrechtstraÃŸe', '14', '24937', '0131 6612321', '02315 2016234');
-Insert into KUNDE Values('KNR000005', 'Leon', 'Traner', 'leon@knute.de', 'DJ4LIFE', 'Susweg', '52', '24536', '0546 123532', '07523 811347');
+Insert into KUNDE Values('KNR000005', 'Leon', 'Traner', 'leon.traner@web.de', 'DJ4LIFE', 'Susweg', '52', '24536', '0546 123532', '07523 811347');
 /* MITARBEITER */
-INSERT INTO MITARBEITER VALUES( 'MNR0000001', 'Manfred','Hagenbeck','Mani@HRC.de');
-INSERT INTO MITARBEITER VALUES( 'MNR0000002', 'Roland','Fischer','Roland@HRC.de');
+INSERT INTO MITARBEITER VALUES( 'MNR0000001', 'Manfred','Hagenbeck','manfred.hagenbeck@web.de');
+INSERT INTO MITARBEITER VALUES( 'MNR0000002', 'Roland','Fischer','rolandhrc@web.de');
 INSERT INTO MITARBEITER VALUES( 'MNR0000003', 'Julia','Rein','Julia@HRC.de');
 INSERT INTO MITARBEITER VALUES( 'MNR0000004', 'Kai','Laume','Kai@HRC.de');
 /* USER */
-INSERT INTO USER VALUES('Mani@HRC.de','12345','j');
-INSERT INTO USER VALUES('Roland@HRC.de','12345','');
+INSERT INTO USER VALUES('manfred.hagenbeck@web.de','12345','j');
+INSERT INTO USER VALUES('rolandhrc@web.de','12345','');
 INSERT INTO USER VALUES('Julia@HRC.de','12345','');
 INSERT INTO USER VALUES('Kai@HRC.de','12345','');
 INSERT INTO USER VALUES('ulrich.haseldorf@web.de','12345','');
 INSERT INTO USER VALUES('susanne.jorsch@web.de','12345','');
 INSERT INTO USER VALUES('sunnyboy@knute.de','12345','');
-INSERT INTO USER VALUES('rÃ¼diger@knute.de','12345','');
-INSERT INTO USER VALUES('leon@knute.de','12345','');
+INSERT INTO USER VALUES('ruedigerhrc@web.de','12345','');
+INSERT INTO USER VALUES('leon.traner@web.de','12345','');
 
 /* FOTO */
 INSERT INTO FOTO VALUES('FNR0000001','C:\\bla.jpg');
