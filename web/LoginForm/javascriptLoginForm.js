@@ -4,6 +4,3 @@
  * and open the template in the editor.
  */
 
-function loadRegistrationForm(){
-    alert("Linus :)")
-}

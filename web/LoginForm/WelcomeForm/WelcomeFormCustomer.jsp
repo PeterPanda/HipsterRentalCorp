@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>WelcomeForm</title>
+        <title>WelcomeFormCustomer</title>
 
         <!--<script type="text/javascript" src="WelcomeForm.js"></script>-->
     </head>
@@ -18,12 +18,20 @@
             <p>Hallo,<br>
                 ${requestScope.customer.getVorname()} ${requestScope.customer.getNachname()}.<br>
             </p>
-            <button type="button" id="buttonLogout" onclick="userLogout()">Abmelden</button>
-            <script>
-                function userLogout() {
-                    alert(<%= session.getAttribute("User")%>);
-                }
-            </script>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form action="/HipsterRentalCorp/LogoutServlet" method="post">
+                                <button type="submit">Abmelden</button>
+                            </form>
+                        </td>
+                        <td>
+                            <button>Kundenportal</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

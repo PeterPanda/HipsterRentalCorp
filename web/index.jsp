@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="stylesheetMainPage.css">
         <script type="text/javascript" src="javascriptMainPage.js"></script>
     </head>
-    <body onload="init()">
+    <body onload="init()" onbeforeunload="clearShoppingCartForUnregisteredUser();">
         <table id="tableMain">
             <thead>
                 <tr>
@@ -53,20 +53,41 @@
                 <tr>
                     <td>
                         <!--<form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">-->
-                            <div id="divNavigation">
-                                Navigation
-                            </div>
+                        <div id="divNavigation">
+                            Navigation
+                        </div>
                         <!--</form>-->
                     </td>
                     <td>
                         <div id="divContent">
-                        Content
+                            Content
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <script>
+            /* Methods, invoked from child-pages */
+            /**
+             * This method loads the registration form and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadRegistrationForm() {
+                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' ></object>";
+                document.getElementById('divContent').innerHTML = loginForm;
+            }
+            /**
+             * This method loads the employee navigation and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadEmployeeOverlay() {
+                var employeeNavigation = "<object type='text/html' data='EmployeeOverlay/Navigation.jsp' ></object>"
+                document.getElementById('divNavigation').innerHTML = employeeNavigation;
+              
+            }
+            
 
+        </script>
 
     </body>
 </html>

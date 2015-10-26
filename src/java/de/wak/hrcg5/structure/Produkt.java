@@ -19,8 +19,9 @@ public class Produkt {
     private String mietzins;
     private String kategorieNR;
     private String alternative;
+    private String verfuegbar;
 
-    public Produkt(String produktNR, String bezeichnung, String hersteller, String beschreibung, String details, String mietzins, String kategorieNR, String alternative) {
+    public Produkt(String produktNR, String bezeichnung, String hersteller, String beschreibung, String details, String mietzins, String kategorieNR, String alternative, String verfuegbar) {
         this.produktNR=produktNR;
         this.bezeichnung=bezeichnung;
         this.hersteller=hersteller;
@@ -29,6 +30,7 @@ public class Produkt {
         this.mietzins=mietzins;
         this.kategorieNR=kategorieNR;
         this.alternative=alternative;
+        this.verfuegbar=verfuegbar;
     }
 
     /**
@@ -85,6 +87,13 @@ public class Produkt {
      */
     public String getAlternative() {
         return alternative;
+    }
+
+    /**
+     * @return the verfuegbar
+     */
+    public String getVerfuegbar() {
+        return verfuegbar;
     }
     
     

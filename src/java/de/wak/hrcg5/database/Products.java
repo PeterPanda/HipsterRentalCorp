@@ -35,13 +35,12 @@ public abstract class Products {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select * from Produkt p, Kategorie k where p.KATEGORIENR = k.KATEGORIENR AND k.KATEGORIENR=?");
+                PreparedStatement ps = con.prepareStatement("select p.PRODUKTNR from Produkt p, Kategorie k where p.KATEGORIENR = k.KATEGORIENR AND k.KATEGORIENR=?");
                 ps.setString(1, categoryNumber);
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    productsByCategory.add(
-                            new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8)));
+                    productsByCategory.add(getProduct(rs.getString(1)));
                 }
 
             } catch (Exception e) {
@@ -80,7 +79,7 @@ public abstract class Products {
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                    product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                 }
 
             } catch (Exception e) {

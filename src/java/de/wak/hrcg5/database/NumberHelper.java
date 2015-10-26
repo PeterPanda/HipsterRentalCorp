@@ -96,4 +96,42 @@ public abstract class NumberHelper {
         digit++;
         return letterpart + (String.format("%0" + digitpart.length() + "d", digit));
     }
+
+    public static String getWARENKORBPRODUKTNR(String kundenNR) {
+        String warenkorbProduktNR = null;
+        Connection con = Connector.getConnection();
+        if(con!=null){
+            try{
+                PreparedStatement ps = con.prepareStatement("select distinct(wp.WARENKORBPRODUKTNR) from WARENKORBPRODUKT wp, WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR and w.WARENKORBPRODUKTNR = wp.WARENKORBPRODUKTNR");
+                ps.setString(1, kundenNR);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    warenkorbProduktNR = rs.getString(1);
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return warenkorbProduktNR;
+    }
+
+    static String getWARENKORBPAKETNR(String kundenNR) {
+        String warenkorbPakektNR = null;
+        Connection con = Connector.getConnection();
+        if(con!=null){
+            try{
+                PreparedStatement ps = con.prepareStatement("select distinct(wp.WARENKORBPRODUKTNR) from WARENKORBPRODUKT wp, WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR and w.WARENKORBPRODUKTNR = wp.WARENKORBPRODUKTNR");
+                ps.setString(1, kundenNR);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    warenkorbPakektNR = rs.getString(1);
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return warenkorbPakektNR;
+    }
 }

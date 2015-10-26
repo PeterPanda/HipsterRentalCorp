@@ -5,12 +5,6 @@
  */
 
 
-function addProductToShoppingCart(productNumber) {
-    
-    alert('<%= session.getAttribute("User") %>');
-    alert(productNumber);
-}
-
 function loadAlternative(productNumber){
     alert();
         var xhr = new XMLHttpRequest();

@@ -6,6 +6,7 @@
 package de.wak.hrcg5.database;
 
 import de.wak.hrcg5.structure.Kunde;
+import de.wak.hrcg5.structure.Mitarbeiter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,13 +23,34 @@ public abstract class User {
      * @param pass User-password.
      * @return True, if email and password correct.
      */
-    public static boolean checkUser(String email, String pass) {
+    public static boolean checkCustomer(String email, String pass) {
         boolean userFound = false;
 
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select * from user where email=? and passwort=?");
+                PreparedStatement ps = con.prepareStatement("select u.* from USER u, KUNDE k where u.EMAIL=? and u.PASSWORT=? and u.EMAIL = k.EMAIL");
+                ps.setString(1, email);
+                ps.setString(2, pass);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                userFound = rs.next();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return userFound;
+    }
+    
+    
+    public static boolean checkEmployee(String email, String pass) {
+                boolean userFound = false;
+
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select u.* from USER u, MITARBEITER m where u.EMAIL=? and u.PASSWORT=? and u.EMAIL = m.EMAIL");
                 ps.setString(1, email);
                 ps.setString(2, pass);
                 ResultSet rs;
@@ -60,7 +82,25 @@ public abstract class User {
             }
         }
         return k;
-        
+    }
+    public static Mitarbeiter getEmployee(String email){
+        Mitarbeiter m = null;
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from MITARBEITER where email=?");
+                ps.setString(1, email);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                while(rs.next()){
+                    m = new Mitarbeiter(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return m;
     }
 
     static Kunde createDummyUser() {
@@ -140,4 +180,25 @@ public abstract class User {
         }
         return false;
     }
+    
+    public static boolean isAdmin(String email){
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("select * from User where email =? AND ISADMIN = 'j'");
+                ps.setString(1, email);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                
+                return rs.next();
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return false;
+    }
+
 }
