@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "LoadProductServlet", urlPatterns = {"/LoadProductServlet"})
 public class LoadProductServlet extends HttpServlet {
-
     
     private ServletContext context;
 

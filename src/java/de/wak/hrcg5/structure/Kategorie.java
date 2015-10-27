@@ -5,6 +5,9 @@
  */
 package de.wak.hrcg5.structure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Jan
@@ -14,13 +17,13 @@ public class Kategorie {
     private final String kategorieNR;
     private final String name;
     private String fotoNR;
-    private final String unterkategorie;
+    private List<String> unterkategorie = new ArrayList<>();
 
     public Kategorie(String kategorieNR, String name, String fotoNR, String unterkategorie) {
         this.kategorieNR = kategorieNR;
         this.name = name;
         this.fotoNR=fotoNR;
-        this.unterkategorie=unterkategorie;
+        this.unterkategorie.add(unterkategorie);
     }
 
     /**
@@ -54,7 +57,7 @@ public class Kategorie {
     /**
      * @return the unterkategorie
      */
-    public String getUnterkategorie() {
+    public List<String> getUnterkategorie() {
         return unterkategorie;
     }
 }
