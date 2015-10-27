@@ -69,7 +69,7 @@
         <script>
             /* Methods, invoked from child-pages */
             /**
-             * This method loads the registration form and is invoked by a childpage.
+             * This method loads the 'registration form' and is invoked by a childpage.
              * @returns {undefined}
              */
             function loadRegistrationForm() {
@@ -77,16 +77,54 @@
                 document.getElementById('divContent').innerHTML = loginForm;
             }
             /**
-             * This method loads the employee navigation and is invoked by a childpage.
+             * This method loads the 'employee navigation' and is invoked by a childpage.
              * @returns {undefined}
              */
             function loadEmployeeOverlay() {
-                var employeeNavigation = "<object type='text/html' data='EmployeeOverlay/Navigation.jsp' ></object>"
-                document.getElementById('divNavigation').innerHTML = employeeNavigation;
-              
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        document.getElementById('divNavigation').innerHTML = data;
+                    }
+                };
+                xhr.open('GET', '/HipsterRentalCorp/EmployeeNavigationServlet', true);
+                xhr.send(null);
             }
-            
+            /**
+             * This method loads the 'order view' and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadOrderView() {
+                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' ></object>";
+                document.getElementById('divContent').innerHTML = orderView;
+            }
+            /**
+             * This method loads the 'add product' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadAddProduct() {
+                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp'></object>";
+                document.getElementById('divContent').innerHTML = addProduct;
+            }
 
+            /**
+             * This method loads the 'add package' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadAddPackage() {
+                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' ></object>";
+                document.getElementById('divContent').innerHTML = addPackage;
+            }
+
+            /**
+             * This method loads the 'add user' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadAddUser() {
+                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' ></object>";
+                document.getElementById('divContent').innerHTML = addUser;
+            }
         </script>
 
     </body>

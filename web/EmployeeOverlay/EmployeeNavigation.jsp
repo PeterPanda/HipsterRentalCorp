@@ -13,9 +13,9 @@
     </head>
     <body>
         <div>
-            <button>Bestellungen anzeigen</button><br>
-            <button>Produkt anlegen</button><br>
-            <button>Paket anlegen</button><br>
+            <button type="button" onclick="parent.loadOrderView();">Bestellungen anzeigen</button><br>
+            <button type="button" onclick="parent.loadAddProduct();">Produkt anlegen</button><br>
+            <button type="button" onclick="parent.loadAddPackage();">Paket anlegen</button><br>
         </div>
     </body>
 </html>

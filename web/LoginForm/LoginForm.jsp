@@ -37,21 +37,12 @@
                             <td><input type="submit" value="login"/></td>
                         </tr>
                         <tr> 
-                            <td> Neukunde? <button class='link' id='buttonRegisterNewUser' onclick="mainPageLoadRegistrationForm()">registrieren</button></td>
+                            <td> Neukunde? <button class='link' id='buttonRegisterNewUser' onclick="parent.loadRegistrationForm();">registrieren</button></td>
                             <td></td>
                         </tr>                     
                     </tbody>
                 </table>
             </form>
         </div>
-        <script>
-            /**
-             * Loads the registration form in the main page.
-             * @returns {undefined}
-             */
-            function mainPageLoadRegistrationForm(){
-                parent.loadRegistrationForm();
-            }
-            </script>
     </body>
 </html>

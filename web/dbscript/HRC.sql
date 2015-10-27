@@ -109,6 +109,7 @@ DETAILS varchar(255),
 MIETZINS varchar(10),
 KATEGORIENR varchar(10) REFERENCES KATEGORIE(KATEGORIENR),
 ALTERNATIVE varchar(10) REFERENCES PRODUKT(PRODUKTNR),
+VERFUEGBAR varchar(1),
 PRIMARY KEY (PRODUKTNR)
 );
 
@@ -193,33 +194,33 @@ INSERT INTO KATEGORIE VALUES('KATNR00012','Funk','FNR0000002', 'KATNR00013');
 INSERT INTO KATEGORIE VALUES('KATNR00013','Funkgeräte','FNR0000002', '');
 
 /* PRODUKT */
-INSERT INTO PRODUKT VALUES('PNR0000001','SAR-24 Nebelmaschine','SAR technologies','Diese Nebelmaschine der Spitzenklasse lÃ¤sst ihre Party zu einem echten Hit werden. Ohne Witz. Und ohne übertriebenes Waffengelaber.','Eine Nebelmaschine','15,00','KATNR00003', 'PNR0000003');
-INSERT INTO PRODUKT VALUES('PNR0000002','Dunst-Nebelmschine Soflar 500','Soflar','Ein transparenter Dunst erzeugt eine tolle AtmosphÃ¤re ohne den Raum zu vernebeln.','Eine Nebelmaschine', '15,00','KATNR00003', 'PNR0000003');
-INSERT INTO PRODUKT VALUES('PNR0000003','Smoke Factory Hazer','Smoke Factory','Professionelles GerÃ¤t fÃ¼r die perfekte AtmosphÃ¤re auf ihrer Party.','Eine Nebelmaschine', '24,00','KATNR00003', '');
-INSERT INTO PRODUKT VALUES('PNR0000004','SAR-78 Scheinwerfer','Sar technologies','Ein absoluter Klassiker und den modernen Beleuchtungsanlagen.','Ein Scheinwerfer', '7,00','KATNR00002', 'PNR0000005');
-INSERT INTO PRODUKT VALUES('PNR0000005','SAR-79 Floorspot','Sar technologies','Auf jeder Party ein Hingucker.','Ein Scheinwerfer', '6,00','KATNR00002', 'PNR0000004');
-INSERT INTO PRODUKT VALUES('PNR0000006','LiteTech LED BAR 252','LiteTech','Helle und schÃ¶ne LED BAR mit einstellbarer Helligkeit.','Ein Scheinwerfer', '12,00','KATNR00002', 'PNR0000004');
-INSERT INTO PRODUKT VALUES('PNR0000007','SAR-85 System COB','Sar technologies','Eine ultrakompakte und leistungsstarke Lichtanlage.','Ein Scheinwerfer', '24,00','KATNR00002', 'PNR0000004');
-INSERT INTO PRODUKT VALUES('PNR0000008','LiteTech Mikro 400','LiteTech','Ein Mikrofon mit herausragender QualitÃ¤t.','Ein Mikrofon', '9,00','KATNR00009', 'PNR0000009');
-INSERT INTO PRODUKT VALUES('PNR0000009','LiteTech Mikro 500','LiteTech','Das LiteTech Mikro 500 ist besser als das LiteTech Mikro 400.','Ein Mikrofon', '11,00','KATNR00009', 'PNR0000008');
-INSERT INTO PRODUKT VALUES('PNR0000010','Beamer Acer X321 Overdrive','Acer','Der X321 Overdrive von Acer ist fÃ¼r Projektionen aller Art geeignet.','Ein Beamer', '36,00','KATNR00004', 'PNR00000011');
-INSERT INTO PRODUKT VALUES('PNR0000011','Beamer GeoLo 600','GeoLo','GeoLo setzt mit seiner 600er Serie neue MaÃŸstÃ¤be in Sachen QualitÃ¤t.','Ein Beamer', '49,00','KATNR00004', 'PNR00000010');
-INSERT INTO PRODUKT VALUES('PNR0000012','GeoLo 1245 Plattenspieler','GeoLo','Seit Jahren erfreut sich der GeoLo 1245 groÃŸer beliebtheit.','Ein CD-Player', '20,00','KATNR00006', 'PNR00000013');
-INSERT INTO PRODUKT VALUES('PNR0000013','Syntech 700 CD-Player','Syntech','Ein CD-Spieler der hÃ¶chsten QualitÃ¤t.','Ein CD-Player', '32,00','KATNR00006', 'PNR00000012');
-INSERT INTO PRODUKT VALUES('PNR0000014','Alien W900 Mischpult','Alien','Ein Mischpult mit einer Ã¤uÃŸerst gut gestalteten BedienoberflÃ¤che.','Ein Mischpult', '17,00','KATNR00007', 'PNR00000015');
-INSERT INTO PRODUKT VALUES('PNR0000015','Alien W100 Mischpult','Alien','Ein Mischpult das auf kleinstem Raum eine hohe LeistungsfÃ¤higkeit besitzt.','Ein Mischpult', '8,00','KATNR00007', 'PNR00000016');
-INSERT INTO PRODUKT VALUES('PNR0000016','SAR-165 Mischpult','SAR technologies','Die hohe QualitÃ¤t von SAR technologies zeigen sie besonders bei ihren Mischpulten.','Ein Mischpult', '47,00','KATNR00007', 'PNR00000014');
-INSERT INTO PRODUKT VALUES('PNR0000017','Nova 7000 Lautsprecher','Nova','Ein Lautsprecher mit besonders hoher Leistung.','Ein Lautsprecher', '21,00','KATNR00010', 'PNR00000018');
-INSERT INTO PRODUKT VALUES('PNR0000018','Syntech 500i Lautsprecher','Syntech','QualitÃ¤t auf engstem Raum machen den 500i zu einem echten >BEAST<','Ein Lautsprecher', '18,00','KATNR00010', 'PNR0000019');
-INSERT INTO PRODUKT VALUES('PNR0000019','SAR-240 Lautsprecher','SAR technologies','Der Lamborghini unter den Lautsprechern begeistert nach wie vor seine ZuhÃ¶rer.','Ein Lautsprecher', '39,00','KATNR00010', 'PNR0000020');
-INSERT INTO PRODUKT VALUES('PNR0000020','Nova 8000 Lautsprecher','Nova','Ein Lautsprecher der mit extra Bass auftrumpft.','Ein Lautsprecher', '23,00','KATNR00010', 'PNR0000017');
-INSERT INTO PRODUKT VALUES('PNR0000021','Syntech 900 VerstÃ¤rker','Syntech','Profis sind sich einig: Einer der besten VerstÃ¤rker auf dem Markt.','Ein VerstÃ¤rker', '32,00','KATNR00008', 'PNR0000022');
-INSERT INTO PRODUKT VALUES('PNR0000022','SAR-170 VerstÃ¤rker','SAR technologies','Der SAR-170 ist eine gÃ¼nstige Alternative mit viel Leistung.','Ein VerstÃ¤rker', '26,00','KATNR00008', 'PNR0000023');
-INSERT INTO PRODUKT VALUES('PNR0000023','GeoLo 1100 VerstÃ¤rker','GeoLo','GeoLo bringt mit der 1100er Serie eine Qualitativ hochwertigen VerstÃ¤rker auf den Markt','Ein VerstÃ¤rker', '38,00','KATNR00008', 'PNR0000021');
-INSERT INTO PRODUKT VALUES('PNR0000024','SubwuufeR','Intel','Ey, das geht ab...','400V Starkstrom mit eingegebautem Backofen','12,45','KATNR00011', 'PNR0000002');
-INSERT INTO PRODUKT VALUES('PNR0000025','Radio','Macintosh','Hammerfettbombekrass','9,5 V Batterie ben�tigt', '3,25','KATNR00012', '');
-INSERT INTO PRODUKT VALUES('PNR0000026','Trucker Funkgerät','Hama','Dem Trucker sein Schätzeke.','Kurz-, Mittel- und Langwelle', '14,89','KATNR00013', '');
-INSERT INTO PRODUKT VALUES('PNR0000027','Amateur Funkgerät','Hama','Für den frischen Funker','Kurz- und Mittelwelle', '9,99','KATNR00013', 'PNR0000026');
+INSERT INTO PRODUKT VALUES('PNR0000001','SAR-24 Nebelmaschine','SAR technologies','Diese Nebelmaschine der Spitzenklasse lÃ¤sst ihre Party zu einem echten Hit werden. Ohne Witz. Und ohne übertriebenes Waffengelaber.','Eine Nebelmaschine','15,00','KATNR00003', 'PNR0000003','j');
+INSERT INTO PRODUKT VALUES('PNR0000002','Dunst-Nebelmschine Soflar 500','Soflar','Ein transparenter Dunst erzeugt eine tolle AtmosphÃ¤re ohne den Raum zu vernebeln.','Eine Nebelmaschine', '15,00','KATNR00003', 'PNR0000003','j');
+INSERT INTO PRODUKT VALUES('PNR0000003','Smoke Factory Hazer','Smoke Factory','Professionelles GerÃ¤t fÃ¼r die perfekte AtmosphÃ¤re auf ihrer Party.','Eine Nebelmaschine', '24,00','KATNR00003', '','j');
+INSERT INTO PRODUKT VALUES('PNR0000004','SAR-78 Scheinwerfer','Sar technologies','Ein absoluter Klassiker und den modernen Beleuchtungsanlagen.','Ein Scheinwerfer', '7,00','KATNR00002', 'PNR0000005','j');
+INSERT INTO PRODUKT VALUES('PNR0000005','SAR-79 Floorspot','Sar technologies','Auf jeder Party ein Hingucker.','Ein Scheinwerfer', '6,00','KATNR00002', 'PNR0000004','j');
+INSERT INTO PRODUKT VALUES('PNR0000006','LiteTech LED BAR 252','LiteTech','Helle und schÃ¶ne LED BAR mit einstellbarer Helligkeit.','Ein Scheinwerfer', '12,00','KATNR00002', 'PNR0000004','j');
+INSERT INTO PRODUKT VALUES('PNR0000007','SAR-85 System COB','Sar technologies','Eine ultrakompakte und leistungsstarke Lichtanlage.','Ein Scheinwerfer', '24,00','KATNR00002', 'PNR0000004','j');
+INSERT INTO PRODUKT VALUES('PNR0000008','LiteTech Mikro 400','LiteTech','Ein Mikrofon mit herausragender QualitÃ¤t.','Ein Mikrofon', '9,00','KATNR00009', 'PNR0000009','j');
+INSERT INTO PRODUKT VALUES('PNR0000009','LiteTech Mikro 500','LiteTech','Das LiteTech Mikro 500 ist besser als das LiteTech Mikro 400.','Ein Mikrofon', '11,00','KATNR00009', 'PNR0000008','j');
+INSERT INTO PRODUKT VALUES('PNR0000010','Beamer Acer X321 Overdrive','Acer','Der X321 Overdrive von Acer ist fÃ¼r Projektionen aller Art geeignet.','Ein Beamer', '36,00','KATNR00004', 'PNR00000011','j');
+INSERT INTO PRODUKT VALUES('PNR0000011','Beamer GeoLo 600','GeoLo','GeoLo setzt mit seiner 600er Serie neue MaÃŸstÃ¤be in Sachen QualitÃ¤t.','Ein Beamer', '49,00','KATNR00004', 'PNR00000010','j');
+INSERT INTO PRODUKT VALUES('PNR0000012','GeoLo 1245 Plattenspieler','GeoLo','Seit Jahren erfreut sich der GeoLo 1245 groÃŸer beliebtheit.','Ein CD-Player', '20,00','KATNR00006', 'PNR00000013','j');
+INSERT INTO PRODUKT VALUES('PNR0000013','Syntech 700 CD-Player','Syntech','Ein CD-Spieler der hÃ¶chsten QualitÃ¤t.','Ein CD-Player', '32,00','KATNR00006', 'PNR00000012','j');
+INSERT INTO PRODUKT VALUES('PNR0000014','Alien W900 Mischpult','Alien','Ein Mischpult mit einer Ã¤uÃŸerst gut gestalteten BedienoberflÃ¤che.','Ein Mischpult', '17,00','KATNR00007', 'PNR00000015','j');
+INSERT INTO PRODUKT VALUES('PNR0000015','Alien W100 Mischpult','Alien','Ein Mischpult das auf kleinstem Raum eine hohe LeistungsfÃ¤higkeit besitzt.','Ein Mischpult', '8,00','KATNR00007', 'PNR00000016','j');
+INSERT INTO PRODUKT VALUES('PNR0000016','SAR-165 Mischpult','SAR technologies','Die hohe QualitÃ¤t von SAR technologies zeigen sie besonders bei ihren Mischpulten.','Ein Mischpult', '47,00','KATNR00007', 'PNR00000014','j');
+INSERT INTO PRODUKT VALUES('PNR0000017','Nova 7000 Lautsprecher','Nova','Ein Lautsprecher mit besonders hoher Leistung.','Ein Lautsprecher', '21,00','KATNR00010', 'PNR00000018','j');
+INSERT INTO PRODUKT VALUES('PNR0000018','Syntech 500i Lautsprecher','Syntech','QualitÃ¤t auf engstem Raum machen den 500i zu einem echten >BEAST<','Ein Lautsprecher', '18,00','KATNR00010', 'PNR0000019','j');
+INSERT INTO PRODUKT VALUES('PNR0000019','SAR-240 Lautsprecher','SAR technologies','Der Lamborghini unter den Lautsprechern begeistert nach wie vor seine ZuhÃ¶rer.','Ein Lautsprecher', '39,00','KATNR00010', 'PNR0000020','j');
+INSERT INTO PRODUKT VALUES('PNR0000020','Nova 8000 Lautsprecher','Nova','Ein Lautsprecher der mit extra Bass auftrumpft.','Ein Lautsprecher', '23,00','KATNR00010', 'PNR0000017','j');
+INSERT INTO PRODUKT VALUES('PNR0000021','Syntech 900 VerstÃ¤rker','Syntech','Profis sind sich einig: Einer der besten VerstÃ¤rker auf dem Markt.','Ein VerstÃ¤rker', '32,00','KATNR00008', 'PNR0000022','j');
+INSERT INTO PRODUKT VALUES('PNR0000022','SAR-170 VerstÃ¤rker','SAR technologies','Der SAR-170 ist eine gÃ¼nstige Alternative mit viel Leistung.','Ein VerstÃ¤rker', '26,00','KATNR00008', 'PNR0000023','j');
+INSERT INTO PRODUKT VALUES('PNR0000023','GeoLo 1100 VerstÃ¤rker','GeoLo','GeoLo bringt mit der 1100er Serie eine Qualitativ hochwertigen VerstÃ¤rker auf den Markt','Ein VerstÃ¤rker', '38,00','KATNR00008', 'PNR0000021','j');
+INSERT INTO PRODUKT VALUES('PNR0000024','SubwuufeR','Intel','Ey, das geht ab...','400V Starkstrom mit eingegebautem Backofen','12,45','KATNR00011', 'PNR0000002','j');
+INSERT INTO PRODUKT VALUES('PNR0000025','Radio','Macintosh','Hammerfettbombekrass','9,5 V Batterie ben�tigt', '3,25','KATNR00012', '','j');
+INSERT INTO PRODUKT VALUES('PNR0000026','Trucker Funkgerät','Hama','Dem Trucker sein Schätzeke.','Kurz-, Mittel- und Langwelle', '14,89','KATNR00013', '','j');
+INSERT INTO PRODUKT VALUES('PNR0000027','Amateur Funkgerät','Hama','Für den frischen Funker','Kurz- und Mittelwelle', '9,99','KATNR00013', 'PNR0000026','j');
 
 /* FOTOPOS */
 INSERT INTO FOTOPOS VALUES('FNR0000001', 'PNR0000001');

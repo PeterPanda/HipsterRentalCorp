@@ -19,6 +19,7 @@ public abstract class User {
 
     /**
      * Checks if the given user data can be found in the table USER.
+     *
      * @param email User-email.
      * @param pass User-password.
      * @return True, if email and password correct.
@@ -42,10 +43,9 @@ public abstract class User {
         }
         return userFound;
     }
-    
-    
+
     public static boolean checkEmployee(String email, String pass) {
-                boolean userFound = false;
+        boolean userFound = false;
 
         Connection con = Connector.getConnection();
         if (con != null) {
@@ -63,8 +63,8 @@ public abstract class User {
         }
         return userFound;
     }
-    
-    public static Kunde getCustomer(String email){
+
+    public static Kunde getCustomer(String email) {
         Kunde k = null;
         Connection con = Connector.getConnection();
         if (con != null) {
@@ -73,8 +73,8 @@ public abstract class User {
                 ps.setString(1, email);
                 ResultSet rs;
                 rs = ps.executeQuery();
-                while(rs.next()){
-                    k = new Kunde(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
+                while (rs.next()) {
+                    k = new Kunde(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
                 }
 
             } catch (Exception e) {
@@ -83,7 +83,8 @@ public abstract class User {
         }
         return k;
     }
-    public static Mitarbeiter getEmployee(String email){
+
+    public static Mitarbeiter getEmployee(String email) {
         Mitarbeiter m = null;
         Connection con = Connector.getConnection();
         if (con != null) {
@@ -92,8 +93,8 @@ public abstract class User {
                 ps.setString(1, email);
                 ResultSet rs;
                 rs = ps.executeQuery();
-                while(rs.next()){
-                    m = new Mitarbeiter(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                while (rs.next()) {
+                    m = new Mitarbeiter(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 }
 
             } catch (Exception e) {
@@ -120,19 +121,19 @@ public abstract class User {
                 ps.setString(8, c.getPlz());
                 ps.setString(9, c.getTelefonNR());
                 ps.setString(10, c.getHandynummer());
-                
+
                 ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
+
         return c;
     }
 
     static Kunde getDummyUser() {
         Kunde c = null;
-        
+
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -148,21 +149,22 @@ public abstract class User {
                 ps.setString(9, "dummy");
                 ResultSet rs;
                 rs = ps.executeQuery();
-                while(rs.next()){
-                    c = new Kunde(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10));
+                while (rs.next()) {
+                    c = new Kunde(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
-        if(c==null)
-            c= createDummyUser();
+
+        if (c == null) {
+            c = createDummyUser();
+        }
         return c;
     }
-    
-    public static boolean hasShoppingCart(String customerNumber){
+
+    public static boolean hasShoppingCart(String customerNumber) {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -171,17 +173,17 @@ public abstract class User {
                 ps.setString(1, customerNumber);
                 ResultSet rs;
                 rs = ps.executeQuery();
-                
+
                 return rs.next();
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return false;
     }
-    
-    public static boolean isAdmin(String email){
+
+    public static boolean isAdmin(String email) {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -190,15 +192,55 @@ public abstract class User {
                 ps.setString(1, email);
                 ResultSet rs;
                 rs = ps.executeQuery();
-                
+
                 return rs.next();
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        
+
         return false;
     }
 
+    private static boolean addUser(String email, String pass) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("insert into User values(?,?,?)");
+                ps.setString(1, email);
+                ps.setString(2, pass);
+                ps.setString(3, null);
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean addEmployee(String surename, String lastname, String email, String pass) {
+        boolean success = addUser(email, pass);
+        if (success) {
+            Connection con = Connector.getConnection();
+            if (con != null) {
+                try {
+                    /* Retrieve products */
+                    PreparedStatement ps = con.prepareStatement("insert into MITARBEITER values(?,?,?,?)");
+                    ps.setString(1, NumberHelper.getNextMITARBEITERNR());
+                    ps.setString(2, surename);
+                    ps.setString(3, lastname);
+                    ps.setString(4, email);
+                    ps.executeUpdate();
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        }
+        else
+            return false;
+        return true;
+    }
 }

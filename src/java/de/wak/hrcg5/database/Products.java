@@ -89,4 +89,28 @@ public abstract class Products {
         return product;
     }
 
+    public static boolean addProduct(String bezeichnung, String herstellername, String beschreibung, String details, String mietzins, String kategorie, String alternative) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("insert into PRODUKT values(?,?,?,?,?,?,?,?,?)");
+                ps.setString(1, NumberHelper.getNextPRODUKTNR());
+                ps.setString(2, bezeichnung);
+                ps.setString(3, herstellername);
+                ps.setString(4, beschreibung);
+                ps.setString(5, details);
+                ps.setString(6, mietzins);
+                ps.setString(7, kategorie);
+                ps.setString(8, alternative.equals("") ? null : alternative);
+                ps.setString(9, "j");
+                ps.executeUpdate();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
