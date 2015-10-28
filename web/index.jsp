@@ -44,7 +44,6 @@
                                 </tr>
                             </thead>
                         </table>
-
                     </th>
 
                 </tr>
@@ -58,8 +57,8 @@
                         </div>
                         <!--</form>-->
                     </td>
-                    <td>
-                        <div id="divContent">
+                    <td id="cellContent">
+                        <div id="divContent" class="border margin">
                             Content
                         </div>
                     </td>
@@ -73,7 +72,7 @@
              * @returns {undefined}
              */
             function loadRegistrationForm() {
-                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' ></object>";
+                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = loginForm;
             }
             /**
@@ -96,7 +95,7 @@
              * @returns {undefined}
              */
             function loadOrderView() {
-                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' ></object>";
+                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = orderView;
             }
             /**
@@ -104,7 +103,7 @@
              * @returns {undefined}
              */
             function loadAddProduct() {
-                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp'></object>";
+                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = addProduct;
             }
 
@@ -113,7 +112,7 @@
              * @returns {undefined}
              */
             function loadAddPackage() {
-                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' ></object>";
+                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' width='100%' height='100%' ></object>";
                 document.getElementById('divContent').innerHTML = addPackage;
             }
 
@@ -122,8 +121,13 @@
              * @returns {undefined}
              */
             function loadAddUser() {
-                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' ></object>";
+                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = addUser;
+            }
+
+            function loadPeriod() {
+                var period = "<object type='text/html' data='Order/Period.jsp' width='100%' height='100%' ></object>";
+                document.getElementById('divContent').innerHTML = period;
             }
         </script>
 

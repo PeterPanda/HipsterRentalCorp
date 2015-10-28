@@ -42,6 +42,9 @@ public class Warenkorb {
             sb.append(p.getBezeichnung());
             sb.append("</td>");
             sb.append("<td>");
+            sb.append(p.getMietzins());
+            sb.append("</td>");
+            sb.append("<td>");
             sb.append("<button value='").append(p.getProduktNR()).append("'>Löschen</button>");
             sb.append("</td>");
             sb.append("</tr>");
@@ -64,6 +67,9 @@ public class Warenkorb {
             sb.append(p.getBezeichnung());
             sb.append("</td>");
             sb.append("<td>");
+            sb.append(p.getMietzins());
+            sb.append("</td>");
+            sb.append("<td>");
             sb.append("<button value='").append(p.getPaketNR()).append("'>Löschen</button>");
             sb.append("</td>");
             sb.append("</tr>");
@@ -75,4 +81,15 @@ public class Warenkorb {
         return sb.toString();
     }
 
+    public String getMietzins() {
+        String sum = "0";
+
+        for (Paket p : pakete) {
+            sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins()));
+        }
+        for (Produkt p : produkte) {
+            sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins().replace(',', '.')));
+        }
+        return sum;
+    }
 }

@@ -80,6 +80,7 @@ public class LoadShoppingCartServlet extends HttpServlet {
 
 
         /* Sending the loaded product to the product-view-page */
+        session.setAttribute("rent", shoppingCart.getMietzins());
         request.setAttribute("shoppingCart", shoppingCart);
         context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
 

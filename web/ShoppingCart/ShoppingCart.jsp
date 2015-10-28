@@ -12,25 +12,42 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        Produkte:
-                    </td>
-                    <td>
-                        ${requestScope.shoppingCart.getProduktView()}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Pakete:
-                    </td>
-                    <td>
-                        ${requestScope.shoppingCart.getPaketView()}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            Produkte:
+                        </td>
+                        <td>
+                            ${requestScope.shoppingCart.getProduktView()}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Pakete:
+                        </td>
+                        <td>
+                            ${requestScope.shoppingCart.getPaketView()}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Mietzins gesamt:
+                        </td>
+                        <td>
+                            ${requestScope.shoppingCart.getMietzins()}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <button type="button" onclick="parent.loadPeriod();">Weiter zur Bestellung</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

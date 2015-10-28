@@ -8,10 +8,8 @@ and open the template in the editor.
     Author     : janFk
 */
 
-html, body{
-    width: 100%;
-    height: 100%;
-}
+html { height:100%; }
+body { position:absolute; top:0; bottom:0; right:0; left:0; }
 
 #tableMain{
     
@@ -23,7 +21,7 @@ html, body{
 
 #cellShopName{
     text-align:left;
-    width:300px;
+    width:350px;
     height: 50px;
     background-color: blue;
 }
@@ -43,14 +41,18 @@ html, body{
     text-align: left;
 }
 
-#divContent{
-    background-color: violet;
+#cellContent{
+    overflow: hidden;
+    position: relative;
     width: 100%;
-    height: 100%;
 }
 
-#buttonSearch{
-    
+#divContent{
+    background-color: violet;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
 }
 
 #buttonLogin{
