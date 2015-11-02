@@ -97,7 +97,7 @@ public abstract class Orders {
                 PreparedStatement ps = con.prepareStatement("insert into BESTELLUNG values (?, ?, ?, ?, ?)");
                 ps.setString(1, b.getBestellNR());
                 ps.setString(2, b.getVon());
-                ps.setString(5, b.getBis());
+                ps.setString(3, b.getBis());
                 ps.setString(4, User.getCustomer(userEmail).getKundenNR());
                 ps.setString(5, null);
                 ps.executeUpdate();

@@ -164,7 +164,7 @@
                         document.getElementById('divContent').innerHTML = data;
                     }
                 };
-                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from+"?till="+till, true);
+                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from+"&till="+till, true);
                 xhr.send(null);
             }
             

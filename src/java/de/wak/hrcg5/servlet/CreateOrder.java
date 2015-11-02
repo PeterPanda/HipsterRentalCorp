@@ -5,6 +5,7 @@
  */
 package de.wak.hrcg5.servlet;
 
+import de.wak.hrcg5.database.NumberHelper;
 import de.wak.hrcg5.database.Orders;
 import de.wak.hrcg5.database.ShoppingCart;
 import de.wak.hrcg5.structure.Warenkorb;
@@ -75,16 +76,16 @@ public class CreateOrder extends HttpServlet {
         HttpSession session = request.getSession();
 
         String userEmail = (String) session.getAttribute("User");
-        Warenkorb shoppingCart = (Warenkorb) session.getAttribute("shoppingCart");
+        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
-        String from = (String) request.getParameter("from");
-        String till = (String) request.getParameter("till");
+        String from = NumberHelper.dateParser((String) request.getParameter("from"));
+        String till = NumberHelper.dateParser((String) request.getParameter("till"));
 
         if (Orders.createOrder(from, till, shoppingCart, userEmail)) {
             if (ShoppingCart.clearShoppingCart(userEmail)) {
                 session.setAttribute("rent", null);
                 request.setAttribute("shoppingCart", null);
-                context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
+                context.getRequestDispatcher("/Order/OrderFinished.jsp").forward(request, response);
             }
         } else {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);

@@ -131,7 +131,8 @@ public abstract class ShoppingCart {
         }
     }
 
-    public static boolean clearShoppingCart(String customerNumber) {
+    public static boolean clearShoppingCart(String userEmail) {
+        String customerNumber = User.getCustomer(userEmail).getKundenNR();
         String warenkorbProduktNR = NumberHelper.getWARENKORBPRODUKTNR(customerNumber);
         String warenkorbPaketNR = NumberHelper.getWARENKORBPAKETNR(customerNumber);
         

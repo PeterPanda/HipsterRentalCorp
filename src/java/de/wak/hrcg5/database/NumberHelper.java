@@ -5,9 +5,14 @@
  */
 package de.wak.hrcg5.database;
 
+import java.text.SimpleDateFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -25,7 +30,7 @@ public abstract class NumberHelper {
 
     public static String getNextKUNDENNR() {
         String lastNumber = getLastNumber("select MAX(KUNDENNR) from KUNDE");
-        
+
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(KUNDENNR);
         }
@@ -34,7 +39,7 @@ public abstract class NumberHelper {
 
     public static String getNextWARENKORBPRODUKTNR() {
         String lastNumber = getLastNumber("select MAX(WARENKORBPRODUKTNR) from WARENKORBPRODUKT");
-        
+
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(WARENKORBPRODUKTNR);
         }
@@ -43,7 +48,7 @@ public abstract class NumberHelper {
 
     public static String getNextWARENKORBPAKETNR() {
         String lastNumber = getLastNumber("select MAX(WARENKORBPAKETNR) from WARENKORBPAKET");
-        
+
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(WARENKORBPAKETNR);
         }
@@ -114,7 +119,7 @@ public abstract class NumberHelper {
 
     static String getNextPRODUKTNR() {
         String lastNumber = getLastNumber("select MAX(PRODUKTNR) from PRODUKT");
-        
+
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(PRODUKTNR);
         }
@@ -123,7 +128,7 @@ public abstract class NumberHelper {
 
     public static String getNextBESTELLNR() {
         String lastNumber = getLastNumber("select MAX(BESTELLNR) from BESTELLUNG");
-        
+
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(BESTELLNR);
         }
@@ -146,5 +151,27 @@ public abstract class NumberHelper {
             }
         }
         return lastNumber;
+    }
+
+    public static String dateParser(String oldDate) {
+        String monthName = oldDate.substring(4, 7);
+        int month = 0;
+        try {
+            Date date = new SimpleDateFormat("MMM").parse(monthName);//put your month name here
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            month = cal.get(Calendar.MONTH) + 1;
+        } catch (Exception e) {
+            return null;
+        }
+
+        String day = oldDate.substring(8, 11);
+        String year = oldDate.substring(11, 15);
+        String hours = oldDate.substring(16, 18);
+        String minutes = oldDate.substring(19, 21);
+        String seconds = oldDate.substring(22, 24);
+
+        /* Return timestamp format: YYYY-MM-DD HH:MI:SS */
+        return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
     }
 }
