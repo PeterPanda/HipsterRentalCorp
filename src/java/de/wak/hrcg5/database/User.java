@@ -238,9 +238,45 @@ public abstract class User {
                     return false;
                 }
             }
-        }
-        else
+        } else {
             return false;
+        }
+        return true;
+    }
+
+    public static boolean addCustomer(String surename, String lastname, String email, String pass, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
+        boolean success = addUser(email, pass);
+        if (success) {
+            success = Place.addPlace(place, postalcode);
+            if (success) {
+                Connection con = Connector.getConnection();
+                if (con != null) {
+                    try {
+                        /* Retrieve products */
+                        PreparedStatement ps = con.prepareStatement("insert into KUNDE values(?,?,?,?,?,?,?,?,?,?)");
+                        ps.setString(1, NumberHelper.getNextKUNDENNR());
+                        ps.setString(2, surename);
+                        ps.setString(3, lastname);
+                        ps.setString(4, email);
+                        ps.setString(5, organisation);
+                        ps.setString(6, streat);
+                        ps.setString(7, housenumber);
+                        ps.setString(8, postalcode);
+                        ps.setString(9, telephonenumber);
+                        ps.setString(10, mobilenumber);
+
+                        ps.executeUpdate();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
         return true;
     }
 }

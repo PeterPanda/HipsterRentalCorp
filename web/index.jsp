@@ -32,13 +32,12 @@
                                     </th>
                                     <th id="cellLogin">
                                         <div id="divLogin">
-                                            <button id="buttonLogin" type="button" class="btn btn-default" onclick="initLogin">Anmelden</button>
                                         </div>
                                     </th>
                                     <th>
                                         <div id="divShoppingCart" onclick="loadShoppingCart();">
                                             <img id="imgShoppingCart" src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/shoppingcart.png" alt="shoppingcart" >
-                                            <p id="pShoppingCartCount"></p>
+                                            <p id="pShoppingCartCount">0</p>
                                         </div>
                                     </th>
                                 </tr>
@@ -66,7 +65,30 @@
             </tbody>
         </table>
         <script>
+            function init() {
+                initCategory();
+                document.getElementById("pShoppingCartCount").innerHTML = "0";
+                initLogin();
+            }
+
             /* Methods, invoked from child-pages */
+
+            /**
+             * This method loads the user (if still loged in) and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            /*function userStillLogedIn() {
+             var xhr = new XMLHttpRequest();
+             xhr.onreadystatechange = function () {
+             if (xhr.readyState === 4) {
+             var data = xhr.responseText;
+             document.getElementById('divLogin').innerHTML = data;
+             }
+             };
+             xhr.open('GET', '/HipsterRentalCorp/UserStillLogedInServlet', true);
+             xhr.send(null);
+             }*/
+
             /**
              * This method loads the 'registration form' and is invoked by a childpage.
              * @returns {undefined}
@@ -125,11 +147,31 @@
                 document.getElementById('divContent').innerHTML = addUser;
             }
 
+            /**
+             * This method loads the 'period' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
             function loadPeriod() {
                 var period = "<object type='text/html' data='Order/Period.jsp' width='100%' height='100%' ></object>";
                 document.getElementById('divContent').innerHTML = period;
             }
-        </script>
 
+            function createOrder(from, till){
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        document.getElementById('divContent').innerHTML = data;
+                    }
+                };
+                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from+"?till="+till, true);
+                xhr.send(null);
+            }
+            
+            function loadGuest(){
+                var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
+                document.getElementById('divContent').innerHTML = period;
+            }
+        </script>
     </body>
 </html>

@@ -8,15 +8,9 @@
  Author     : janFk
  */
 
-function init() {
-    document.getElementById('buttonLogin').addEventListener("click", initLogin);
-    initCategory();
-    document.getElementById("pShoppingCartCount").innerHTML = "0";
-}
-
 /* Initialize the Loginfunction/overlay */
 function initLogin() {
-    var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' ></object>";
+    var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";
     document.getElementById('divLogin').innerHTML = loginForm;
 }
 
@@ -75,3 +69,4 @@ function clearShoppingCartForUnregisteredUser() {
     xhr.open('GET', '/HipsterRentalCorp/ClearShoppingCartForUnregisteredUserServlet', true);
     xhr.send(null);
 }
+

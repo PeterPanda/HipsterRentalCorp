@@ -27,29 +27,59 @@
                 });
             });
 
-            function calculateCost(){
-            var rent = '<%= session.getAttribute("rent")%>';
-            
-            var fd = $('#fromDate').val();
-            var ft = $('#fromTime').val();
-            var td = $('#tillDate').val();
-            var tt = $('#tillTime').val();
+            function calculateCost() {
+                var rent = '<%= session.getAttribute("rent")%>';
 
-            var splitfromdate = fd.split('.');
-            var splitfromtime = ft.split(':');
-            var splittilldate = td.split('.');
-            var splittilltime = tt.split(':');
-            
-           var from = new Date(splitfromdate[2], splitfromdate[1]-1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
-           var till = new Date(splittilldate[2], splittilldate[1]-1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
-            var diff = Math.abs(till - from);
-            diff = diff /1000/60/60/24;
-            diff = Math.ceil(diff);
-            var cost = diff * rent;
-            cost = cost.toFixed(2);
-            $('#cost').html(cost + ' €');
-        }
-    
+                var from = getFrom();
+                var till = getTill();
+
+                /* Calculate the final costs */
+                var diff = Math.abs(till - from);
+                diff = diff / 1000 / 60 / 60 / 24;
+                diff = Math.ceil(diff);
+                var cost = diff * rent;
+                cost = cost.toFixed(2);
+                $('#cost').html(cost + ' €');
+            }
+
+            function validateUser() {
+                var from = document.getElementById('fromDate');
+                var till = document.getElementById('tillDate');
+                if (from.value.length === 0 || till.value.length === 0) {
+                    alert("Bitte geben Sie einen korrekten Zeitraum an.");
+                } else {
+                    var user = '<%= session.getAttribute("User")%>';
+                    if (user !== null && user !== "" && user !== "null") {
+                        parent.createOrder(getFrom(), getTill());
+                    } else {
+                        parent.loadGuest();
+                    }
+                }
+            }
+
+            function getFrom() {
+                /* Get the 'timestamp' attribute for the order */
+                var fd = $('#fromDate').val();
+                var ft = $('#fromTime').val();
+
+                var splitfromdate = fd.split('.');
+                var splitfromtime = ft.split(':');
+
+                var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
+                return from;
+            }
+            function getTill() {
+                /* Get the 'timestamp' attributes for the order */
+                var td = $('#tillDate').val();
+                var tt = $('#tillTime').val();
+
+                var splittilldate = td.split('.');
+                var splittilltime = tt.split(':');
+
+                var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
+                return till;
+            }
+
         </script>
     </head>
     <body>
@@ -122,6 +152,11 @@
                         <td></td>
                         <td>Kosten:</td>
                         <td><p id="cost"></p></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><button onclick="validateUser()">Bestellen</button></td>
                     </tr>
                 </tbody>
             </table>

@@ -8,11 +8,11 @@ package de.wak.hrcg5.database;
 import de.wak.hrcg5.structure.Bestellung;
 import de.wak.hrcg5.structure.Paket;
 import de.wak.hrcg5.structure.Produkt;
+import de.wak.hrcg5.structure.Warenkorb;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,14 +63,14 @@ public abstract class Orders {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return products;
     }
 
     private static List<Paket> getPackages(String orderNumber) {
         List<Paket> packages = new ArrayList<>();
-        
-                Connection con = Connector.getConnection();
+
+        Connection con = Connector.getConnection();
         try {
             PreparedStatement ps = con.prepareStatement("select PAKETNR from BESTELLPAKETPOS where BESTELLNR=?");
             ps.setString(1, orderNumber);
@@ -84,7 +84,40 @@ public abstract class Orders {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return packages;
+    }
+
+    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail) {
+        Bestellung b = shoppingCart.erzeugeBestellung(from, till);
+
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("insert into BESTELLUNG values (?, ?, ?, ?, ?)");
+                ps.setString(1, b.getBestellNR());
+                ps.setString(2, b.getVon());
+                ps.setString(5, b.getBis());
+                ps.setString(4, User.getCustomer(userEmail).getKundenNR());
+                ps.setString(5, null);
+                ps.executeUpdate();
+
+                for (Produkt p : b.getProdukte()) {
+                    ps = con.prepareStatement("insert into BESTELLPRODUKTPOS values (?, ?)");
+                    ps.setString(1, b.getBestellNR());
+                    ps.setString(2, p.getProduktNR());
+                    ps.executeUpdate();
+                }
+                for (Paket p : b.getPakete()) {
+                    ps = con.prepareStatement("insert into BESTELLPAKETPOS values (?, ?)");
+                    ps.setString(1, b.getBestellNR());
+                    ps.setString(2, p.getPaketNR());
+                    ps.executeUpdate();
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return true;
     }
 }

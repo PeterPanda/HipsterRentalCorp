@@ -44,5 +44,14 @@
                 </table>
             </form>
         </div>
+        <script>
+            function init() {
+                /* User still loged in? */
+                var user = '<%= session.getAttribute("User")%>';
+                if (user !== null && user !== "" && user !== "null") {
+
+                }
+            }
+        </script>
     </body>
 </html>

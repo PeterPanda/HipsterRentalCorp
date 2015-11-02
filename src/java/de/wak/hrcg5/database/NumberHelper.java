@@ -21,21 +21,11 @@ public abstract class NumberHelper {
     private static final String MITARBEITERNR = "MNR0000000";
     private static final String PRODUKTNR = "PNR0000000";
 
+    private static final String BESTELLNR = "BNR0000000";
+
     public static String getNextKUNDENNR() {
-        String lastNumber = "";
-        Connection con = Connector.getConnection();
-        if (con != null) {
-            try {
-                PreparedStatement ps = con.prepareStatement("select MAX(KUNDENNR) from KUNDE");
-                ResultSet rs;
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    lastNumber = rs.getString(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        String lastNumber = getLastNumber("select MAX(KUNDENNR) from KUNDE");
+        
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(KUNDENNR);
         }
@@ -43,20 +33,8 @@ public abstract class NumberHelper {
     }
 
     public static String getNextWARENKORBPRODUKTNR() {
-        String lastNumber = "";
-        Connection con = Connector.getConnection();
-        if (con != null) {
-            try {
-                PreparedStatement ps = con.prepareStatement("select MAX(WARENKORBPRODUKTNR) from WARENKORBPRODUKT");
-                ResultSet rs;
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    lastNumber = rs.getString(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        String lastNumber = getLastNumber("select MAX(WARENKORBPRODUKTNR) from WARENKORBPRODUKT");
+        
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(WARENKORBPRODUKTNR);
         }
@@ -64,20 +42,8 @@ public abstract class NumberHelper {
     }
 
     public static String getNextWARENKORBPAKETNR() {
-        String lastNumber = "";
-        Connection con = Connector.getConnection();
-        if (con != null) {
-            try {
-                PreparedStatement ps = con.prepareStatement("select MAX(WARENKORBPAKETNR) from WARENKORBPAKET");
-                ResultSet rs;
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    lastNumber = rs.getString(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        String lastNumber = getLastNumber("select MAX(WARENKORBPAKETNR) from WARENKORBPAKET");
+        
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(WARENKORBPAKETNR);
         }
@@ -139,20 +105,7 @@ public abstract class NumberHelper {
     }
 
     static String getNextMITARBEITERNR() {
-        String lastNumber = "";
-        Connection con = Connector.getConnection();
-        if (con != null) {
-            try {
-                PreparedStatement ps = con.prepareStatement("select MAX(MITARBEITERNR) from MITARBEITER");
-                ResultSet rs;
-                rs = ps.executeQuery();
-                while (rs.next()) {
-                    lastNumber = rs.getString(1);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        String lastNumber = getLastNumber("select MAX(MITARBEITERNR) from MITARBEITER");
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(MITARBEITERNR);
         }
@@ -160,11 +113,29 @@ public abstract class NumberHelper {
     }
 
     static String getNextPRODUKTNR() {
+        String lastNumber = getLastNumber("select MAX(PRODUKTNR) from PRODUKT");
+        
+        if (lastNumber == null || lastNumber.equals("")) {
+            return incementLastNumber(PRODUKTNR);
+        }
+        return incementLastNumber(lastNumber);
+    }
+
+    public static String getNextBESTELLNR() {
+        String lastNumber = getLastNumber("select MAX(BESTELLNR) from BESTELLUNG");
+        
+        if (lastNumber == null || lastNumber.equals("")) {
+            return incementLastNumber(BESTELLNR);
+        }
+        return incementLastNumber(lastNumber);
+    }
+
+    private static String getLastNumber(String sql) {
         String lastNumber = "";
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select MAX(PRODUKTNR) from PRODUKT");
+                PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -174,9 +145,6 @@ public abstract class NumberHelper {
                 e.printStackTrace();
             }
         }
-        if (lastNumber == null || lastNumber.equals("")) {
-            return incementLastNumber(PRODUKTNR);
-        }
-        return incementLastNumber(lastNumber);
+        return lastNumber;
     }
 }

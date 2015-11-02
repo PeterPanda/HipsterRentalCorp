@@ -5,6 +5,7 @@
  */
 package de.wak.hrcg5.structure;
 
+import de.wak.hrcg5.database.NumberHelper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,5 +92,12 @@ public class Warenkorb {
             sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins().replace(',', '.')));
         }
         return sum;
+    }
+    
+    public Bestellung erzeugeBestellung(String von, String bis){
+        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis);
+        b.getProdukte().addAll(this.produkte);
+        b.getPakete().addAll(this.pakete);
+        return b;
     }
 }
