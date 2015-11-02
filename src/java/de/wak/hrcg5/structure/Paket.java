@@ -5,6 +5,7 @@
  */
 package de.wak.hrcg5.structure;
 
+import de.wak.hrcg5.database.Images;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Paket {
     private final String beschreibung;
     private final String details;
     private final String mietzins;
-    private final String fotoNR;
+    private final String foto;
     private final List<Produkt> produkte;
 
     public Paket(String PAKETNR, String KATEGORIENR, String BEZEICHNUNG, String BESCHREIBUNG, String DETAILS, String MIETZINS, String FOTONR) {
@@ -31,7 +32,7 @@ public class Paket {
         this.beschreibung = BESCHREIBUNG;
         this.details = DETAILS;
         this.mietzins = MIETZINS;
-        this.fotoNR = FOTONR;
+        this.foto = Images.getPackageImage(FOTONR);
     }
 
     /**
@@ -79,8 +80,8 @@ public class Paket {
     /**
      * @return the fotoNR
      */
-    public String getFotoNR() {
-        return fotoNR;
+    public String getFoto() {
+        return foto;
     }
 
     /**
