@@ -76,7 +76,7 @@ public abstract class NumberHelper {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select distinct(wp.WARENKORBPRODUKTNR) from WARENKORBPRODUKT wp, WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR and w.WARENKORBPRODUKTNR = wp.WARENKORBPRODUKTNR");
+                PreparedStatement ps = con.prepareStatement("select distinct(w.WARENKORBPRODUKTNR) from WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR");
                 ps.setString(1, kundenNR);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -95,7 +95,7 @@ public abstract class NumberHelper {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select distinct(wp.WARENKORBPRODUKTNR) from WARENKORBPRODUKT wp, WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR and w.WARENKORBPRODUKTNR = wp.WARENKORBPRODUKTNR");
+                PreparedStatement ps = con.prepareStatement("select distinct(w.WARENKORBPAKETNR) from WARENKORB w, KUNDE k where k.KUNDENNR =? and k.KUNDENNR=w.KUNDENNR");
                 ps.setString(1, kundenNR);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {

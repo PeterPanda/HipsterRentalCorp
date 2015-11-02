@@ -86,7 +86,7 @@ public class Warenkorb {
         String sum = "0";
 
         for (Paket p : pakete) {
-            sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins()));
+            sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins().replace(',', '.')));
         }
         for (Produkt p : produkte) {
             sum = String.valueOf(Double.parseDouble(sum) + Double.parseDouble(p.getMietzins().replace(',', '.')));

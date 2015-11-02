@@ -71,6 +71,19 @@
                 initLogin();
             }
 
+            function loadPackage(packageNumber) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        document.getElementById('divContent').innerHTML = data;
+                    }
+                };
+                xhr.open('GET', '/HipsterRentalCorp/LoadPackageServlet?packageNumber=' + packageNumber, true);
+                xhr.send(null);
+            }
+
+
             /* Methods, invoked from child-pages */
 
             /**
@@ -156,7 +169,7 @@
                 document.getElementById('divContent').innerHTML = period;
             }
 
-            function createOrder(from, till){
+            function createOrder(from, till) {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4) {
@@ -164,11 +177,11 @@
                         document.getElementById('divContent').innerHTML = data;
                     }
                 };
-                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from+"&till="+till, true);
+                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from + "&till=" + till, true);
                 xhr.send(null);
             }
-            
-            function loadGuest(){
+
+            function loadGuest() {
                 var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
                 document.getElementById('divContent').innerHTML = period;
             }

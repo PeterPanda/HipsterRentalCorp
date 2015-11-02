@@ -64,6 +64,7 @@ function loadProduct(productNumber) {
     xhr.send(null);
 }
 
+
 function clearShoppingCartForUnregisteredUser() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/HipsterRentalCorp/ClearShoppingCartForUnregisteredUserServlet', true);

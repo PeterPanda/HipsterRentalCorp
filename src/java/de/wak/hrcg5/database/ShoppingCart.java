@@ -24,6 +24,7 @@ public abstract class ShoppingCart {
         }
         // Nur neue Nummer holen, wenn noch kein Warenkorb vorhanden --- Produkte müssen immer an die selbe nummer, zu dem selben Kunden gehören
         if (User.hasShoppingCart(k.getKundenNR())) {
+
             String warenkorbProduktNR = NumberHelper.getWARENKORBPRODUKTNR(k.getKundenNR());
 
             if (productAlreadyInsideShoppingCart(warenkorbProduktNR, productNumber)) {
@@ -42,27 +43,36 @@ public abstract class ShoppingCart {
                 }
             }
         } else {
-            newShoppingCart(k.getKundenNR(), productNumber);
+            newShoppingCart(k.getKundenNR(), productNumber, null);
         }
         return "Product added to your shopping cart.";
     }
 
-    private static void newShoppingCart(String customerNumber, String productNumber) {
+    private static void newShoppingCart(String customerNumber, String productNumber, String packageNumber) {
         String nextWARENKORBPRODUKTNR = NumberHelper.getNextWARENKORBPRODUKTNR();
+        String nextWARENKORBPAKETNR = NumberHelper.getNextWARENKORBPAKETNR();
 
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-
-                PreparedStatement ps = con.prepareStatement("insert into WARENKORBPRODUKT values (?, ?)");
-                ps.setString(1, nextWARENKORBPRODUKTNR);
-                ps.setString(2, productNumber);
-                ps.executeUpdate();
+                PreparedStatement ps;
+                if (productNumber != null) {
+                    ps = con.prepareStatement("insert into WARENKORBPRODUKT values (?, ?)");
+                    ps.setString(1, nextWARENKORBPRODUKTNR);
+                    ps.setString(2, productNumber);
+                    ps.executeUpdate();
+                }
+                if (packageNumber != null) {
+                    ps = con.prepareStatement("insert into WARENKORBPAKET values (?, ?)");
+                    ps.setString(1, nextWARENKORBPAKETNR);
+                    ps.setString(2, packageNumber);
+                    ps.executeUpdate();
+                }
 
                 ps = con.prepareStatement("insert into WARENKORB values (?, ?, ?)");
                 ps.setString(1, customerNumber);
                 ps.setString(2, nextWARENKORBPRODUKTNR);
-                ps.setString(3, null);
+                ps.setString(3, nextWARENKORBPAKETNR);
                 ps.executeUpdate();
 
             } catch (Exception e) {
@@ -135,28 +145,76 @@ public abstract class ShoppingCart {
         String customerNumber = User.getCustomer(userEmail).getKundenNR();
         String warenkorbProduktNR = NumberHelper.getWARENKORBPRODUKTNR(customerNumber);
         String warenkorbPaketNR = NumberHelper.getWARENKORBPAKETNR(customerNumber);
-        
+
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
                 PreparedStatement ps = con.prepareStatement("delete from WARENKORBPRODUKT where WARENKORBPRODUKTNR=?");
                 ps.setString(1, warenkorbProduktNR);
                 ps.executeUpdate();
-                
+
                 ps = con.prepareStatement("delete from WARENKORBPAKET where WARENKORBPAKETNR=?");
                 ps.setString(1, warenkorbPaketNR);
                 ps.executeUpdate();
-                
+
                 ps = con.prepareStatement("delete from WARENKORB where KUNDENNR=?");
                 ps.setString(1, customerNumber);
                 ps.executeUpdate();
-                
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return true;
+    }
+
+    public static String addPackage(String userEmail, String packageNumber) {
+        Kunde k = User.getCustomer(userEmail);
+        if (k == null) {
+            k = User.getDummyUser();
+        }
+        // Nur neue Nummer holen, wenn noch kein Warenkorb vorhanden --- Produkte müssen immer an die selbe nummer, zu dem selben Kunden gehören
+        if (User.hasShoppingCart(k.getKundenNR())) {
+            String warenkorbPaketNR = NumberHelper.getWARENKORBPAKETNR(k.getKundenNR());
+
+            if (packageAlreadyInsideShoppingCart(warenkorbPaketNR, packageNumber)) {
+                return "You have already added this package to your shopping cart.";
+            } else {
+                Connection con = Connector.getConnection();
+                if (con != null) {
+                    try {
+                        PreparedStatement ps = con.prepareStatement("insert into WARENKORBPAKET values (?, ?)");
+                        ps.setString(1, warenkorbPaketNR);
+                        ps.setString(2, packageNumber);
+                        ps.executeUpdate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } else {
+            newShoppingCart(k.getKundenNR(), null, packageNumber);
+        }
+        return "Product added to your shopping cart.";
+    }
+
+    private static boolean packageAlreadyInsideShoppingCart(String warenkorbPaketNR, String packageNumber) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("select * from WARENKORBPAKET wp where wp.WARENKORBPAKETNR=? and wp.PRODUKTNR=?");
+                ps.setString(1, warenkorbPaketNR);
+                ps.setString(2, packageNumber);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                return rs.next();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
 }

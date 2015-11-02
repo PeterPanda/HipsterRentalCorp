@@ -19,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "ClearShoppingCartForUnregisteredUserServlet", urlPatterns = {"/ClearShoppingCartForUnregisteredUserServlet"})
-public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
+@WebServlet(name = "AddPackageToShoppingCartServlet", urlPatterns = {"/AddPackageToShoppingCartServlet"})
+public class AddPackageToShoppingCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ClearShoppingCartForUnregisteredUserServlet</title>");            
+            out.println("<title>Servlet AddProductToShoppingCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ClearShoppingCartForUnregisteredUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddProductToShoppingCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +60,7 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        
-        if(userEmail == null||userEmail.equals("")||userEmail.equals("null")){
-            ShoppingCart.clearDummyShoppingCart();
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,7 +74,14 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("User");
+        String packageNumber = request.getParameter("buttonAddToShoppingCart");
+        String message = ShoppingCart.addPackage(userEmail, packageNumber);
+        
     }
 
     /**

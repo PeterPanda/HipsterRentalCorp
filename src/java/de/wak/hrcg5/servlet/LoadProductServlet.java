@@ -9,7 +9,6 @@ import de.wak.hrcg5.database.Products;
 import de.wak.hrcg5.structure.Produkt;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

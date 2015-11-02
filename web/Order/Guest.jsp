@@ -12,6 +12,7 @@
         <title>Guest</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        Bestellung als Gast:
+        
     </body>
 </html>

@@ -5,6 +5,9 @@
  */
 package de.wak.hrcg5.structure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author janFk
@@ -20,6 +23,7 @@ public class Produkt {
     private String kategorieNR;
     private String alternative;
     private String verfuegbar;
+    private List<String> fotos = new ArrayList<>();
 
     public Produkt(String produktNR, String bezeichnung, String hersteller, String beschreibung, String details, String mietzins, String kategorieNR, String alternative, String verfuegbar) {
         this.produktNR=produktNR;
@@ -94,6 +98,13 @@ public class Produkt {
      */
     public String getVerfuegbar() {
         return verfuegbar;
+    }
+
+    /**
+     * @return the fotos
+     */
+    public List<String> getFotos() {
+        return fotos;
     }
     
     
