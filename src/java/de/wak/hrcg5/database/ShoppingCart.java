@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 public abstract class ShoppingCart {
 
     public static String addProduct(String userEmail, String productNumber) {
-        Kunde k = User.getCustomer(userEmail);
+        Kunde k = User.getCustomer("EMAIL",userEmail);
         if (k == null) {
             k = User.getDummyUser();
         }
@@ -101,7 +101,7 @@ public abstract class ShoppingCart {
     }
 
     public static Warenkorb getShoppingCart(String userEmail) {
-        Kunde k = User.getCustomer(userEmail);
+        Kunde k = User.getCustomer("EMAIL",userEmail);
         if (k == null) {
             k = User.getDummyUser();
         }
@@ -142,7 +142,7 @@ public abstract class ShoppingCart {
     }
 
     public static boolean clearShoppingCart(String userEmail) {
-        String customerNumber = User.getCustomer(userEmail).getKundenNR();
+        String customerNumber = User.getCustomer("EMAIL",userEmail).getKundenNR();
         String warenkorbProduktNR = NumberHelper.getWARENKORBPRODUKTNR(customerNumber);
         String warenkorbPaketNR = NumberHelper.getWARENKORBPAKETNR(customerNumber);
 
@@ -169,7 +169,7 @@ public abstract class ShoppingCart {
     }
 
     public static String addPackage(String userEmail, String packageNumber) {
-        Kunde k = User.getCustomer(userEmail);
+        Kunde k = User.getCustomer("EMAIL",userEmail);
         if (k == null) {
             k = User.getDummyUser();
         }

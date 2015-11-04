@@ -91,7 +91,7 @@ public class LoginServlet extends HttpServlet {
 
         if (User.checkCustomer(email, pass)) {
             session.setAttribute("User", email);
-            request.setAttribute("customer", User.getCustomer(email));
+            request.setAttribute("customer", User.getCustomer("EMAIL",email));
             context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormCustomer.jsp").forward(request, response);
         } else if(User.checkEmployee(email, pass)){  
             session.setAttribute("User", email);

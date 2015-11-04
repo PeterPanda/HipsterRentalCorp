@@ -65,13 +65,14 @@ public abstract class User {
         return userFound;
     }
 
-    public static Kunde getCustomer(String email) {
+    public static Kunde getCustomer(String attribute, String value) {
         Kunde k = null;
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select * from KUNDE where email=?");
-                ps.setString(1, email);
+                PreparedStatement ps = con.prepareStatement("select * from KUNDE where ?=?");
+                ps.setString(1, attribute);
+                ps.setString(2, value);
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
@@ -108,13 +109,14 @@ public abstract class User {
         return m;
     }
     
-        public static Gast getGuest(String email) {
+        public static Gast getGuest(String attribute, String value) {
         Gast g = null;
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
                 PreparedStatement ps = con.prepareStatement("select * from GAST where email=?");
-                ps.setString(1, email);
+                ps.setString(1, attribute);
+                ps.setString(2, value);
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {

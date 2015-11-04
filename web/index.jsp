@@ -147,6 +147,15 @@
                 var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = orderView;
             }
+            
+            function checkOrder(orderNumber){
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/HipsterRentalCorp/CheckOrderServlet?orderNumber='+orderNumber, true);
+                xhr.send(null);
+                
+                loadOrderView();
+            }
+            
             /**
              * This method loads the 'add product' page and is invoked by a childpage.
              * @returns {undefined}

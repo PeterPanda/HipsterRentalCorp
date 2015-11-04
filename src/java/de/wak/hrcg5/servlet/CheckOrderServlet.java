@@ -5,10 +5,7 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
 import de.wak.hrcg5.database.Orders;
-import de.wak.hrcg5.structure.Bestellung;
-import de.wak.hrcg5.structure.Kategorie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author janFk
  */
-@WebServlet(name = "LoadOrdersServlet", urlPatterns = {"/LoadOrdersServlet"})
-public class LoadOrdersServlet extends HttpServlet {
+@WebServlet(name = "CheckOrderServlet", urlPatterns = {"/CheckOrderServlet"})
+public class CheckOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +38,10 @@ public class LoadOrdersServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoadOrdersServlet</title>");
+            out.println("<title>Servlet CheckOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoadOrdersServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,56 +59,9 @@ public class LoadOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        StringBuilder data = new StringBuilder();
-        data.append("<div>\n");
-        data.append("<table>");
-        data.append("<thead>");
-        data.append("<tr>");
-        data.append("<th>");
-        data.append("Bestellnummer");
-        data.append("</th>");
-        data.append("<th>");
-        data.append("Zeitraum Von");
-        data.append("</th>");
-        data.append("<th>");
-        data.append("Zeitraum Bis");
-        data.append("</th>");
-        data.append("<th>");
-        data.append("Bestätigen");
-        data.append("</th>");
-        data.append("</tr>");
-        data.append("</thead>");
-        data.append("<tbody>");
-        for (Bestellung o : Orders.getOrders()) {
-            data.append("<tr>");
-        data.append("<th>");
-            data.append(o.getBestellNR());
-            data.append("</th>");
-            data.append("<th>");
-            data.append(o.getVon());
-            data.append("</th>");
-            data.append("<th>");
-            data.append(o.getBis());
-            data.append("</th>");
-            data.append("<th>");
-            if(o.getVerfuegbar()== null||o.getVerfuegbar().equals("null")||o.getVerfuegbar().equals("")){   
-                data.append("<input type='checkbox' onclick='parent.checkOrder(");
-                data.append(o.getBestellNR());
-                data.append("'>");
-            }else{
-                data.append("<input type='checkbox' checked onclick='return false'>");
-            }
-            data.append("</th>");
-        data.append("</tr>");
-        }
-
-        data.append("</tbody>");
-        data.append("</table>");
-        data.append("</div>");
-
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(data.toString());
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        String orderNumber = (String)request.getParameter("orderNumber");
+        Orders.checkOrder(orderNumber);
     }
 
     /**

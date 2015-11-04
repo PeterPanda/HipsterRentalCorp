@@ -96,7 +96,7 @@ public class RegisterGuestServlet extends HttpServlet {
 
         if (User.addGuest(vorname, nachname, email, organisation, ort, plz, strasse, hausnummer, telefonnummer, handynummer)) {
             HttpSession session = request.getSession();
-            session.setAttribute("Guest", User.getGuest(email).getGastNR());
+            session.setAttribute("Guest", User.getGuest("EMAIL",email).getGastNR());
             context.getRequestDispatcher("/Order/Period.jsp").forward(request, response);
         }
     }

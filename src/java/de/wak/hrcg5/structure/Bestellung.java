@@ -14,18 +14,24 @@ import java.util.List;
  */
 public class Bestellung {
 
-    private String bestellNR;
-    private String von;
-    private String bis;
-    private List<Produkt> produkte = new ArrayList<>();
-    private List<Paket> pakete = new ArrayList<>();
+    private final String bestellNR;
+    private final String von;
+    private final String bis;
+    private final Kunde kunde;
+    private final String verfuegbar;
+    private final Gast gast;
+    private final List<Produkt> produkte = new ArrayList<>();
+    private final List<Paket> pakete = new ArrayList<>();
 
-    public Bestellung(String bestellNR, String von, String bis) {
+    public Bestellung(String bestellNR, String von, String bis, Kunde kunde, String verfuegbar, Gast gast) {
         this.bestellNR = bestellNR;
         this.von = von;
         this.bis = bis;
+        this.kunde = kunde;
+        this.verfuegbar = verfuegbar;
+        this.gast = gast;
     }
-    
+
     /**
      * @return the bestellNR
      */
@@ -60,6 +66,26 @@ public class Bestellung {
     public List<Paket> getPakete() {
         return pakete;
     }
-    
-    
+
+    /**
+     * @return the kunde
+     */
+    public Kunde getKunde() {
+        return kunde;
+    }
+
+    /**
+     * @return the verfuegbar
+     */
+    public String getVerfuegbar() {
+        return verfuegbar;
+    }
+
+    /**
+     * @return the gast
+     */
+    public Gast getGast() {
+        return gast;
+    }
+
 }

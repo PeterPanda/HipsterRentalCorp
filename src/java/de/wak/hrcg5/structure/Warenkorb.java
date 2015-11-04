@@ -123,8 +123,8 @@ public class Warenkorb {
         return sum;
     }
 
-    public Bestellung erzeugeBestellung(String von, String bis) {
-        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis);
+    public Bestellung erzeugeBestellObjekt(String von, String bis) {
+        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis, null, null, null);
         b.getProdukte().addAll(this.produkte);
         b.getPakete().addAll(this.pakete);
         return b;

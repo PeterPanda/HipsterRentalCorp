@@ -31,7 +31,7 @@ public abstract class Orders {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3)));
+                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3), User.getCustomer("KUNDENNR", rs.getString(4)), rs.getString(5), User.getGuest("GASTNR", rs.getString(6))));
             }
 
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public abstract class Orders {
     }
 
     public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guestNumber) {
-        Bestellung b = shoppingCart.erzeugeBestellung(from, till);
+        Bestellung b = shoppingCart.erzeugeBestellObjekt(from, till);
 
         Connection con = Connector.getConnection();
         if (con != null) {
@@ -98,9 +98,9 @@ public abstract class Orders {
                 ps.setString(1, b.getBestellNR());
                 ps.setString(2, b.getVon());
                 ps.setString(3, b.getBis());
-                ps.setString(4, (userEmail==null||userEmail.equals("")||userEmail.equals("null"))?null:User.getCustomer(userEmail).getKundenNR());
+                ps.setString(4, (userEmail == null || userEmail.equals("") || userEmail.equals("null")) ? null : User.getCustomer("EMAIL", userEmail).getKundenNR());
                 ps.setString(5, null);
-                ps.setString(6, (guestNumber==null||guestNumber.equals("")||guestNumber.equals("null"))?null:guestNumber);
+                ps.setString(6, (guestNumber == null || guestNumber.equals("") || guestNumber.equals("null")) ? null : guestNumber);
                 ps.executeUpdate();
 
                 for (Produkt p : b.getProdukte()) {
@@ -120,5 +120,20 @@ public abstract class Orders {
             }
         }
         return true;
+    }
+
+    public static void checkOrder(String orderNumber) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("update BESTELLUNG SET BESTAETIGT=? where BESTELLNR=?");
+                ps.setString(1, "j");
+                ps.setString(2, orderNumber);
+                ps.executeUpdate();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

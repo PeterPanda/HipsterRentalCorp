@@ -74,7 +74,7 @@ public class UserStillLogedInServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("User");
-        Kunde k = User.getCustomer(email);
+        Kunde k = User.getCustomer("EMAIL",email);
         if (k != null) {
             request.setAttribute("customer", k);
             context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormCustomer.jsp").forward(request, response);
