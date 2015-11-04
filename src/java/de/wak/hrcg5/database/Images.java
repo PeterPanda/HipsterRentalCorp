@@ -42,7 +42,7 @@ public abstract class Images {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select f.FOTO from FOTOS f, KATEGORIE k where k.KATEGORIENR=? AND k.FOTONR = f.FOTONR");
+                PreparedStatement ps = con.prepareStatement("select f.FOTO from FOTO f, KATEGORIE k where k.KATEGORIENR=? AND k.FOTONR = f.FOTONR");
                 ps.setString(1, categoryNumber);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -55,13 +55,13 @@ public abstract class Images {
         }
         return image;
     }
-    public static String getPackageImage(String packageNumber) {
+    public static String getPackageImage(String imageNumber) {
         String image = null;
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("select f.FOTO from FOTOS f, PAKET p where p.PAKETNR=? AND p.FOTONR = f.FOTONR");
-                ps.setString(1, packageNumber);
+                PreparedStatement ps = con.prepareStatement("select f.FOTO from FOTO f, PAKET p where p.FOTONR = f.FOTONR and f.FOTONR=?");
+                ps.setString(1, imageNumber);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     image= rs.getString(1);

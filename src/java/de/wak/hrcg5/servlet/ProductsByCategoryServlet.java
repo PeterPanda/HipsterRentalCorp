@@ -81,6 +81,19 @@ public class ProductsByCategoryServlet extends HttpServlet {
             if (products != null) {
                 data.append("<div>\n");
                 for (Produkt p : products) {
+                    data.append("<div class='col-sm-4'>");
+                    data.append("<div class='product-image-wrapper'>");
+                    data.append("<div class='single-products'>");
+                    data.append("<div class='productinfo text-center'>");
+                    data.append("<img src='" + p.getFotos().get(0) + "' height='150px' alt='' />");
+                    data.append(" <h2>" + p.getMietzins() + "€</h2>");
+                    data.append("<p>" + p.getBezeichnung() + "</p>");
+                    data.append("<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</a>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    /*
                     data.append("<button type='button' value='");
                     data.append(p.getProduktNR());
                     data.append("' name='");
@@ -88,6 +101,7 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("' onclick='loadProduct(this.value);'>");
                     data.append(p.getBezeichnung());
                     data.append("</button>\n");
+                     */
                 }
                 data.append("</div>");
             }
@@ -95,6 +109,22 @@ public class ProductsByCategoryServlet extends HttpServlet {
             if (packages != null) {
                 data.append("<div>\n");
                 for (Paket p : packages) {
+                    if (!data.toString().contains(p.getPaketNR())) {
+                        data.append("<div class='col-sm-4'>");
+                        data.append("<div class='product-image-wrapper'>");
+                        data.append("<div class='single-products'>");
+                        data.append("<div class='productinfo text-center'>");
+                        data.append("<div onclick='alert(" + p.getPaketNR() + ");'>");
+                        data.append("<img src='" + p.getFoto() + "' max-height='150px' alt='' />");
+                        data.append(" <h2>" + p.getMietzins() + "€</h2>");
+                        data.append("<p>" + p.getBezeichnung() + "</p>");
+                        data.append("</div>");
+                        data.append("<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</a>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        /*
                     data.append("<button type='button' value='");
                     data.append(p.getPaketNR());
                     data.append("' name='");
@@ -102,11 +132,13 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("' onclick='loadPackage(this.value);'>");
                     data.append(p.getBezeichnung());
                     data.append("</button>\n");
+                         */
+                    }
                 }
                 data.append("</div>");
             }
             data.append("</div>");
-            
+
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(data.toString());

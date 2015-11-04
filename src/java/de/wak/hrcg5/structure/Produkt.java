@@ -6,6 +6,7 @@
 package de.wak.hrcg5.structure;
 
 import de.wak.hrcg5.database.Images;
+import de.wak.hrcg5.database.Products;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,8 +92,8 @@ public class Produkt {
     /**
      * @return the alternative
      */
-    public String getAlternative() {
-        return alternative;
+    public Produkt getAlternative() {
+        return Products.getProduct(alternative);
     }
 
     /**

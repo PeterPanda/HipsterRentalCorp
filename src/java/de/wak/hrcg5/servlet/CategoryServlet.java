@@ -63,7 +63,17 @@ public class CategoryServlet extends HttpServlet {
         StringBuilder data = new StringBuilder();
         data.append("<div>\n");
         for (Kategorie c : Categories.getCategories()) {
-            if (!data.toString().contains(c.getKategorieNR())) {
+            if (!data.toString().contains(c.getName())) {
+                data.append("<div class='panel panel-default'>");
+                data.append("<div class='panel-heading'>");
+                data.append("<h4 class='panel-title'><a href='#' onclick='getProducts(\"");
+                data.append(c.getKategorieNR());
+                data.append("\")'>");
+                data.append(c.getName());
+                data.append("</a></h4>");
+                data.append("</div>");
+                data.append("</div>");
+                /*
                 data.append("<button type='button' value='");
                 data.append(c.getKategorieNR());
                 data.append("' name='");
@@ -71,9 +81,11 @@ public class CategoryServlet extends HttpServlet {
                 data.append("' onclick='getProducts(this.value);'>");
                 data.append(c.getName());
                 data.append("</button><br>\n");
+                */
             }
         }
         data.append("</div>");
+
 
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
