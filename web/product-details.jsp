@@ -32,7 +32,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="index.html"><img src="images/home/logo.png" alt="" />
+							<a href="index.jsp"><img src="images/home/logo.png" alt="" />
 							<div class="companyinfo">
 								<h2><span>H</span>ipster <span>R</span>ental</h2>
 							</div>
@@ -120,7 +120,7 @@
 				 		<div class="col-sm-7">
 							<div class="product-information"><!--product-information-->
 								<h2>${requestScope.product.getBezeichnung()}</h2>
-								<p>${requestScope.product.getID()}</p>
+								<p>${requestScope.product.getProduktNR()}</p>
 								<span>
 									<span>${requestScope.product.getMietzins()}</span>
 									<form action="/HipsterRentalCorp/AddProductToShoppingCartServlet" method="post">
@@ -128,7 +128,7 @@
            								 </form>
 							</span>
 								<p><b>Zustand:</b> Neu</p>
-								<p><b>Hersteller:</b> ${requestScope.product.getHerrsteller()}</p>
+								<p><b>Hersteller:</b> ${requestScope.product.getHersteller()}</p>
 							</div><!--/product-information-->
 						</div>
 					</div><!--/product-details-->
@@ -164,7 +164,7 @@
 											<div class="productinfo text-center">
 												<img src="images/home/gallery3.jpg" alt="" />
 												<h2>${requestScope.product.getAlternative().getMietzins()}</h2>
-												<p>${requestScope.product.getAlternative().getBezeichnung}</p>
+												<p>${requestScope.product.getAlternative().getBezeichnung()}</p>
 												<button type="button" onclick="loadAlternative(this.value);" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Zum Warenkorb</button>
 											</div>
 										</div>

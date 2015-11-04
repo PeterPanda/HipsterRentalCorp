@@ -53,7 +53,7 @@
                                     <li><a href="#"><i class="fa fa-user"></i> Konto</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
-                                    <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
@@ -154,7 +154,7 @@
                     <div class="col-sm-9 padding-right">
                         <div class="features_items" ><!--features_items-->
                             <h2 class="title text-center">Features Items</h2>
-                            
+
                             <div id="divContent"></div>
                         </div><!--features_items-->
 
@@ -257,213 +257,197 @@
 </table>
         -->
         <script>
-        function init() {
-            initCategory();
-            alert("initCategory done");
-        }
+                                            function init() {
+                                                initCategory();
+                                            }
 
-        function initLogin() {
-            var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divLogin').innerHTML = loginForm;
-        }
+                                            function initLogin() {
+                                                var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divLogin').innerHTML = loginForm;
+                                            }
 
-        function loadShoppingCart() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divContent').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/LoadShoppingCartServlet', true);
-            xhr.send(null);
-        }
+                                            function loadShoppingCart() {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divContent').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/LoadShoppingCartServlet', true);
+                                                xhr.send(null);
+                                            }
 
-        /* Initializes the product-category-navigation via servlet */
-        function initCategory() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divNavigation').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/CategoryServlet', true);
-            xhr.send(null);
-        }
+                                            /* Initializes the product-category-navigation via servlet */
+                                            function initCategory() {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divNavigation').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/CategoryServlet', true);
+                                                xhr.send(null);
+                                            }
 
-        /* Retrieves the products within the clicked category and places them in the 'divContent'. */
-        function getProducts(categoryNumber) {
-            
-            alert("getProducts begin");
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divContent').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet?categoryNumber=' + categoryNumber, true);
-            xhr.send(null);
-        }
+                                            /* Retrieves the products within the clicked category and places them in the 'divContent'. */
+                                            function getProducts(categoryNumber) {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divContent').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet?categoryNumber=' + categoryNumber, true);
+                                                xhr.send(null);
+                                            }
 
-        function loadProduct(productNumber) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divContent').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/LoadProductServlet?productNumber=' + productNumber, true);
-            xhr.send(null);
-        }
+                                            function clearShoppingCartForUnregisteredUser() {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.open('GET', '/HipsterRentalCorp/ClearShoppingCartForUnregisteredUserServlet', true);
+                                                xhr.send(null);
+                                            }
 
 
-        function clearShoppingCartForUnregisteredUser() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/HipsterRentalCorp/ClearShoppingCartForUnregisteredUserServlet', true);
-            xhr.send(null);
-        }
+                                            function loadPackage(packageNumber) {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divContent').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/LoadPackageServlet?packageNumber=' + packageNumber, true);
+                                                xhr.send(null);
+                                            }
 
 
-        function loadPackage(packageNumber) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divContent').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/LoadPackageServlet?packageNumber=' + packageNumber, true);
-            xhr.send(null);
-        }
+                                            /* Methods, invoked from child-pages */
 
+                                            /**
+                                             * This method loads the user (if still loged in) and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            /*function userStillLogedIn() {
+                                             var xhr = new XMLHttpRequest();
+                                             xhr.onreadystatechange = function () {
+                                             if (xhr.readyState === 4) {
+                                             var data = xhr.responseText;
+                                             document.getElementById('divLogin').innerHTML = data;
+                                             }
+                                             };
+                                             xhr.open('GET', '/HipsterRentalCorp/UserStillLogedInServlet', true);
+                                             xhr.send(null);
+                                             }*/
 
-        /* Methods, invoked from child-pages */
+                                            /**
+                                             * This method loads the 'registration form' and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadRegistrationForm() {
+                                                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = loginForm;
+                                            }
 
-        /**
-         * This method loads the user (if still loged in) and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        /*function userStillLogedIn() {
-         var xhr = new XMLHttpRequest();
-         xhr.onreadystatechange = function () {
-         if (xhr.readyState === 4) {
-         var data = xhr.responseText;
-         document.getElementById('divLogin').innerHTML = data;
-         }
-         };
-         xhr.open('GET', '/HipsterRentalCorp/UserStillLogedInServlet', true);
-         xhr.send(null);
-         }*/
+                                            /**
+                                             * This method loads the 'Welcome' page and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadWelcomePage() {
+                                                var welcome = "<object type='text/html' data='Welcome/WelcomeMain.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = welcome;
+                                                initCategory();
+                                            }
 
-        /**
-         * This method loads the 'registration form' and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadRegistrationForm() {
-            var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = loginForm;
-        }
+                                            /**
+                                             * This method loads the 'employee navigation' and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadEmployeeOverlay() {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divNavigation').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/EmployeeNavigationServlet', true);
+                                                xhr.send(null);
 
-        /**
-         * This method loads the 'Welcome' page and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadWelcomePage() {
-            var welcome = "<object type='text/html' data='Welcome/WelcomeMain.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = welcome;
-            initCategory();
-        }
+                                                var welcomeemployee = "<object type='text/html' data='Welcome/WelcomeEmployee.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = welcomeemployee;
+                                            }
+                                            /**
+                                             * This method loads the 'order view' and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadOrderView() {
+                                                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = orderView;
+                                            }
+                                            /**
+                                             * This method loads the 'add product' page and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadAddProduct() {
+                                                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = addProduct;
+                                            }
 
-        /**
-         * This method loads the 'employee navigation' and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadEmployeeOverlay() {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divNavigation').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/EmployeeNavigationServlet', true);
-            xhr.send(null);
+                                            /**
+                                             * This method loads the 'add package' page and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadAddPackage() {
+                                                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' width='100%' height='100%' ></object>";
+                                                document.getElementById('divContent').innerHTML = addPackage;
+                                            }
 
-            var welcomeemployee = "<object type='text/html' data='Welcome/WelcomeEmployee.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = welcomeemployee;
-        }
-        /**
-         * This method loads the 'order view' and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadOrderView() {
-            var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = orderView;
-        }
-        /**
-         * This method loads the 'add product' page and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadAddProduct() {
-            var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = addProduct;
-        }
+                                            /**
+                                             * This method loads the 'add user' page and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadAddUser() {
+                                                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' width='100%' height='100%'></object>";
+                                                document.getElementById('divContent').innerHTML = addUser;
+                                            }
 
-        /**
-         * This method loads the 'add package' page and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadAddPackage() {
-            var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' width='100%' height='100%' ></object>";
-            document.getElementById('divContent').innerHTML = addPackage;
-        }
+                                            /**
+                                             * This method loads the 'period' page and is invoked by a childpage.
+                                             * @returns {undefined}
+                                             */
+                                            function loadPeriod() {
+                                                var period = "<object type='text/html' data='Order/Period.jsp' width='100%' height='100%' ></object>";
+                                                document.getElementById('divContent').innerHTML = period;
+                                            }
 
-        /**
-         * This method loads the 'add user' page and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadAddUser() {
-            var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' width='100%' height='100%'></object>";
-            document.getElementById('divContent').innerHTML = addUser;
-        }
+                                            function createOrder(from, till) {
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        document.getElementById('divContent').innerHTML = data;
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from + "&till=" + till, true);
+                                                xhr.send(null);
+                                            }
 
-        /**
-         * This method loads the 'period' page and is invoked by a childpage.
-         * @returns {undefined}
-         */
-        function loadPeriod() {
-            var period = "<object type='text/html' data='Order/Period.jsp' width='100%' height='100%' ></object>";
-            document.getElementById('divContent').innerHTML = period;
-        }
+                                            function loadGuest() {
+                                                var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
+                                                document.getElementById('divContent').innerHTML = period;
+                                            }
 
-        function createOrder(from, till) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    var data = xhr.responseText;
-                    document.getElementById('divContent').innerHTML = data;
-                }
-            };
-            xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from + "&till=" + till, true);
-            xhr.send(null);
-        }
-
-        function loadGuest() {
-            var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
-            document.getElementById('divContent').innerHTML = period;
-        }
-
-        function validateUser() {
-            var user = '<%= session.getAttribute("User")%>';
-            if (user !== null && user !== "" && user !== "null") {
-                loadPeriod();
-            } else {
-                loadGuest();
-            }
-        }
+                                            function validateUser() {
+                                                var user = '<%= session.getAttribute("User")%>';
+                                                if (user !== null && user !== "" && user !== "null") {
+                                                    loadPeriod();
+                                                } else {
+                                                    loadGuest();
+                                                }
+                                            }
         </script>
     </body>
 </html>

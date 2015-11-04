@@ -77,6 +77,7 @@ public class ProductsByCategoryServlet extends HttpServlet {
             products = Products.getProductsByCategory(categoryNumber);
             StringBuilder data = new StringBuilder();
             data.append("<div>\n");
+
             /* Visualize the products */
             if (products != null) {
                 data.append("<div>\n");
@@ -85,9 +86,13 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("<div class='product-image-wrapper'>");
                     data.append("<div class='single-products'>");
                     data.append("<div class='productinfo text-center'>");
+                    data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=" + p.getProduktNR() + "' method='post'>");
+                    data.append("<div onclick='document.forms[0].submit();'>");
                     data.append("<img src='" + p.getFotos().get(0) + "' height='150px' alt='' />");
                     data.append(" <h2>" + p.getMietzins() + "€</h2>");
                     data.append("<p>" + p.getBezeichnung() + "</p>");
+                    data.append("</div>");
+                    data.append("</form>");
                     data.append("<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</a>");
                     data.append("</div>");
                     data.append("</div>");
@@ -114,11 +119,13 @@ public class ProductsByCategoryServlet extends HttpServlet {
                         data.append("<div class='product-image-wrapper'>");
                         data.append("<div class='single-products'>");
                         data.append("<div class='productinfo text-center'>");
-                        data.append("<div onclick='alert(" + p.getPaketNR() + ");'>");
+                        data.append("<form action='/HipsterRentalCorp/LoadPackageServlet?productNumber=" + p.getPaketNR() + "' method='post'>");
+                        data.append("<div onclick='document.forms[0].submit();'>");
                         data.append("<img src='" + p.getFoto() + "' max-height='150px' alt='' />");
                         data.append(" <h2>" + p.getMietzins() + "€</h2>");
                         data.append("<p>" + p.getBezeichnung() + "</p>");
                         data.append("</div>");
+                        data.append("</form>");
                         data.append("<a href='#' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</a>");
                         data.append("</div>");
                         data.append("</div>");
