@@ -5,6 +5,10 @@
  */
 package de.wak.hrcg5.structure;
 
+import de.wak.hrcg5.database.Images;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author janFk
@@ -20,17 +24,19 @@ public class Produkt {
     private String kategorieNR;
     private String alternative;
     private String verfuegbar;
+    private List<String> fotos = new ArrayList<>();
 
     public Produkt(String produktNR, String bezeichnung, String hersteller, String beschreibung, String details, String mietzins, String kategorieNR, String alternative, String verfuegbar) {
-        this.produktNR=produktNR;
-        this.bezeichnung=bezeichnung;
-        this.hersteller=hersteller;
-        this.beschreibung=beschreibung;
-        this.details=details;
-        this.mietzins=mietzins;
-        this.kategorieNR=kategorieNR;
-        this.alternative=alternative;
-        this.verfuegbar=verfuegbar;
+        this.produktNR = produktNR;
+        this.bezeichnung = bezeichnung;
+        this.hersteller = hersteller;
+        this.beschreibung = beschreibung;
+        this.details = details;
+        this.mietzins = mietzins;
+        this.kategorieNR = kategorieNR;
+        this.alternative = alternative;
+        this.verfuegbar = verfuegbar;
+        fotos.addAll(Images.getProductImages(produktNR));
     }
 
     /**
@@ -95,7 +101,43 @@ public class Produkt {
     public String getVerfuegbar() {
         return verfuegbar;
     }
-    
-    
+
+    /**
+     * @return the fotos
+     */
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public String getThumbnails() {
+        if (fotos.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            for (String foto : fotos) {
+                String name = foto.substring(foto.lastIndexOf("/") + 1, foto.lastIndexOf("."));
+                sb.append("<img onclick='preview.src = ");
+                sb.append(name);
+                sb.append(".src' name='");
+                sb.append(name);
+                sb.append("' src='");
+                sb.append(foto);
+                sb.append("' /><br>");
+            }
+            return sb.toString();
+        }
+        return null;
+    }
+
+    public String firstImage() {
+        if (fotos.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("<img name='preview' src='");
+            sb.append(fotos.get(0));
+            sb.append("' alt=''/>");
+            return sb.toString();
+        }
+        return null;
+    }
 
 }

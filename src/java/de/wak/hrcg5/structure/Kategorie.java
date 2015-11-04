@@ -22,8 +22,10 @@ public class Kategorie {
     public Kategorie(String kategorieNR, String name, String fotoNR, String unterkategorie) {
         this.kategorieNR = kategorieNR;
         this.name = name;
-        this.fotoNR=fotoNR;
-        this.unterkategorie.add(unterkategorie);
+        this.fotoNR = fotoNR;
+        if (unterkategorie != null && !unterkategorie.equals("") && !unterkategorie.equals("null")) {
+            this.unterkategorie.add(unterkategorie);
+        }
     }
 
     /**

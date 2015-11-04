@@ -5,28 +5,34 @@
  */
 package de.wak.hrcg5.structure;
 
+import de.wak.hrcg5.database.Images;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author janFk
  */
 public class Paket {
 
-    private String paketNR;
-    private String kategorieNR;
-    private String bezeichnung;
-    private String beschreibung;
-    private String details;
-    private String mietzins;
-    private String fotoNR;
+    private final String paketNR;
+    private final String kategorieNR;
+    private final String bezeichnung;
+    private final String beschreibung;
+    private final String details;
+    private final String mietzins;
+    private final String foto;
+    private final List<Produkt> produkte;
 
     public Paket(String PAKETNR, String KATEGORIENR, String BEZEICHNUNG, String BESCHREIBUNG, String DETAILS, String MIETZINS, String FOTONR) {
+        this.produkte = new ArrayList<>();
         this.paketNR = PAKETNR;
         this.kategorieNR = KATEGORIENR;
         this.bezeichnung = BEZEICHNUNG;
         this.beschreibung = BESCHREIBUNG;
         this.details = DETAILS;
         this.mietzins = MIETZINS;
-        this.fotoNR = FOTONR;
+        this.foto = Images.getPackageImage(FOTONR);
     }
 
     /**
@@ -74,8 +80,26 @@ public class Paket {
     /**
      * @return the fotoNR
      */
-    public String getFotoNR() {
-        return fotoNR;
+    public String getFoto() {
+        return foto;
     }
 
+    /**
+     * @return the produkte
+     */
+    public List<Produkt> getProdukte() {
+        return produkte;
+    }
+
+    public String getProduktView(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div>");
+        for(Produkt p:produkte){
+            sb.append("<button>");
+            sb.append(p.getBezeichnung());
+            sb.append("</button>");
+        }
+        sb.append("</div>");
+        return sb.toString();
+    }
 }

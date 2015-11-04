@@ -32,19 +32,17 @@
                                     </th>
                                     <th id="cellLogin">
                                         <div id="divLogin">
-                                            <button id="buttonLogin" type="button" class="btn btn-default" onclick="initLogin">Anmelden</button>
                                         </div>
                                     </th>
                                     <th>
                                         <div id="divShoppingCart" onclick="loadShoppingCart();">
                                             <img id="imgShoppingCart" src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/shoppingcart.png" alt="shoppingcart" >
-                                            <p id="pShoppingCartCount"></p>
+                                            <p id="pShoppingCartCount">0</p>
                                         </div>
                                     </th>
                                 </tr>
                             </thead>
                         </table>
-
                     </th>
 
                 </tr>
@@ -58,8 +56,8 @@
                         </div>
                         <!--</form>-->
                     </td>
-                    <td>
-                        <div id="divContent">
+                    <td id="cellContent">
+                        <div id="divContent" class="border margin">
                             Content
                         </div>
                     </td>
@@ -67,15 +65,62 @@
             </tbody>
         </table>
         <script>
+            function init() {
+                initCategory();
+                document.getElementById("pShoppingCartCount").innerHTML = "0";
+                initLogin();
+            }
+
+            function loadPackage(packageNumber) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        document.getElementById('divContent').innerHTML = data;
+                    }
+                };
+                xhr.open('GET', '/HipsterRentalCorp/LoadPackageServlet?packageNumber=' + packageNumber, true);
+                xhr.send(null);
+            }
+
+
             /* Methods, invoked from child-pages */
+
+            /**
+             * This method loads the user (if still loged in) and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            /*function userStillLogedIn() {
+             var xhr = new XMLHttpRequest();
+             xhr.onreadystatechange = function () {
+             if (xhr.readyState === 4) {
+             var data = xhr.responseText;
+             document.getElementById('divLogin').innerHTML = data;
+             }
+             };
+             xhr.open('GET', '/HipsterRentalCorp/UserStillLogedInServlet', true);
+             xhr.send(null);
+             }*/
+
             /**
              * This method loads the 'registration form' and is invoked by a childpage.
              * @returns {undefined}
              */
             function loadRegistrationForm() {
-                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' ></object>";
+                var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = loginForm;
             }
+
+            /**
+             * This method loads the 'Welcome' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadWelcomePage() {
+                var welcome = "<object type='text/html' data='Welcome/WelcomeMain.jsp' width='100%' height='100%'></object>";
+                document.getElementById('divContent').innerHTML = welcome;
+                initCategory();
+            }
+
             /**
              * This method loads the 'employee navigation' and is invoked by a childpage.
              * @returns {undefined}
@@ -90,13 +135,16 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/EmployeeNavigationServlet', true);
                 xhr.send(null);
+
+                var welcomeemployee = "<object type='text/html' data='Welcome/WelcomeEmployee.jsp' width='100%' height='100%'></object>";
+                document.getElementById('divContent').innerHTML = welcomeemployee;
             }
             /**
              * This method loads the 'order view' and is invoked by a childpage.
              * @returns {undefined}
              */
             function loadOrderView() {
-                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' ></object>";
+                var orderView = "<object type='text/html' data='EmployeeOverlay/OrderView.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = orderView;
             }
             /**
@@ -104,7 +152,7 @@
              * @returns {undefined}
              */
             function loadAddProduct() {
-                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp'></object>";
+                var addProduct = "<object type='text/html' data='EmployeeOverlay/AddProduct.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = addProduct;
             }
 
@@ -113,7 +161,7 @@
              * @returns {undefined}
              */
             function loadAddPackage() {
-                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' ></object>";
+                var addPackage = "<object type='text/html' data='EmployeeOverlay/AddPackage.jsp' width='100%' height='100%' ></object>";
                 document.getElementById('divContent').innerHTML = addPackage;
             }
 
@@ -122,10 +170,45 @@
              * @returns {undefined}
              */
             function loadAddUser() {
-                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' ></object>";
+                var addUser = "<object type='text/html' data='EmployeeOverlay/AddUser.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = addUser;
             }
-        </script>
 
+            /**
+             * This method loads the 'period' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadPeriod() {
+                var period = "<object type='text/html' data='Order/Period.jsp' width='100%' height='100%' ></object>";
+                document.getElementById('divContent').innerHTML = period;
+            }
+
+            function createOrder(from, till) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        document.getElementById('divContent').innerHTML = data;
+                    }
+                };
+                xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + from + "&till=" + till, true);
+                xhr.send(null);
+            }
+
+            function loadGuest() {
+                var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
+                document.getElementById('divContent').innerHTML = period;
+            }
+            
+            function validateUser() {
+                var user = '<%= session.getAttribute("User")%>';
+                if (user !== null && user !== "" && user !== "null") {
+                    loadPeriod();
+                }
+                else{
+                    loadGuest();
+                }
+            }
+        </script>
     </body>
 </html>

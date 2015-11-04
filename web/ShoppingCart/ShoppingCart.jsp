@@ -12,25 +12,28 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        Produkte:
-                    </td>
-                    <td>
-                        ${requestScope.shoppingCart.getProduktView()}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Pakete:
-                    </td>
-                    <td>
-                        ${requestScope.shoppingCart.getPaketView()}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div>
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <form action="/HipsterRentalCorp/DeleteFromShoppingCartServlet" method="post">  
+                                ${requestScope.shoppingCart.getItemsView()}
+                            </form>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <button type="button" onclick="parent.validateUser();">Weiter zur Bestellung</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

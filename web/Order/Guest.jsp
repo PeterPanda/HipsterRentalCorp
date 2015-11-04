@@ -1,6 +1,6 @@
 <%-- 
-    Document   : RegistrationForm
-    Created on : 26.10.2015, 12:31:52
+    Document   : Guest
+    Created on : 02.11.2015, 09:05:41
     Author     : janFk
 --%>
 
@@ -9,10 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>RegistrationForm</title>
+        <title>Guest</title>
     </head>
     <body>
-        <form action="/HipsterRentalCorp/RegisterNewUserServlet" method="post">  
+        Bestellung als Gast:
+        <form action="/HipsterRentalCorp/RegisterGuestServlet" method="post">  
             <div>
                 <table>
                     <tbody>
@@ -27,14 +28,6 @@
                         <tr>
                             <td>Email*:</td>
                             <td><input type='text' name='inputEmail' required="true" maxlength="255"></td>
-                        </tr>
-                        <tr>
-                            <td>Passwort*:</td>
-                            <td><input type='text' name='inputPasswort' required="true" maxlength="255"></td>
-                        </tr>
-                        <tr>
-                            <td>Passwort wiederholen*:</td>
-                            <td><input type='text' name='inputPasswortWDH' required="true" maxlength="255"></td>
                         </tr>
                         <tr>
                             <td>Organisation:</td>
@@ -65,7 +58,7 @@
                             <td><input type='text' name='inputHandynummer' maxlength="255"></td>
                         </tr>
                         <tr>
-                            <td><button type="submit">Registrieren</button></td>
+                            <td><button type="submit">Bestellung fortsetzen</button></td>
                             <td></td>
                         </tr>
                     </tbody>

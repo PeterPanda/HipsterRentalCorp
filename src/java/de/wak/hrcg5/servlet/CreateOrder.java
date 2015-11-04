@@ -5,9 +5,9 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Products;
+import de.wak.hrcg5.database.NumberHelper;
+import de.wak.hrcg5.database.Orders;
 import de.wak.hrcg5.database.ShoppingCart;
-import de.wak.hrcg5.structure.Produkt;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "LoadShoppingCartServlet", urlPatterns = {"/LoadShoppingCartServlet"})
-public class LoadShoppingCartServlet extends HttpServlet {
+@WebServlet(name = "CreateOrder", urlPatterns = {"/CreateOrder"})
+public class CreateOrder extends HttpServlet {
 
     private ServletContext context;
 
@@ -51,10 +51,10 @@ public class LoadShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoadShoppingCartServlet</title>");
+            out.println("<title>Servlet CreateOrder</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoadShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateOrder at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,16 +72,25 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
+
         String userEmail = (String) session.getAttribute("User");
-        
+        String guestNumber = (String) session.getAttribute("Guest");
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
-        session.setAttribute("rent", shoppingCart.getMietzins());
-        request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
+        String from = NumberHelper.dateParser((String) request.getParameter("from"));
+        String till = NumberHelper.dateParser((String) request.getParameter("till"));
 
+        if (Orders.createOrder(from, till, shoppingCart, userEmail, guestNumber)) {
+            if (ShoppingCart.clearShoppingCart(userEmail)) {
+                session.setAttribute("rent", null);
+                request.setAttribute("shoppingCart", null);
+                context.getRequestDispatcher("/Order/OrderFinished.jsp").forward(request, response);
+            }
+        } else {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
     }
 
     /**

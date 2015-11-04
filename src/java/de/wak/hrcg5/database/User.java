@@ -5,6 +5,7 @@
  */
 package de.wak.hrcg5.database;
 
+import de.wak.hrcg5.structure.Gast;
 import de.wak.hrcg5.structure.Kunde;
 import de.wak.hrcg5.structure.Mitarbeiter;
 import java.sql.Connection;
@@ -81,6 +82,9 @@ public abstract class User {
                 e.printStackTrace();
             }
         }
+        if(k==null){
+            return getDummyUser();
+        }
         return k;
     }
 
@@ -102,6 +106,26 @@ public abstract class User {
             }
         }
         return m;
+    }
+    
+        public static Gast getGuest(String email) {
+        Gast g = null;
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from GAST where email=?");
+                ps.setString(1, email);
+                ResultSet rs;
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    g = new Gast(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return g;
     }
 
     static Kunde createDummyUser() {
@@ -238,9 +262,77 @@ public abstract class User {
                     return false;
                 }
             }
-        }
-        else
+        } else {
             return false;
+        }
+        return true;
+    }
+
+    public static boolean addCustomer(String surename, String lastname, String email, String pass, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
+        boolean success = addUser(email, pass);
+        if (success) {
+            success = Place.addPlace(place, postalcode);
+            if (success) {
+                Connection con = Connector.getConnection();
+                if (con != null) {
+                    try {
+                        /* Retrieve products */
+                        PreparedStatement ps = con.prepareStatement("insert into KUNDE values(?,?,?,?,?,?,?,?,?,?)");
+                        ps.setString(1, NumberHelper.getNextKUNDENNR());
+                        ps.setString(2, surename);
+                        ps.setString(3, lastname);
+                        ps.setString(4, email);
+                        ps.setString(5, organisation);
+                        ps.setString(6, streat);
+                        ps.setString(7, housenumber);
+                        ps.setString(8, postalcode);
+                        ps.setString(9, telephonenumber);
+                        ps.setString(10, mobilenumber);
+
+                        ps.executeUpdate();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean addGuest(String surename, String lastname, String email, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
+        boolean success = Place.addPlace(place, postalcode);
+        if (success) {
+            Connection con = Connector.getConnection();
+            if (con != null) {
+                try {
+                    /* Retrieve products */
+                    PreparedStatement ps = con.prepareStatement("insert into GAST values(?,?,?,?,?,?,?,?,?,?)");
+                    ps.setString(1, NumberHelper.getNextGASTNR());
+                    ps.setString(2, surename);
+                    ps.setString(3, lastname);
+                    ps.setString(4, email);
+                    ps.setString(5, organisation);
+                    ps.setString(6, streat);
+                    ps.setString(7, housenumber);
+                    ps.setString(8, postalcode);
+                    ps.setString(9, telephonenumber);
+                    ps.setString(10, mobilenumber);
+
+                    ps.executeUpdate();
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+
+        } else {
+            return false;
+        }
+
         return true;
     }
 }

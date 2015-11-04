@@ -66,7 +66,7 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("User");
         
-        if(userEmail == null||userEmail.equals("")){
+        if(userEmail == null||userEmail.equals("")||userEmail.equals("null")){
             ShoppingCart.clearDummyShoppingCart();
         }
     }

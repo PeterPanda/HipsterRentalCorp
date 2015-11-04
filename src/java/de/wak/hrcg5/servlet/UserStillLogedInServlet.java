@@ -5,10 +5,9 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Products;
-import de.wak.hrcg5.database.ShoppingCart;
-import de.wak.hrcg5.structure.Produkt;
-import de.wak.hrcg5.structure.Warenkorb;
+import de.wak.hrcg5.database.User;
+import de.wak.hrcg5.structure.Kunde;
+import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletConfig;
@@ -24,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "LoadShoppingCartServlet", urlPatterns = {"/LoadShoppingCartServlet"})
-public class LoadShoppingCartServlet extends HttpServlet {
+@WebServlet(name = "UserStillLogedInServlet", urlPatterns = {"/UserStillLogedInServlet"})
+public class UserStillLogedInServlet extends HttpServlet {
 
     private ServletContext context;
 
@@ -51,10 +50,10 @@ public class LoadShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoadShoppingCartServlet</title>");
+            out.println("<title>Servlet UserStillLogedInServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoadShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserStillLogedInServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,16 +71,20 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        
-        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
-
-        session.setAttribute("rent", shoppingCart.getMietzins());
-        request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
-
+        String email = (String) session.getAttribute("User");
+        Kunde k = User.getCustomer(email);
+        if (k != null) {
+            request.setAttribute("customer", k);
+            context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormCustomer.jsp").forward(request, response);
+        } else {
+            Mitarbeiter m = User.getEmployee(email);
+            if (m != null) {
+                request.setAttribute("employee", m);
+                context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormEmployee.jsp").forward(request, response);
+            }
+        }
     }
 
     /**

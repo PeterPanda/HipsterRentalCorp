@@ -11,6 +11,28 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      
         <script type="text/javascript" src="ViewProduct.js"></script>
         <title>ViewProduct</title>
+
+        <style type="text/css">
+            .thumbnails img {
+                height: 40px;
+                border: 4px solid #555;
+                padding: 1px;
+                margin: 0 10px 10px 0;
+            }
+
+            .thumbnails img:hover {
+                border: 4px solid #00ccff;
+                cursor:pointer;
+            }
+
+            .preview img {
+                border: 4px solid #444;
+                padding: 1px;
+                width: 150px;
+                height: 150px;
+            }
+        </style>
+
     </head>
     <body>
         <div id="divProduct">
@@ -19,8 +41,25 @@
 
                     <tr>
                         <td>
-                            imm&aumltsch
-                            <!-- image here -->
+                            <div id="divGallery" class="gallery" align="center">
+
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="thumbnails">
+                                                    ${requestScope.product.getThumbnails()}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="preview" align="center">
+                                                    ${requestScope.product.firstImage()}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </td>
                         <td>
                             ${requestScope.product.getBezeichnung()}

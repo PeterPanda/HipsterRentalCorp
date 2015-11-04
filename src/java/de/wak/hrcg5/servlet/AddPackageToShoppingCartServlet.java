@@ -5,14 +5,9 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Products;
 import de.wak.hrcg5.database.ShoppingCart;
-import de.wak.hrcg5.structure.Produkt;
-import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,15 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "LoadShoppingCartServlet", urlPatterns = {"/LoadShoppingCartServlet"})
-public class LoadShoppingCartServlet extends HttpServlet {
-
-    private ServletContext context;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.context = config.getServletContext();
-    }
+@WebServlet(name = "AddPackageToShoppingCartServlet", urlPatterns = {"/AddPackageToShoppingCartServlet"})
+public class AddPackageToShoppingCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,10 +39,10 @@ public class LoadShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoadShoppingCartServlet</title>");
+            out.println("<title>Servlet AddProductToShoppingCartServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoadShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddProductToShoppingCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,16 +60,7 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        
-        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
-
-        session.setAttribute("rent", shoppingCart.getMietzins());
-        request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -95,7 +74,14 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("User");
+        String packageNumber = request.getParameter("buttonAddToShoppingCart");
+        String message = ShoppingCart.addPackage(userEmail, packageNumber);
+        
     }
 
     /**

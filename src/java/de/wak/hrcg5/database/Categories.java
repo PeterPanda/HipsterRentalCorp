@@ -9,6 +9,7 @@ import de.wak.hrcg5.structure.Kategorie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
