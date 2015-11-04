@@ -86,21 +86,20 @@ public class LoginServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
 
-        String email = request.getParameter("inputEmail");
-        String pass = request.getParameter("inputPassword");
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
 
         if (User.checkCustomer(email, pass)) {
             session.setAttribute("User", email);
             request.setAttribute("customer", User.getCustomer(email));
-            context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormCustomer.jsp").forward(request, response);
+            context.getRequestDispatcher("/index.jsp").forward(request, response);
         } else if(User.checkEmployee(email, pass)){  
             session.setAttribute("User", email);
             request.setAttribute("employee", User.getEmployee(email));
-            context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormEmployee.jsp").forward(request, response);
+            context.getRequestDispatcher("/index.jsp").forward(request, response);
         }else{
-        
             session.setAttribute("User", null);
-            context.getRequestDispatcher("/LoginForm/LoginForm.jsp").forward(request, response);
+            context.getRequestDispatcher("/Login/Login.jsp").forward(request, response);
         }
     }
 

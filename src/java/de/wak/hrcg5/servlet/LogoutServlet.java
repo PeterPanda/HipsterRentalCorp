@@ -68,7 +68,11 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                
+        HttpSession session = request.getSession();
+        session.setAttribute("User", null);
+        context.getRequestDispatcher("/index.jsp").forward(request, response);  
+        
     }
 
     /**
@@ -82,10 +86,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("User", null);
-        context.getRequestDispatcher("/LoginForm/LoginForm.jsp").forward(request, response);  
+        processRequest(request, response);
     }
 
     /**

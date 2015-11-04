@@ -53,7 +53,7 @@
                                     <li><a href="#"><i class="fa fa-user"></i> Konto</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
-                                    <li><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
@@ -259,6 +259,18 @@
         <script>
                                             function init() {
                                                 initCategory();
+                                                isUserLoggedIn();
+                                            }
+
+                                            function isUserLoggedIn() {
+                                                var user = '<%= session.getAttribute("User")%>';
+                                                if (user !== null && user !== "" && user !== "null") {
+                                                    var li = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = li;
+                                                } else {
+                                                         var li = '<li id="liLoginout"><a href="Login/Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = li;
+                                                }
                                             }
 
                                             function initLogin() {
