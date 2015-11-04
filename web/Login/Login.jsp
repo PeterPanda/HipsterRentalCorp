@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
+                                <a href="../index.jsp"><img src="../images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
@@ -51,7 +51,7 @@
                                     <li><a href="#"><i class="fa fa-user"></i> Konto</a></li>
                                     <li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.jsp"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
-                                    <li><a href="#.jsp"><i class="fa fa-lock"></i> Login</a></li>
+                                    <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
