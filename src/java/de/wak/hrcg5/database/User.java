@@ -268,7 +268,7 @@ public abstract class User {
         return true;
     }
 
-    public static boolean addCustomer(String surename, String lastname, String email, String pass, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
+    public static boolean addCustomer(String firstname, String lastname, String email, String pass, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
         boolean success = addUser(email, pass);
         if (success) {
             success = Place.addPlace(place, postalcode);
@@ -279,7 +279,7 @@ public abstract class User {
                         /* Retrieve products */
                         PreparedStatement ps = con.prepareStatement("insert into KUNDE values(?,?,?,?,?,?,?,?,?,?)");
                         ps.setString(1, NumberHelper.getNextKUNDENNR());
-                        ps.setString(2, surename);
+                        ps.setString(2, firstname);
                         ps.setString(3, lastname);
                         ps.setString(4, email);
                         ps.setString(5, organisation);
