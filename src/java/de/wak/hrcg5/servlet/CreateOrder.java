@@ -76,12 +76,13 @@ public class CreateOrder extends HttpServlet {
         HttpSession session = request.getSession();
 
         String userEmail = (String) session.getAttribute("User");
+        String guestNumber = (String) session.getAttribute("Guest");
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
         String from = NumberHelper.dateParser((String) request.getParameter("from"));
         String till = NumberHelper.dateParser((String) request.getParameter("till"));
 
-        if (Orders.createOrder(from, till, shoppingCart, userEmail)) {
+        if (Orders.createOrder(from, till, shoppingCart, userEmail, guestNumber)) {
             if (ShoppingCart.clearShoppingCart(userEmail)) {
                 session.setAttribute("rent", null);
                 request.setAttribute("shoppingCart", null);

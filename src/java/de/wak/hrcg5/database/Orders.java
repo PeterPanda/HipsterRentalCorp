@@ -88,18 +88,19 @@ public abstract class Orders {
         return packages;
     }
 
-    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail) {
+    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guestNumber) {
         Bestellung b = shoppingCart.erzeugeBestellung(from, till);
 
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("insert into BESTELLUNG values (?, ?, ?, ?, ?)");
+                PreparedStatement ps = con.prepareStatement("insert into BESTELLUNG values (?, ?, ?, ?, ?, ?)");
                 ps.setString(1, b.getBestellNR());
                 ps.setString(2, b.getVon());
                 ps.setString(3, b.getBis());
-                ps.setString(4, User.getCustomer(userEmail).getKundenNR());
+                ps.setString(4, (userEmail==null||userEmail.equals("")||userEmail.equals("null"))?null:User.getCustomer(userEmail).getKundenNR());
                 ps.setString(5, null);
+                ps.setString(6, (guestNumber==null||guestNumber.equals("")||guestNumber.equals("null"))?null:guestNumber);
                 ps.executeUpdate();
 
                 for (Produkt p : b.getProdukte()) {

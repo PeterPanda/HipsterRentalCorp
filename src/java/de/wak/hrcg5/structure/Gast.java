@@ -9,18 +9,19 @@ package de.wak.hrcg5.structure;
  *
  * @author janFk
  */
-public class Kunde extends Person{
-    private final String kundenNR;
+public class Gast extends Person{
+    private final String gastNR;
     
-    public Kunde (String kundenNR,String vorname,String nachname,String email,String organisationsname,String strasse,String hausnummer,String plz,String telefonNR,String handynummer){
+    public Gast(String gastNR,String vorname, String nachname, String email, String organisationsname, String strasse, String hausnummer, String plz, String telefonNR, String handynummer) {
         super(vorname, nachname, email, organisationsname, strasse, hausnummer, plz, telefonNR, handynummer);
-        this.kundenNR=kundenNR;
+        this.gastNR=gastNR;
     }
 
     /**
-     * @return the kundenNR
+     * @return the gastNR
      */
-    public String getKundenNR() {
-        return kundenNR;
+    public String getGastNR() {
+        return gastNR;
     }
+    
 }

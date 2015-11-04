@@ -42,18 +42,13 @@
                 $('#cost').html(cost + ' €');
             }
 
-            function validateUser() {
+            function validate() {
                 var from = document.getElementById('fromDate');
                 var till = document.getElementById('tillDate');
                 if (from.value.length === 0 || till.value.length === 0) {
                     alert("Bitte geben Sie einen korrekten Zeitraum an.");
                 } else {
-                    var user = '<%= session.getAttribute("User")%>';
-                    if (user !== null && user !== "" && user !== "null") {
-                        parent.createOrder(getFrom(), getTill());
-                    } else {
-                        parent.loadGuest();
-                    }
+                    parent.createOrder(getFrom(), getTill());
                 }
             }
 
@@ -156,7 +151,7 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td><button onclick="validateUser()">Bestellen</button></td>
+                        <td><button onclick="validate()">Bestellen</button></td>
                     </tr>
                 </tbody>
             </table>

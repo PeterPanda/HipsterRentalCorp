@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,7 +23,7 @@ public abstract class NumberHelper {
     private static final String KUNDENNR = "KNR0000000";
     private static final String MITARBEITERNR = "MNR0000000";
     private static final String PRODUKTNR = "PNR0000000";
-
+    private static final String GASTNR = "GNR0000000";
     private static final String BESTELLNR = "BNR0000000";
 
     public static String getNextKUNDENNR() {
@@ -173,5 +171,19 @@ public abstract class NumberHelper {
 
         /* Return timestamp format: YYYY-MM-DD HH:MI:SS */
         return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+    }
+
+    public static boolean isProductNumber(String validate) {
+        return validate.startsWith(PRODUKTNR.substring(0, 3));
+
+    }
+
+    public static String getNextGASTNR() {
+        String lastNumber = getLastNumber("select MAX(GASTNR) from GAST");
+
+        if (lastNumber == null || lastNumber.equals("")) {
+            return incementLastNumber(GASTNR);
+        }
+        return incementLastNumber(lastNumber);
     }
 }

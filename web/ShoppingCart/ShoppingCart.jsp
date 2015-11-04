@@ -13,37 +13,23 @@
     </head>
     <body>
         <div>
+
             <table>
                 <tbody>
                     <tr>
                         <td>
-                            Produkte:
+                            <form action="/HipsterRentalCorp/DeleteFromShoppingCartServlet" method="post">  
+                                ${requestScope.shoppingCart.getItemsView()}
+                            </form>
                         </td>
                         <td>
-                            ${requestScope.shoppingCart.getProduktView()}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Pakete:
-                        </td>
-                        <td>
-                            ${requestScope.shoppingCart.getPaketView()}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Mietzins gesamt:
-                        </td>
-                        <td>
-                            ${requestScope.shoppingCart.getMietzins()}
                         </td>
                     </tr>
                     <tr>
                         <td>
                         </td>
                         <td>
-                            <button type="button" onclick="parent.loadPeriod();">Weiter zur Bestellung</button>
+                            <button type="button" onclick="parent.validateUser();">Weiter zur Bestellung</button>
                         </td>
                     </tr>
                 </tbody>

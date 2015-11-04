@@ -110,6 +110,17 @@
                 var loginForm = "<object type='text/html' data='RegistrationForm/RegistrationForm.jsp' width='100%' height='100%'></object>";
                 document.getElementById('divContent').innerHTML = loginForm;
             }
+
+            /**
+             * This method loads the 'Welcome' page and is invoked by a childpage.
+             * @returns {undefined}
+             */
+            function loadWelcomePage() {
+                var welcome = "<object type='text/html' data='Welcome/WelcomeMain.jsp' width='100%' height='100%'></object>";
+                document.getElementById('divContent').innerHTML = welcome;
+                initCategory();
+            }
+
             /**
              * This method loads the 'employee navigation' and is invoked by a childpage.
              * @returns {undefined}
@@ -124,6 +135,9 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/EmployeeNavigationServlet', true);
                 xhr.send(null);
+
+                var welcomeemployee = "<object type='text/html' data='Welcome/WelcomeEmployee.jsp' width='100%' height='100%'></object>";
+                document.getElementById('divContent').innerHTML = welcomeemployee;
             }
             /**
              * This method loads the 'order view' and is invoked by a childpage.
@@ -184,6 +198,16 @@
             function loadGuest() {
                 var period = "<object type='text/html' data='Order/Guest.jsp' width='100%' height='100%' ></object>";
                 document.getElementById('divContent').innerHTML = period;
+            }
+            
+            function validateUser() {
+                var user = '<%= session.getAttribute("User")%>';
+                if (user !== null && user !== "" && user !== "null") {
+                    loadPeriod();
+                }
+                else{
+                    loadGuest();
+                }
             }
         </script>
     </body>

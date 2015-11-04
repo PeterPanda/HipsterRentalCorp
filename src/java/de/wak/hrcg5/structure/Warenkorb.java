@@ -32,49 +32,78 @@ public class Warenkorb {
         return pakete;
     }
 
-    public String getProduktView() {
+    public String getItemsView() {
         StringBuilder sb = new StringBuilder();
         sb.append("<div>");
         sb.append("<table>");
         sb.append("<tbody>");
+        sb.append("<tr>");
+        sb.append("<td>");
+        sb.append("Produkte:");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("</tr>");
         for (Produkt p : produkte) {
             sb.append("<tr>");
             sb.append("<td>");
+            sb.append("</td>");
+            sb.append("<td>");
             sb.append(p.getBezeichnung());
             sb.append("</td>");
             sb.append("<td>");
             sb.append(p.getMietzins());
             sb.append("</td>");
             sb.append("<td>");
-            sb.append("<button value='").append(p.getProduktNR()).append("'>Löschen</button>");
+            sb.append("<button id='deleteButton' onclick='alert();' value='").append(p.getProduktNR()).append("'>Löschen</button>");
             sb.append("</td>");
             sb.append("</tr>");
         }
-        sb.append("</tbody>");
-        sb.append("</table>");
-        sb.append("</div>");
-
-        return sb.toString();
-    }
-
-    public String getPaketView() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div>");
-        sb.append("<table>");
-        sb.append("<tbody>");
+        sb.append("<tr>");
+        sb.append("<td>");
+        sb.append("Pakete:");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("</tr>");
         for (Paket p : pakete) {
             sb.append("<tr>");
             sb.append("<td>");
+            sb.append("</td>");
+            sb.append("<td>");
             sb.append(p.getBezeichnung());
             sb.append("</td>");
             sb.append("<td>");
             sb.append(p.getMietzins());
             sb.append("</td>");
             sb.append("<td>");
-            sb.append("<button value='").append(p.getPaketNR()).append("'>Löschen</button>");
+            sb.append("<button id='deleteButton' onclick='alert();' value='").append(p.getPaketNR()).append("'>Löschen</button>");
             sb.append("</td>");
             sb.append("</tr>");
         }
+        sb.append("<tr height='20'>");
+        sb.append("</tr>");
+        sb.append("<tr>");
+        sb.append("<td>");
+        sb.append("Mietzins gesamt:");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append(getMietzins());
+        sb.append("</td>");
+        sb.append("<td>");
+        sb.append("</td>");
+        sb.append("</tr>");
+        
         sb.append("</tbody>");
         sb.append("</table>");
         sb.append("</div>");
@@ -93,8 +122,8 @@ public class Warenkorb {
         }
         return sum;
     }
-    
-    public Bestellung erzeugeBestellung(String von, String bis){
+
+    public Bestellung erzeugeBestellung(String von, String bis) {
         Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis);
         b.getProdukte().addAll(this.produkte);
         b.getPakete().addAll(this.pakete);

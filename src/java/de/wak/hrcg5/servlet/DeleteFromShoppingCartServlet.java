@@ -5,9 +5,8 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Products;
+import de.wak.hrcg5.database.NumberHelper;
 import de.wak.hrcg5.database.ShoppingCart;
-import de.wak.hrcg5.structure.Produkt;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,8 +23,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "LoadShoppingCartServlet", urlPatterns = {"/LoadShoppingCartServlet"})
-public class LoadShoppingCartServlet extends HttpServlet {
+@WebServlet(name = "DeleteFromShoppingCartServlet", urlPatterns = {"/DeleteFromShoppingCartServlet"})
+public class DeleteFromShoppingCartServlet extends HttpServlet {
 
     private ServletContext context;
 
@@ -51,10 +50,10 @@ public class LoadShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoadShoppingCartServlet</title>");
+            out.println("<title>Servlet DeleteFromShoppingCartServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoadShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteFromShoppingCartServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,16 +71,7 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        
-        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
-
-        session.setAttribute("rent", shoppingCart.getMietzins());
-        request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -95,7 +85,20 @@ public class LoadShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("User");
+        String toDeleteNumber = request.getParameter("deleteButton");
+        if (NumberHelper.isProductNumber(toDeleteNumber)) {
+            ShoppingCart.deleteProduct(toDeleteNumber, userEmail);
+        } else {
+            ShoppingCart.deletePackage(toDeleteNumber, userEmail);
+        }
+
+        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
+        session.setAttribute("rent", shoppingCart.getMietzins());
+        request.setAttribute("shoppingCart", shoppingCart);
+        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
     }
 
     /**
