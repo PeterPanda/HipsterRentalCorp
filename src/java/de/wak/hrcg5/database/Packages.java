@@ -84,4 +84,35 @@ public abstract class Packages {
 
         return productsByCategory;
     }
+
+    public static boolean addPackage(String description, String specification, String details, String rent, String category, String[] products, String imageNumber) {
+        String packageNumber = NumberHelper.getNextPAKETNR();
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                /* Retrieve products */
+                PreparedStatement ps = con.prepareStatement("insert into PAKET values(?,?,?,?,?,?,?)");
+                ps.setString(1, packageNumber);
+                ps.setString(2, category);
+                ps.setString(3, description);
+                ps.setString(4, specification);
+                ps.setString(5, details);
+                ps.setString(6, rent);
+                ps.setString(7, imageNumber);
+                ps.executeUpdate();
+
+                for (int i = 0; i < products.length; i++) {
+                    ps = con.prepareStatement("insert into PAKETPOS values(?,?)");
+                    ps.setString(1, packageNumber);
+                    ps.setString(2, products[i]);
+                    ps.executeUpdate();
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

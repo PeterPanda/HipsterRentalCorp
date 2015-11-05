@@ -25,6 +25,7 @@ public abstract class NumberHelper {
     private static final String PRODUKTNR = "PNR0000000";
     private static final String GASTNR = "GNR0000000";
     private static final String BESTELLNR = "BNR0000000";
+    private static final String PAKETNR = "PAKNR00000";
 
     public static String getNextKUNDENNR() {
         String lastNumber = getLastNumber("select MAX(KUNDENNR) from KUNDE");
@@ -183,6 +184,15 @@ public abstract class NumberHelper {
 
         if (lastNumber == null || lastNumber.equals("")) {
             return incementLastNumber(GASTNR);
+        }
+        return incementLastNumber(lastNumber);
+    }
+
+    static String getNextPAKETNR() {
+        String lastNumber = getLastNumber("select MAX(PAKETNR) from PAKET");
+
+        if (lastNumber == null || lastNumber.equals("")) {
+            return incementLastNumber(PAKETNR);
         }
         return incementLastNumber(lastNumber);
     }

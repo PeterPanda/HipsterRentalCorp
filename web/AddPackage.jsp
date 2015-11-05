@@ -157,7 +157,6 @@
                                     <h2>Paket anlegen</h2>
                                     <form action="/HipsterRentalCorp/AddPackageServlet" method="post">
                                         <input type="text" name="description" required=true placeholder="Bezeichnung *"/>
-                                        <input type="text" name="producer" required=true placeholder="Hersteller *"/>
                                         <input type="text" name="specification" required=true placeholder="Beschreibung *"/>
                                         <input type="text" name="detail" required=true placeholder="Details *" />
                                         <input type="text" name="rent" required=true placeholder="Mietzins *" />
@@ -189,21 +188,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td class="cart_product">
-                                                                <a href=""><img src="images/cart/one.png" alt=""></a>
-                                                            </td>
-                                                            <td class="cart_description">
-                                                                <h4><a href="">Colorblock Scuba</a></h4>
-                                                                <p>Web ID: 1089772</p>
-                                                            </td>
-                                                            <td class="cart_total">
-                                                                <p class="cart_total_price">$59</p>
-                                                            </td>
-                                                            <td class="cart_delete">
-                                                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                                                            </td>
-                                                        </tr>
+                                                        <tr></tr>
 
 
                                                     </tbody>
@@ -275,20 +260,29 @@
                                                                 var table = document.getElementById("productTable");
 
 
-                                                                var row = table.insertRow(1);
+                                                                var row = table.insertRow(-1);
 
-                                                                var cell0 = row.insertCell(0);
-                                                                var cell1 = row.insertCell(1);
-                                                                var cell2 = row.insertCell(2);
-                                                                var cell3 = row.insertCell(3);
-
+                                                                row.id=items[0].split('<br>')[1];
+                                                                
+                                                                var cell0 = row.insertCell();
+                                                                cell0.classname = "cart_product";
+                                                                var cell1 = row.insertCell();
+                                                                cell0.classname = "cart_description";
+                                                                var cell2 = row.insertCell();
+                                                                cell0.classname = "cart_total";
+                                                                var cell3 = row.insertCell();
+                                                                cell0.classname = "cart_delete";
 
                                                                 cell0.innerHTML = '<img src=\"' + items[1] + '\" width="100px" height="100px">';
-                                                                cell1.innerHTML = items[0];
-                                                                cell2.innerHTML = items[2];
-                                                                cell3.innerHTML = '<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>';
+                                                                cell1.innerHTML = items[0]+"<input type='hidden' name='products' value='"+row.id+"' />";
+                                                                cell2.innerHTML = items[2]+"€";
+                                                                cell3.innerHTML = '<a class="cart_quantity_delete" onclick="clearRow('+row.id+');"><i class="fa fa-times"></i></a>';
+                                                                table.value=table.value+","+row.id;
                                                             }
-
+                                                            function clearRow(id){
+                                                                document.getElementById("productTable").deleteRow(id);
+                                                                document.getElementById("productTable").value =document.getElementById("productTable").value.toString().replace(id,"");
+                                                            }
                                                             function initProductSelector() {
                                                                 var xhr = new XMLHttpRequest();
                                                                 xhr.onreadystatechange = function () {
