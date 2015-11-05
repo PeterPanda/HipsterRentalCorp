@@ -29,9 +29,6 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-
-
-        <!--<link rel="stylesheet" type="text/css" href="stylesheetMainPage.css">-->
     </head>
     <body onload="init()" onbeforeunload="clearShoppingCartForUnregisteredUser();">
         <header id="header"><!--header-->		
@@ -50,7 +47,7 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-user"></i> Konto</a></li>
+                                    <li id="liAccount"</li>
                                     <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
                                     <li id="liLoginout"></li>
@@ -265,11 +262,24 @@
                                             function isUserLoggedIn() {
                                                 var user = '<%= session.getAttribute("User")%>';
                                                 if (user !== null && user !== "" && user !== "null") {
-                                                    var li = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
-                                                    document.getElementById('liLoginout').innerHTML = li;
+                                                    var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = liLogin;
+
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.onreadystatechange = function () {
+                                                        if (xhr.readyState === 4) {
+                                                            var data = xhr.responseText;
+                                                            var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                            document.getElementById('liAccount').innerHTML = liAccount;
+                                                        }
+                                                    };
+                                                    xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
+                                                    xhr.send(null);
                                                 } else {
-                                                         var li = '<li id="liLoginout"><a href="Login/Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
-                                                    document.getElementById('liLoginout').innerHTML = li;
+                                                    var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = liLogin;
+                                                    var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
+                                                    document.getElementById('liAccount').innerHTML = liAccount;
                                                 }
                                             }
 

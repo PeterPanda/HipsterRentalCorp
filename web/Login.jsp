@@ -13,13 +13,13 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Login | Hipster Rental</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/prettyPhoto.css" rel="stylesheet">
-        <link href="../css/price-range.css" rel="stylesheet">
-        <link href="../css/animate.css" rel="stylesheet">
-        <link href="../css/main.css" rel="stylesheet">
-        <link href="../css/responsive.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/prettyPhoto.css" rel="stylesheet">
+        <link href="css/price-range.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+        <link href="css/responsive.css" rel="stylesheet">
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="../index.jsp"><img src="../images/home/logo.png" alt="" />
+                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
