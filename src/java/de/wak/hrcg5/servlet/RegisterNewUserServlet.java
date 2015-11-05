@@ -81,20 +81,20 @@ public class RegisterNewUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String vorname = request.getParameter("inputVorname");
-        String nachname = request.getParameter("inputNachname");
-        String email = request.getParameter("inputEmail");
-        String passwort = request.getParameter("inputPasswort");
-        String passwortwdh = request.getParameter("inputPasswortWDH");
-        String organisation = request.getParameter("inputOrganisation");
-        String ort = request.getParameter("inputOrt");
-        String plz = request.getParameter("inputPLZ");
-        String strasse = request.getParameter("inputStrasse");
-        String hausnummer = request.getParameter("inputHausnummer");
-        String telefonnummer = request.getParameter("inputTelefonnummer");
-        String handynummer = request.getParameter("inputHandynummer");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String password2 = request.getParameter("password2");
+        String organisation = request.getParameter("organisation");
+        String place = request.getParameter("place");
+        String postalCode = request.getParameter("postalCode");
+        String streat = request.getParameter("streat");
+        String houseNumber = request.getParameter("houseNumber");
+        String telephone = request.getParameter("telephone");
+        String mobilephone = request.getParameter("mobilephone");
         
-        if(User.addCustomer(vorname, nachname, email, passwort, organisation, ort, plz, strasse, hausnummer, telefonnummer, handynummer)){
+        if(User.addCustomer(firstName, lastName, email, password, organisation, place, postalCode, streat, houseNumber, telephone, mobilephone)){
             context.getRequestDispatcher("/RegistrationForm/CustomerAdded.jsp").forward(request, response);
         }
         

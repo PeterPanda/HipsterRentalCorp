@@ -5,10 +5,8 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
 import de.wak.hrcg5.database.Packages;
 import de.wak.hrcg5.database.Products;
-import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Paket;
 import de.wak.hrcg5.structure.Produkt;
 import java.io.IOException;
@@ -77,10 +75,30 @@ public class ProductsByCategoryServlet extends HttpServlet {
             products = Products.getProductsByCategory(categoryNumber);
             StringBuilder data = new StringBuilder();
             data.append("<div>\n");
+
             /* Visualize the products */
             if (products != null) {
                 data.append("<div>\n");
                 for (Produkt p : products) {
+                    data.append("<div class='col-sm-4'>");
+                    data.append("<div class='product-image-wrapper'>");
+                    data.append("<div class='single-products'>");
+                    data.append("<div class='productinfo text-center'>");
+                    data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                    data.append("<div onclick='this.parentNode.submit();'>");
+                    data.append("<img src='").append((p.getFotos().size() > 0) ? p.getFotos().get(0) : "images/home/logo.png").append("' height='150px' alt='' />");
+                    data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
+                    data.append("<p>").append(p.getBezeichnung()).append("</p>");
+                    data.append("</div>");
+                    data.append("</form>");
+                    data.append("<form action='/HipsterRentalCorp/AddProductToShoppingCartServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                    data.append("<button type='submit' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</button>");
+                    data.append("</form>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    /*
                     data.append("<button type='button' value='");
                     data.append(p.getProduktNR());
                     data.append("' name='");
@@ -88,6 +106,7 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("' onclick='loadProduct(this.value);'>");
                     data.append(p.getBezeichnung());
                     data.append("</button>\n");
+                     */
                 }
                 data.append("</div>");
             }
@@ -95,6 +114,26 @@ public class ProductsByCategoryServlet extends HttpServlet {
             if (packages != null) {
                 data.append("<div>\n");
                 for (Paket p : packages) {
+                    if (!data.toString().contains(p.getPaketNR())) {
+                        data.append("<div class='col-sm-4'>");
+                        data.append("<div class='product-image-wrapper'>");
+                        data.append("<div class='single-products'>");
+                        data.append("<div class='productinfo text-center'>");
+                        data.append("<form action='/HipsterRentalCorp/LoadPackageServlet?packageNumber=").append(p.getPaketNR()).append("' method='post'>");
+                        data.append("<div onclick='this.parentNode.submit();'>");
+                        data.append("<img src='").append((p.getFoto() != null) ? p.getFoto() : "images/home/logo.png").append("' max-height='150px' alt='' />");
+                        data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
+                        data.append("<p>").append(p.getBezeichnung()).append("</p>");
+                        data.append("</div>");
+                        data.append("</form>");
+                        data.append("<form action='/HipsterRentalCorp/AddPackageToShoppingCartServlet?packageNumber=").append(p.getPaketNR()).append("' method='post'>");
+                        data.append("<button type='submit' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</button>");
+                        data.append("</form>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        data.append("</div>");
+                        /*
                     data.append("<button type='button' value='");
                     data.append(p.getPaketNR());
                     data.append("' name='");
@@ -102,11 +141,13 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("' onclick='loadPackage(this.value);'>");
                     data.append(p.getBezeichnung());
                     data.append("</button>\n");
+                         */
+                    }
                 }
                 data.append("</div>");
             }
             data.append("</div>");
-            
+
             response.setContentType("text/html");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(data.toString());

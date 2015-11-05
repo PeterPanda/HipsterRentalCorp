@@ -83,19 +83,17 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                    
-        String bezeichnung = request.getParameter("inputBezeichnung");
-        String herstellername = request.getParameter("inputHerstellername");
-        String beschreibung = request.getParameter("inputBeschreibung");
-        String details = request.getParameter("inputDetails");
-        String mietzins = request.getParameter("inputMietzins");    
-        String kategorie = request.getParameter("inputKategorie");   
-        String alternative = request.getParameter("inputAlternative");
+        String bezeichnung = request.getParameter("description");
+        String herstellername = request.getParameter("producer");
+        String beschreibung = request.getParameter("specification");
+        String details = request.getParameter("detail");
+        String mietzins = request.getParameter("rent");    
+        String kategorie = request.getParameter("category");   
+        String alternative = request.getParameter("alternative");
         
 
         if(Products.addProduct(bezeichnung, herstellername, beschreibung, details, mietzins, kategorie, alternative)){
-            context.getRequestDispatcher("/EmployeeOverlay/Success/AddedProduct.jsp").forward(request, response);
-        }else{
-            context.getRequestDispatcher("/EmployeeOverlay/Failure/Failure.jsp").forward(request, response);
+            context.getRequestDispatcher("/AddProductSuccess.jsp").forward(request, response);
         }
     }
 

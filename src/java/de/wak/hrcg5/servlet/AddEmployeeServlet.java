@@ -82,16 +82,14 @@ public class AddEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             
-        String surename = request.getParameter("inputVorname");
-        String lastname = request.getParameter("inputNachname");
-        String email = request.getParameter("inputEmail");
-        String password = request.getParameter("inputPasswort");
-        String passwordRepeat = request.getParameter("inputPasswortWDH");
+        String firstname = request.getParameter("firstName");
+        String lastname = request.getParameter("lastName");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String passwordRepeat = request.getParameter("password2");
 
-        if(password.equals(passwordRepeat) && User.addEmployee(surename, lastname, email, password)){
-            context.getRequestDispatcher("/EmployeeOverlay/Success/AddedUser.jsp").forward(request, response);
-        }else{
-            context.getRequestDispatcher("/EmployeeOverlay/Failure/Failure.jsp").forward(request, response);
+        if(password.equals(passwordRepeat) && User.addEmployee(firstname, lastname, email, password)){
+            context.getRequestDispatcher("/AddEmployeeSuccess.jsp").forward(request, response);
         }
     }
 

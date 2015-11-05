@@ -34,79 +34,49 @@ public class Warenkorb {
 
     public String getItemsView() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<div>");
-        sb.append("<table>");
-        sb.append("<tbody>");
-        sb.append("<tr>");
-        sb.append("<td>");
-        sb.append("Produkte:");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("</tr>");
-        for (Produkt p : produkte) {
-            sb.append("<tr>");
-            sb.append("<td>");
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append(p.getBezeichnung());
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append(p.getMietzins());
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append("<button id='deleteButton' onclick='alert();' value='").append(p.getProduktNR()).append("'>Löschen</button>");
-            sb.append("</td>");
-            sb.append("</tr>");
-        }
-        sb.append("<tr>");
-        sb.append("<td>");
-        sb.append("Pakete:");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("</tr>");
-        for (Paket p : pakete) {
-            sb.append("<tr>");
-            sb.append("<td>");
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append(p.getBezeichnung());
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append(p.getMietzins());
-            sb.append("</td>");
-            sb.append("<td>");
-            sb.append("<button id='deleteButton' onclick='alert();' value='").append(p.getPaketNR()).append("'>Löschen</button>");
-            sb.append("</td>");
-            sb.append("</tr>");
-        }
-        sb.append("<tr height='20'>");
-        sb.append("</tr>");
-        sb.append("<tr>");
-        sb.append("<td>");
-        sb.append("Mietzins gesamt:");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append(getMietzins());
-        sb.append("</td>");
-        sb.append("<td>");
-        sb.append("</td>");
-        sb.append("</tr>");
         
-        sb.append("</tbody>");
-        sb.append("</table>");
-        sb.append("</div>");
+        for (Produkt p : produkte) {
+           sb.append("<tr>");
+           sb.append("<td class=\'cart_product\'>");
+           sb.append(p.firstImage());
+           sb.append("</td>");
+           sb.append("<td class='cart_description'>");
+           sb.append("<h4>");
+           sb.append(p.getBezeichnung());
+           sb.append("</h4>");
+           sb.append("</td>");
+           sb.append("<td class='cart_total'>");
+           sb.append("<p class='cart_total_price'>");       
+           sb.append(p.getMietzins());
+           sb.append("</p>");
+           sb.append("</td>");
+           sb.append("<td class='cart_delete'>");
+           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
+           sb.append("</td>");
+           sb.append("</tr>");
+           
+        }
+
+          for (Paket p : pakete) {
+            sb.append("<tr>");
+           sb.append("<td class=\'cart_product\'>");
+           sb.append("<img src='"+p.getFoto()+"' width='100px' height='100px'/>");
+           sb.append("</td>");
+           sb.append("<td class='cart_description'>");
+           sb.append("<h4>");
+           sb.append(p.getBezeichnung());
+           sb.append("</h4>");
+           sb.append("</td>");
+           sb.append("<td class='cart_total'>");
+           sb.append("<p class='cart_total_price'>");       
+           sb.append(p.getMietzins());
+           sb.append("</p>");
+           sb.append("</td>");
+           sb.append("<td class='cart_delete'>");
+           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
+           sb.append("</td>");
+           sb.append("</tr>");
+        }
 
         return sb.toString();
     }

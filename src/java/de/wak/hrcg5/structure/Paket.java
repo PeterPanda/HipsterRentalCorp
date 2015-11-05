@@ -32,7 +32,7 @@ public class Paket {
         this.beschreibung = BESCHREIBUNG;
         this.details = DETAILS;
         this.mietzins = MIETZINS;
-        this.foto = Images.getPackageImage(FOTONR);
+        this.foto = FOTONR;
     }
 
     /**

@@ -36,19 +36,25 @@ public abstract class Place {
     }
 
     private static boolean postalcodeExists(String postalcode) {
+        return getPlace(postalcode) != null;
+    }
+
+    public static String getPlace(String postalcode) {
+        String place = null;
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
                 /* Retrieve products */
-                PreparedStatement ps = con.prepareStatement("select * from ORTE where PLZ=?");
+                PreparedStatement ps = con.prepareStatement("select ORT from ORTE where PLZ=?");
                 ps.setString(1, postalcode);
                 ResultSet rs = ps.executeQuery();
-                return rs.next();
+                while (rs.next()) {
+                    place = rs.getString(1);
+                }
             } catch (Exception e) {
-                return false;
+                e.printStackTrace();
             }
         }
-
-        return true;
+        return place;
     }
 }
