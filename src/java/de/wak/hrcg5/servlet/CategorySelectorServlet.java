@@ -5,7 +5,10 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.ShoppingCart;
+import de.wak.hrcg5.database.Categories;
+import de.wak.hrcg5.database.User;
+import de.wak.hrcg5.structure.Kategorie;
+import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "AddProductToShoppingCartServlet", urlPatterns = {"/AddProductToShoppingCartServlet"})
-public class AddProductToShoppingCartServlet extends HttpServlet {
+@WebServlet(name = "CategorySelectorServlet", urlPatterns = {"/CategorySelectorServlet"})
+public class CategorySelectorServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class AddProductToShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProductToShoppingCartServlet</title>");            
+            out.println("<title>Servlet CategorySelectorServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddProductToShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategorySelectorServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +63,16 @@ public class AddProductToShoppingCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        StringBuilder data = new StringBuilder();
+
+        for (Kategorie c : Categories.getCategories()) {
+            if (!data.toString().contains(c.getName())) {
+                data.append(c.getKategorieNR()+","+c.getName()+"|");
+            }
+        }
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(data.toString());
     }
 
     /**
@@ -74,14 +86,7 @@ public class AddProductToShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        String productNumber = request.getParameter("productNumber");
-        String message = ShoppingCart.addProduct(userEmail, productNumber);
-        
+        processRequest(request, response);
     }
 
     /**

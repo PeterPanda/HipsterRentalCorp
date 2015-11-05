@@ -6,7 +6,9 @@
 package de.wak.hrcg5.servlet;
 
 import de.wak.hrcg5.database.Categories;
+import de.wak.hrcg5.database.User;
 import de.wak.hrcg5.structure.Kategorie;
+import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,31 +64,52 @@ public class CategoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         StringBuilder data = new StringBuilder();
-        data.append("<div>\n");
-        for (Kategorie c : Categories.getCategories()) {
-            if (!data.toString().contains(c.getName())) {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("User");
+        Mitarbeiter e = User.getEmployee(userEmail);
+        if (e != null) {
+            data.append("<div>");
+            if (User.isAdmin(userEmail)) {
                 data.append("<div class='panel panel-default'>");
                 data.append("<div class='panel-heading'>");
-                data.append("<h4 class='panel-title'><a href='#' onclick='getProducts(\"");
-                data.append(c.getKategorieNR());
-                data.append("\")'>");
-                data.append(c.getName());
-                data.append("</a></h4>");
+                data.append("<h4 class='panel-title'><a href='AddEmployee.jsp'>Mitarbeiter anlegen</a></h4>");
                 data.append("</div>");
                 data.append("</div>");
-                /*
-                data.append("<button type='button' value='");
-                data.append(c.getKategorieNR());
-                data.append("' name='");
-                data.append(c.getName());
-                data.append("' onclick='getProducts(this.value);'>");
-                data.append(c.getName());
-                data.append("</button><br>\n");
-                */
             }
+            data.append("<div class='panel panel-default'>");
+            data.append("<div class='panel-heading'>");
+            data.append("<h4 class='panel-title'><a href='EmployeeOrderView.jsp'>Bestellungen anzeigen</a></h4>");
+            data.append("</div>");
+            data.append("</div>");
+            data.append("<div class='panel panel-default'>");
+            data.append("<div class='panel-heading'>");
+            data.append("<h4 class='panel-title'><a href='AddProduct.jsp'>Produkt anlegen</a></h4>");
+            data.append("</div>");
+            data.append("</div>");
+            data.append("<div class='panel panel-default'>");
+            data.append("<div class='panel-heading'>");
+            data.append("<h4 class='panel-title'><a href='AddPackage.jsp'>Paket anlegen</a></h4>");
+            data.append("</div>");
+            data.append("</div>");
+            data.append("</div>");
+        } else {
+            data.append("<div>\n");
+            for (Kategorie c : Categories.getCategories()) {
+                if (!data.toString().contains(c.getName())) {
+                    data.append("<div class='panel panel-default'>");
+                    data.append("<div class='panel-heading'>");
+                    data.append("<h4 class='panel-title'><a href='#' onclick='getProducts(\"");
+                    data.append(c.getKategorieNR());
+                    data.append("\")'>");
+                    data.append(c.getName());
+                    data.append("</a></h4>");
+                    data.append("</div>");
+                    data.append("</div>");
+                }
+            }
+            data.append("</div>");
         }
-        data.append("</div>");
-
 
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");

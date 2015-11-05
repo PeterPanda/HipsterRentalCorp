@@ -79,9 +79,8 @@ public class AddPackageToShoppingCartServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("User");
-        String packageNumber = request.getParameter("buttonAddToShoppingCart");
+        String packageNumber = request.getParameter("packageNumber");
         String message = ShoppingCart.addPackage(userEmail, packageNumber);
-        
     }
 
     /**

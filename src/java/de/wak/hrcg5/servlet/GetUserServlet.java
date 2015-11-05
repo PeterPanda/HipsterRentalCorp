@@ -68,17 +68,18 @@ public class GetUserServlet extends HttpServlet {
         String email = (String) session.getAttribute("User");
 
         StringBuilder data = new StringBuilder();
-        if (email != null || !email.equals("") || !email.equals("null")) {
-            Kunde c = User.getCustomer(email);
-            if (c != null) {
-                data.append(c.getVorname()).append(" ").append(c.getNachname());
+        if (email != null && !email.equals("") && !email.equals("null")) {
+            Mitarbeiter e = User.getEmployee(email);
+            if (e != null) {
+                data.append(e.getVorname()).append(" ").append(e.getNachname());
             } else {
-                Mitarbeiter e = User.getEmployee(email);
-                if (e != null) {
-                    data.append(e.getVorname()).append(" ").append(e.getNachname());
+                Kunde c = User.getCustomer(email);
+                if (c != null) {
+                    data.append(c.getVorname()).append(" ").append(c.getNachname());
                 }
             }
         }
+
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data.toString());

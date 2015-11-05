@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 07.10.2015, 10:17:07
-    Author     : janFk
+    Document   : login
+    Created on : 04.11.2015, 15:47:40
+    Author     : Jan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Home | Hipster Rental</title>
+        <title>Mitarbeiter anlegen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -31,13 +31,14 @@
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     </head>
     <body onload="init()">
-        <header id="header"><!--header-->		
+        <header id="header"><!--header-->
+
             <div class="header-middle"><!--header-middle-->
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" />
+                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
@@ -59,106 +60,30 @@
                 </div>
             </div><!--/header-middle-->
 
+
         </header><!--/header-->
-        <section>
+
+        <section id="form"><!--form-->
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-3">
-                        <div class="left-sidebar">
-                            <h2>Kategorie</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Sportswear
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="sportswear" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Nike </a></li>
-                                                <li><a href="#">Under Armour </a></li>
-                                                <li><a href="#">Adidas </a></li>
-                                                <li><a href="#">Puma</a></li>
-                                                <li><a href="#">ASICS </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Mens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="mens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                                <li><a href="#">Armani</a></li>
-                                                <li><a href="#">Prada</a></li>
-                                                <li><a href="#">Dolce and Gabbana</a></li>
-                                                <li><a href="#">Chanel</a></li>
-                                                <li><a href="#">Gucci</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Womens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="womens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a onclick="alert('abc')" href="#">Bags</a></h4>
-                                    </div>
-                                </div>
-                                <div id="divNavigation">
-                                </div>
-                            </div><!--/category-products-->
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-9 padding-right">
-                        <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Features Items</h2>
-
-                            <div id="divContent"></div>
-                        </div><!--features_items-->
-
+                    <div class="col-sm-4">
+                        <div class="signup-form"><!--sign up form-->
+                            <h2>Mitarbeiter anlegen</h2>
+                            <form action="/HipsterRentalCorp/AddEmployeeServlet" method="post">
+                                <input type="email" name="email" required=true placeholder="Email Addresse *"/>
+                                <input type="password" name="password" required=true placeholder="Passwort *"/>
+                                <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
+                                <input type="text" name="firstName" required=true placeholder="Vorname *" />
+                                <input type="text" name="lastName" required=true placeholder="Nachname *" />
+                                <button type="submit" class="btn btn-default">Anlegen</button>
+                            </form>
+                        </div><!--/sign up form-->
                     </div>
                 </div>
             </div>
-        </section>
+        </section><!--/form-->
+
+
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
                 <div class="container">
@@ -195,9 +120,9 @@
 
 
         <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.scrollUp.min.js"></script>
         <script src="js/price-range.js"></script>
+        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
         <script>
@@ -401,58 +326,5 @@
                                                 }
                                             }
         </script>
-
-        <!--
-                <table id="tableMain">
-                    <thead>
-                        <tr>
-                            <th id="cellShopName"><h1>Hipster Rental Corp</h1></th>
-        
-                            <th>
-                                <table id="tableSearchAndLogin">
-                                    <thead>
-                                        <tr>
-                                            <th id="cellSearch">
-                                                <input type="text"
-                                                       size="40"
-                                                       id="complete-field"
-                                                       onkeyup="doCompletion();">
-                                                <button id="buttonSearch" type="button" class="btn btn-default">Suche</button>
-                                            </th>
-                                            <th id="cellLogin">
-                                                <div id="divLogin">
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div id="divShoppingCart" onclick="loadShoppingCart();">
-                                                    <img id="imgShoppingCart" src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/shoppingcart.png" alt="shoppingcart" >
-                                                    <p id="pShoppingCartCount">0</p>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </th>
-        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-        <!--<form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">
-        <div id="divNavigation">
-            Navigation
-        </div>
-        <!--</form>
-    </td>
-    <td id="cellContent">
-        <div id="divContent" class="border margin">
-            Contentt
-        </div>
-    </td>
-</tr>
-</tbody>
-</table>
-        -->                              
     </body>
 </html>
