@@ -11,6 +11,8 @@ import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -95,25 +97,105 @@ public class CategoryServlet extends HttpServlet {
             data.append("</div>");
         } else {
             data.append("<div>\n");
-            for (Kategorie c : Categories.getCategories()) {
-                if (!data.toString().contains(c.getName())) {
-                    data.append("<div class='panel panel-default'>");
+            for (Kategorie c : filterCategories(Categories.getCategories())) {
+
+                data.append("<div class='panel panel-default'>");
+                if (c.getUnterkategorie().size() < 1) {
                     data.append("<div class='panel-heading'>");
-                    data.append("<h4 class='panel-title'><a href='#' onclick='getProducts(\"");
+                    data.append("<h4 class='panel-title'><a onclick='getProducts(\"");
                     data.append(c.getKategorieNR());
                     data.append("\")'>");
                     data.append(c.getName());
                     data.append("</a></h4>");
                     data.append("</div>");
+                } else {
+                    data.append("<div class='panel-heading'>");
+                    data.append("<h4 class='panel-title'>");
+                    data.append("<a data-toggle='collapse' data-parent='#accordian' href='#"+c.getName()+"' onclick='getProducts(\"");
+                    data.append(c.getKategorieNR());
+                    data.append("\")'>");
+                    data.append("<span class='badge pull-right'><i class='fa fa-plus'></i></span>");
+                    data.append(c.getName());
+                    data.append("</a>");
+                    data.append("</h4>");
                     data.append("</div>");
+                    data.append("<div id='" + c.getName() + "' class='panel-collapse collapse'>");
+                    data.append("<div class='panel-body'>");
+                    data.append("<ul>");
+                    for (String s : c.getUnterkategorie()) {
+                        Kategorie k = Categories.getCategory(s);
+                        data.append("<li><a href='#' onclick='getProducts(\"");
+                        data.append(k.getKategorieNR());
+                        data.append("\")'>");
+                        data.append(k.getName());
+                        data.append("</a></li>");
+                    }
+                    data.append("</ul>");
+                    data.append("</div>");
+                    data.append("</div>");
+
                 }
+
+                data.append("</div>");
+
             }
             data.append("</div>");
         }
-
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data.toString());
+    }
+
+    /**
+     * Filters the Categories => throws out double entries and subcategories.
+     *
+     * @param unsorted Unsorted category list out of database
+     * @return
+     */
+    private List<Kategorie> filterCategories(List<Kategorie> unsorted) {
+        List<Kategorie> filtered = new ArrayList<>();
+        String breaker = null;
+        for (Kategorie c : unsorted) {
+            if (!c.getKategorieNR().equals(breaker)) {
+                for (Kategorie d : unsorted) {
+
+                    if (!c.equals(d)) {
+                        if (c.getKategorieNR().equals(d.getKategorieNR())) {
+                            if (!filtered.contains(c)) {
+                                c.getUnterkategorie().addAll(d.getUnterkategorie());
+                                filtered.add(c);
+                                breaker = c.getKategorieNR();
+                            } else {
+                                filtered.get(filtered.indexOf(c)).getUnterkategorie().addAll(d.getUnterkategorie());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        List<Kategorie> toAdd = new ArrayList<>();
+        for (Kategorie c : unsorted) {
+            for (Kategorie d : filtered) {
+                if (!d.getKategorieNR().equals(c.getKategorieNR())) {
+                    toAdd.add(c);
+                }
+            }
+        }
+        filtered.addAll(toAdd);
+
+        List<Kategorie> toRemove = new ArrayList<>();
+        for (Kategorie c : filtered) {
+            for (Kategorie d : filtered) {
+                if (!c.equals(d)) {
+                    if (c.getUnterkategorie().contains(d.getKategorieNR())) {
+                        toRemove.add(d);
+                    }
+                }
+            }
+        }
+        filtered.removeAll(toRemove);
+        return filtered;
     }
 
     /**
