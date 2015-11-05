@@ -89,9 +89,7 @@ public class AddEmployeeServlet extends HttpServlet {
         String passwordRepeat = request.getParameter("password2");
 
         if(password.equals(passwordRepeat) && User.addEmployee(firstname, lastname, email, password)){
-            context.getRequestDispatcher("/EmployeeOverlay/Success/AddedUser.jsp").forward(request, response);
-        }else{
-            context.getRequestDispatcher("/EmployeeOverlay/Failure/Failure.jsp").forward(request, response);
+            context.getRequestDispatcher("/AddEmployeeSuccess.jsp").forward(request, response);
         }
     }
 
