@@ -69,19 +69,7 @@ public class LoadPackageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String packageNumber;
-        Paket loadedPackage;
-
-        /* Get the productNumber from request sender */
-        packageNumber = request.getParameter("packageNumber");
-        if (packageNumber != null) {
-            loadedPackage = Packages.getPackage(packageNumber);
-            if (loadedPackage != null) {
-                /* Sending the loaded product to the product-view-page */
-                request.setAttribute("loadedPackage", loadedPackage);
-                context.getRequestDispatcher("/ViewProduct/ViewPackage.jsp").forward(request, response);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -95,7 +83,19 @@ public class LoadPackageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String packageNumber;
+        Paket loadedPackage;
+
+        /* Get the productNumber from request sender */
+        packageNumber = request.getParameter("packageNumber");
+        if (packageNumber != null) {
+            loadedPackage = Packages.getPackage(packageNumber);
+            if (loadedPackage != null) {
+                /* Sending the loaded product to the product-view-page */
+                request.setAttribute("loadedPackage", loadedPackage);
+                context.getRequestDispatcher("/package-details.jsp").forward(request, response);
+            }
+        }
     }
 
     /**

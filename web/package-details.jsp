@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Product Details | Hipster Rental</title>
+        <title>Paket Details | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -113,19 +113,19 @@
                         <div class="product-details"><!--product-details-->
                             <div class="col-sm-5">
                                 <div class="view-product">
-                                    ${requestScope.loadedpackage.firstImage()}
+                                    ${requestScope.loadedPackage.getFoto()}
 
                                 </div>
 
                             </div>				
                             <div class="col-sm-7">
                                 <div class="product-information"><!--product-information-->
-                                    <h2>${requestScope.loadedpackage.getBezeichnung()}</h2>
-                                    <p>${requestScope.loadedpackage.getProduktNR()}</p>
+                                    <h2>${requestScope.loadedPackage.getBezeichnung()}</h2>
+                                    <p>${requestScope.loadedPackage.getPaketNR()}</p>
                                     <span>
-                                        <span>${requestScope.loadedpackage.getMietzins()}</span>
-                                        <form action="/HipsterRentalCorp/AddProductToShoppingCartServlet" method="post">
-                                            <button type="submit" class="btn btn-fefault cart" name="buttonAddToShoppingCart" value="${requestScope.product.getProduktNR()}">Zum Warenkorb hinzufügen</button>
+                                        <span>${requestScope.loadedPackage.getMietzins()}</span>
+                                        <form action="/HipsterRentalCorp/AddPackageToShoppingCartServlet" method="post">
+                                            <button type="submit" class="btn btn-fefault cart" name="buttonAddToShoppingCart" value="${requestScope.loadedPackage.getPaketNR()}">Zum Warenkorb hinzufügen</button>
                                         </form>
                                     </span>
                                     <p><b>Zustand:</b> Neu</p>
@@ -143,14 +143,14 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade" id="details" >
                                     <div class="col-sm-3">
-                                        ${requestScope.loadedpackage.getBeschreibung()}
+                                        ${requestScope.loadedPackage.getBeschreibung()}
                                     </div>
 
                                 </div>
 
                                 <div class="tab-pane fade" id="companyprofile" >
                                     <div class="col-sm-3">
-                                        ${requestScope.loadedpackage.getDetails()}
+                                        ${requestScope.loadedPackage.getDetails()}
                                     </div>
                                 </div>
 

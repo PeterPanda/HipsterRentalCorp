@@ -5,10 +5,8 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
 import de.wak.hrcg5.database.Packages;
 import de.wak.hrcg5.database.Products;
-import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Paket;
 import de.wak.hrcg5.structure.Produkt;
 import java.io.IOException;
@@ -87,7 +85,7 @@ public class ProductsByCategoryServlet extends HttpServlet {
                     data.append("<div class='single-products'>");
                     data.append("<div class='productinfo text-center'>");
                     data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
-                    data.append("<div onclick='document.forms[0].submit();'>");
+                    data.append("<div onclick='this.parentNode.submit();'>");
                     data.append("<img src='").append((p.getFotos().size() > 0) ? p.getFotos().get(0) : "images/home/logo.png").append("' height='150px' alt='' />");
                     data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
                     data.append("<p>").append(p.getBezeichnung()).append("</p>");
@@ -121,8 +119,8 @@ public class ProductsByCategoryServlet extends HttpServlet {
                         data.append("<div class='product-image-wrapper'>");
                         data.append("<div class='single-products'>");
                         data.append("<div class='productinfo text-center'>");
-                        data.append("<form action='/HipsterRentalCorp/LoadPackageServlet?productNumber=").append(p.getPaketNR()).append("' method='post'>");
-                        data.append("<div onclick='document.forms[0].submit();'>");
+                        data.append("<form action='/HipsterRentalCorp/LoadPackageServlet?packageNumber=").append(p.getPaketNR()).append("' method='post'>");
+                        data.append("<div onclick='this.parentNode.submit();'>");
                         data.append("<img src='").append((p.getFoto() != null) ? p.getFoto() : "images/home/logo.png").append("' max-height='150px' alt='' />");
                         data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
                         data.append("<p>").append(p.getBezeichnung()).append("</p>");
