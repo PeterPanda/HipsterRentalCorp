@@ -44,7 +44,7 @@
                                 <ul class="nav navbar-nav">
                                     <li id="liAccount"></li>
                                     <li><a href="#" onclick="loadCheckout();"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="#" onclick="loadShoppingCart();"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
+                                    <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
@@ -125,7 +125,7 @@
                                     <span>
                                         <span>${requestScope.product.getMietzins()}</span>
                                         <form action="/HipsterRentalCorp/AddProductToShoppingCartServlet" method="post">
-                                            <button type="submit" class="btn btn-fefault cart" name="buttonAddToShoppingCart" value="${requestScope.product.getProduktNR()}">Zum Warenkorb hinzufügen</button>
+                                            <button type="submit" class="btn btn-fefault cart" name="productNumber" value="${requestScope.product.getProduktNR()}">Zum Warenkorb hinzufügen</button>
                                         </form>
                                     </span>
                                     <p><b>Zustand:</b> Neu</p>
@@ -249,9 +249,15 @@
                                                                         if (data.indexOf("MitarbeiterNR -") === -1) {
                                                                             var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                             document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                         } else {
                                                                             var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                             document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                            var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                                                                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                         }
                                                                     }
                                                                 };
@@ -260,8 +266,12 @@
                                                             } else {
                                                                 var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                                                                 document.getElementById('liLoginout').innerHTML = liLogin;
+
                                                                 var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
                                                                 document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                             }
                                                         }
 

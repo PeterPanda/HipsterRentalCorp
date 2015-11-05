@@ -6,6 +6,8 @@
 package de.wak.hrcg5.database;
 
 import de.wak.hrcg5.structure.Kunde;
+import de.wak.hrcg5.structure.Paket;
+import de.wak.hrcg5.structure.Produkt;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -116,14 +118,20 @@ public abstract class ShoppingCart {
                 ResultSet rs;
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    shoppingCart.getProdukte().add(Products.getProduct(rs.getString(1)));
+                    Produkt p = Products.getProduct(rs.getString(1));
+                    if (p != null) {
+                        shoppingCart.getProdukte().add(p);
+                    }
                 }
                 /* Retrieve packages */
                 ps = con.prepareStatement("select wpak.PAKETNR from WARENKORB w, WARENKORBPAKET wpak where w.KUNDENNR=? and w.WARENKORBPAKETNR = wpak.WARENKORBPAKETNR");
                 ps.setString(1, k.getKundenNR());
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    shoppingCart.getPakete().add(Packages.getPackage(rs.getString(1)));
+                    Paket p = Packages.getPackage(rs.getString(1));
+                    if (p != null) {
+                        shoppingCart.getPakete().add(p);
+                    }
                 }
 
             } catch (Exception e) {

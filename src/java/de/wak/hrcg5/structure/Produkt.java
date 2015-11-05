@@ -135,7 +135,7 @@ public class Produkt {
 
             sb.append("<img name='preview' src='");
             sb.append(fotos.get(0));
-            sb.append("' alt=''/>");
+            sb.append("' alt='' width='100px' height='100px'/>");
             return sb.toString();
         }
         return null;

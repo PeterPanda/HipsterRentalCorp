@@ -50,7 +50,7 @@
                                 <ul class="nav navbar-nav">
                                     <li><a href="#"><i class="fa fa-user"></i> Konto</a></li>
                                     <li><a href="checkout.jsp"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="cart.jsp"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
+                                    <li><a href="ShoppingCart.jsp"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
                                     <li><a href="#"><i class="fa fa-lock"></i> Login</a></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
