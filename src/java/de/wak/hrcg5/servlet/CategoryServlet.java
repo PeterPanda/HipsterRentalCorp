@@ -150,11 +150,12 @@ public class CategoryServlet extends HttpServlet {
      * Filters the Categories => throws out double entries and subcategories.
      *
      * @param unsorted Unsorted category list out of database
-     * @return
+     * @return Returns a beautiful list of categories.
      */
     private List<Kategorie> filterCategories(List<Kategorie> unsorted) {
         List<Kategorie> filtered = new ArrayList<>();
         String breaker = null;
+        /* combine doubles */
         for (Kategorie c : unsorted) {
             if (!c.getKategorieNR().equals(breaker)) {
                 for (Kategorie d : unsorted) {
@@ -173,7 +174,8 @@ public class CategoryServlet extends HttpServlet {
                 }
             }
         }
-
+        /* Get the rest of the pack back. Filtered only
+           knows what happened in the previous loop*/
         List<Kategorie> toAdd = new ArrayList<>();
         for (Kategorie c : unsorted) {
             for (Kategorie d : filtered) {
@@ -183,7 +185,8 @@ public class CategoryServlet extends HttpServlet {
             }
         }
         filtered.addAll(toAdd);
-
+        
+        /* Remove those doubles. We don't need them any more. */
         List<Kategorie> toRemove = new ArrayList<>();
         for (Kategorie c : filtered) {
             for (Kategorie d : filtered) {
