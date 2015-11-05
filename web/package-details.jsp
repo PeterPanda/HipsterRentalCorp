@@ -113,23 +113,22 @@
                         <div class="product-details"><!--product-details-->
                             <div class="col-sm-5">
                                 <div class="view-product">
-                                    ${requestScope.product.firstImage()}
+                                    ${requestScope.loadedpackage.firstImage()}
 
                                 </div>
 
                             </div>				
                             <div class="col-sm-7">
                                 <div class="product-information"><!--product-information-->
-                                    <h2>${requestScope.product.getBezeichnung()}</h2>
-                                    <p>${requestScope.product.getProduktNR()}</p>
+                                    <h2>${requestScope.loadedpackage.getBezeichnung()}</h2>
+                                    <p>${requestScope.loadedpackage.getProduktNR()}</p>
                                     <span>
-                                        <span>${requestScope.product.getMietzins()}</span>
+                                        <span>${requestScope.loadedpackage.getMietzins()}</span>
                                         <form action="/HipsterRentalCorp/AddProductToShoppingCartServlet" method="post">
                                             <button type="submit" class="btn btn-fefault cart" name="buttonAddToShoppingCart" value="${requestScope.product.getProduktNR()}">Zum Warenkorb hinzufügen</button>
                                         </form>
                                     </span>
                                     <p><b>Zustand:</b> Neu</p>
-                                    <p><b>Hersteller:</b> ${requestScope.product.getHersteller()}</p>
                                 </div><!--/product-information-->
                             </div>
                         </div><!--/product-details-->
@@ -139,44 +138,23 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#details" data-toggle="tab">Beschreibung</a></li>
                                     <li><a href="#companyprofile" data-toggle="tab">Spezifikationen</a></li>
-                                    <li><a href="#tag" data-toggle="tab">Alternativen</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">
                                 <div class="tab-pane fade" id="details" >
                                     <div class="col-sm-3">
-                                        ${requestScope.product.getBeschreibung()}
+                                        ${requestScope.loadedpackage.getBeschreibung()}
                                     </div>
 
                                 </div>
 
                                 <div class="tab-pane fade" id="companyprofile" >
                                     <div class="col-sm-3">
-                                        ${requestScope.product.getDetails()}
+                                        ${requestScope.loadedpackage.getDetails()}
                                     </div>
                                 </div>
 
-                                <div class="tab-pane fade" id="tag" >
-                                    <div class="col-sm-3">
-
-
-                                        <div class="product-image-wrapper">
-                                            <div class="single-products">
-                                                <div class="productinfo text-center">
-                                                    ${requestScope.product.getAlternative().firstImage()}
-                                                    <h2>${requestScope.product.getAlternative().getMietzins()}</h2>
-                                                    <p>${requestScope.product.getAlternative().getBezeichnung()}</p>
-                                                    <button type="button" onclick="loadAlternative(this.value);" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Zum Warenkorb</button>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-
-
-                                    </div>
+                                
 
                                 </div>
 
