@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Mitarbeiter anlegen | Hipster Rental</title>
+        <title>Kundenportal | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -63,25 +63,45 @@
 
         </header><!--/header-->
 
-        <section id="form"><!--form-->
+        <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>Mitarbeiter anlegen</h2>
-                            <form action="/HipsterRentalCorp/AddEmployeeServlet" method="post">
-                                <input type="email" name="email" required=true placeholder="Email Addresse *"/>
-                                <input type="password" name="password" required=true placeholder="Passwort *"/>
-                                <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
-                                <input type="text" name="firstName" required=true placeholder="Vorname *" />
-                                <input type="text" name="lastName" required=true placeholder="Nachname *" />
-                                <button type="submit" class="btn btn-default">Anlegen</button>
-                            </form>
-                        </div><!--/sign up form-->
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Navigation</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
+                                    </div>
+                                </div>
+                            </div><!--/category-products-->
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items" ><!--features_items-->
+                            <h2 class="title text-center">Kundenportal</h2>
+                            <div id="divContent">
+                                Ihre Kontaktinformationen wurden erfolgreich ge&auml;ndert.
+                            </div>
+                        </div><!--features_items-->
+
                     </div>
                 </div>
             </div>
-        </section><!--/form-->
+        </section>
 
 
         <footer id="footer"><!--Footer-->
@@ -127,7 +147,6 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
-            initCategory();
             isUserLoggedIn();
         }
 

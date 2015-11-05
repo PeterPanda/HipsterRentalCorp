@@ -82,7 +82,7 @@ public abstract class User {
                 e.printStackTrace();
             }
         }
-        if(k==null){
+        if (k == null) {
             return getDummyUser();
         }
         return k;
@@ -107,8 +107,8 @@ public abstract class User {
         }
         return m;
     }
-    
-        public static Gast getGuest(String email) {
+
+    public static Gast getGuest(String email) {
         Gast g = null;
         Connection con = Connector.getConnection();
         if (con != null) {
@@ -310,7 +310,6 @@ public abstract class User {
             Connection con = Connector.getConnection();
             if (con != null) {
                 try {
-                    /* Retrieve products */
                     PreparedStatement ps = con.prepareStatement("insert into GAST values(?,?,?,?,?,?,?,?,?,?)");
                     ps.setString(1, NumberHelper.getNextGASTNR());
                     ps.setString(2, surename);
@@ -334,5 +333,47 @@ public abstract class User {
         }
 
         return true;
+    }
+
+    public static void updateUser(String email, String oldpass, String newpass) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("update USER set PASSWORT=? where PASSWORT=? and EMAIL=?");
+                ps.setString(1, newpass);
+                ps.setString(2, oldpass);
+                ps.setString(3, email);
+
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateCustomer(String firstname, String lastname, String email, String organisation, String place, String postalcode, String streat, String housenumber, String telephonenumber, String mobilenumber) {
+        if (Place.getPlace(postalcode) == null) {
+            Place.addPlace(place, postalcode);
+        }
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("update KUNDE set VORNAME=?, NACHNAME=?, ORGANISATIONSNAME=?, STRASSE=?, HAUSNUMMER=?, PLZ=?, TELEFONNR=?, HANDYNR=? where EMAIL=?");
+                ps.setString(1, firstname);
+                ps.setString(2, lastname);
+                ps.setString(3, organisation);
+                ps.setString(4, streat);
+                ps.setString(5, housenumber);
+                ps.setString(6, postalcode);
+                ps.setString(7, telephonenumber);
+                ps.setString(8, mobilenumber);
+                
+                ps.setString(9, email);
+
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

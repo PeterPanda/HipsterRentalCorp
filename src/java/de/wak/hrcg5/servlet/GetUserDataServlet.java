@@ -5,9 +5,8 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
+import de.wak.hrcg5.database.Place;
 import de.wak.hrcg5.database.User;
-import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Kunde;
 import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "GetUserServlet", urlPatterns = {"/GetUserServlet"})
-public class GetUserServlet extends HttpServlet {
+@WebServlet(name = "GetUserDataServlet", urlPatterns = {"/GetUserDataServlet"})
+public class GetUserDataServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class GetUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetUserServlet</title>");
+            out.println("<title>Servlet GetUserDataServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetUserDataServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,14 +68,17 @@ public class GetUserServlet extends HttpServlet {
 
         StringBuilder data = new StringBuilder();
         if (email != null && !email.equals("") && !email.equals("null")) {
-            Mitarbeiter e = User.getEmployee(email);
-            if (e != null) {
-                data.append(e.getVorname()).append(" ").append(e.getNachname()).append("<br>MitarbeiterNR - ").append(e.getMitarbeiterNR());
-            } else {
-                Kunde c = User.getCustomer(email);
-                if (c != null) {
-                    data.append(c.getVorname()).append(" ").append(c.getNachname());
-                }
+            Kunde c = User.getCustomer(email);
+            if (c != null) {
+                data.append(c.getVorname()).append(",");
+                data.append(c.getNachname()).append(",");
+                data.append(c.getOrganisationsname()).append(",");
+                data.append(Place.getPlace(c.getPlz())).append(",");
+                data.append(c.getPlz()).append(",");
+                data.append(c.getStrasse()).append(",");
+                data.append(c.getHausnummer()).append(",");
+                data.append(c.getTelefonNR()).append(",");
+                data.append(c.getHandynummer());
             }
         }
 

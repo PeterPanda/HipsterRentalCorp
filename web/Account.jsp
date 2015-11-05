@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Mitarbeiter anlegen | Hipster Rental</title>
+        <title>Kundenportal | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -62,110 +62,47 @@
 
 
         </header><!--/header-->
+
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                            <h2>Kategorie</h2>
+                            <h2>Navigation</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Sportswear
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="sportswear" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Nike </a></li>
-                                                <li><a href="#">Under Armour </a></li>
-                                                <li><a href="#">Adidas </a></li>
-                                                <li><a href="#">Puma</a></li>
-                                                <li><a href="#">ASICS </a></li>
-                                            </ul>
-                                        </div>
+                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Mens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="mens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                                <li><a href="#">Armani</a></li>
-                                                <li><a href="#">Prada</a></li>
-                                                <li><a href="#">Dolce and Gabbana</a></li>
-                                                <li><a href="#">Chanel</a></li>
-                                                <li><a href="#">Gucci</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Womens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="womens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                            </ul>
-                                        </div>
+                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a onclick="alert('abc')" href="#">Bags</a></h4>
+                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
                                     </div>
-                                </div>
-                                <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
 
                         </div>
                     </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="signup-form"><!--sign up form-->
-                                    <h2>Mitarbeiter anlegen</h2>
-                                    <form action="/HipsterRentalCorp/AddEmployeeServlet" method="post">
-                                        <input type="email" name="email" required=true placeholder="Email Addresse *"/>
-                                        <input type="password" name="password" required=true placeholder="Passwort *"/>
-                                        <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
-                                        <input type="text" name="firstName" required=true placeholder="Vorname *" />
-                                        <input type="text" name="lastName" required=true placeholder="Nachname *" />
-                                        <button type="submit" class="btn btn-default">Anlegen</button>
-                                    </form>
-                                </div><!--/sign up form-->
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items" ><!--features_items-->
+                            <h2 class="title text-center">Kundenportal</h2>
+                            <div id="divContent">
+                                Willkommen in Ihrem Kundenportal.<br>
+                                Hier können Sie Ihre Bestellungen überprüfen und Ihre Benutzerdaten ändern.<br>
+                                <br>
+                                Ihre Kundennummer ist:
+                                <br>
+                                Die HRC bedankt sich für Ihre Registration als Kunde und möchte Sie auf den Bonus hinweisen, den angemeldete Nutzer erhalten:
                             </div>
-                        </div>
+                        </div><!--features_items-->
+
                     </div>
                 </div>
             </div>
@@ -215,12 +152,11 @@
         <script src="js/main.js"></script>
         <script>
                                             function init() {
-                                                initCategory();
                                                 isUserLoggedIn();
                                             }
 
                                             function isUserLoggedIn() {
-                                                var user = '<%= session.getAttribute("User")%>'
+                                                var user ='<%= session.getAttribute("User")%>'
                                                 if (user !== null && user !== "" && user !== "null") {
 
                                                     var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
@@ -230,13 +166,8 @@
                                                     xhr.onreadystatechange = function () {
                                                         if (xhr.readyState === 4) {
                                                             var data = xhr.responseText;
-                                                            if (data.indexOf("MitarbeiterNR -") === -1) {
-                                                                var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
-                                                                document.getElementById('liAccount').innerHTML = liAccount;
-                                                            } else {
-                                                                var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
-                                                                document.getElementById('liAccount').innerHTML = liAccount;
-                                                            }
+                                                            var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                            document.getElementById('liAccount').innerHTML = liAccount;
                                                         }
                                                     };
                                                     xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);

@@ -207,7 +207,7 @@
                                             }
 
                                             function isUserLoggedIn() {
-                                                var user ='<%= session.getAttribute("User")%>'
+                                                var user = '<%= session.getAttribute("User")%>'
                                                 if (user !== null && user !== "" && user !== "null") {
 
                                                     var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
@@ -217,8 +217,14 @@
                                                     xhr.onreadystatechange = function () {
                                                         if (xhr.readyState === 4) {
                                                             var data = xhr.responseText;
-                                                            var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
-                                                            document.getElementById('liAccount').innerHTML = liAccount;
+                                                            if (data.indexOf("MitarbeiterNR -") === -1) {
+                                                                var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                                document.getElementById('liAccount').innerHTML = liAccount;
+                                                            }
+                                                            else{
+                                                                var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                                document.getElementById('liAccount').innerHTML = liAccount;
+                                                            }
                                                         }
                                                     };
                                                     xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);

@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Mitarbeiter anlegen | Hipster Rental</title>
+        <title>Kundenportal | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -63,25 +63,61 @@
 
         </header><!--/header-->
 
-        <section id="form"><!--form-->
+        <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>Mitarbeiter anlegen</h2>
-                            <form action="/HipsterRentalCorp/AddEmployeeServlet" method="post">
-                                <input type="email" name="email" required=true placeholder="Email Addresse *"/>
-                                <input type="password" name="password" required=true placeholder="Passwort *"/>
-                                <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
-                                <input type="text" name="firstName" required=true placeholder="Vorname *" />
-                                <input type="text" name="lastName" required=true placeholder="Nachname *" />
-                                <button type="submit" class="btn btn-default">Anlegen</button>
-                            </form>
-                        </div><!--/sign up form-->
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Navigation</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
+                                    </div>
+                                </div>
+                            </div><!--/category-products-->
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9 padding-right">
+                        <div class="features_items" ><!--features_items-->
+                            <h2 class="title text-center">Kundenportal</h2>
+                            <div id="divContent">
+                                <div class="col-sm-4">
+                                    <div class="signup-form"><!--sign up form-->
+                                        <h2>Kontaktinformationen &auml;ndern</h2>
+                                        <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
+                                            <input type="text" id="firstName" name="firstName" required=true placeholder="Vorname *" />
+                                            <input type="text" id="lastName" name="lastName" required=true placeholder="Nachname *" />
+                                            <input type="text" id="organisation" name="organisation" placeholder="Organisation" />
+                                            <input type="text" id="place" name="place" required=true placeholder="Ort *" />
+                                            <input type="text" id="postalCode" name="postalCode" required=true placeholder="PLZ *" />
+                                            <input type="text" id="streat" name="streat" required=true placeholder="Stra&szlig;e *" />
+                                            <input type="text" id="houseNumber" name="houseNumber" required=true placeholder="Hausnummer *" />
+                                            <input type="text" id="telephone" name="telephone" required=true placeholder="Telefonnummer *" />
+                                            <input type="text" id="mobilephone" name="mobilephone" placeholder="Handynummer" />
+                                            <button type="submit" class="btn btn-default">&Auml;ndern</button>
+                                        </form>
+                                    </div><!--/sign up form-->
+                                </div>
+                            </div>
+                        </div><!--features_items-->
+
                     </div>
                 </div>
             </div>
-        </section><!--/form-->
+        </section>
 
 
         <footer id="footer"><!--Footer-->
@@ -127,7 +163,6 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
-            initCategory();
             isUserLoggedIn();
         }
 
@@ -153,6 +188,25 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
+
+                var xhru = new XMLHttpRequest();
+                xhru.onreadystatechange = function () {
+                    if (xhru.readyState === 4) {
+                        var data = xhru.responseText;
+                        var items = data.split(',');
+                        document.getElementById('firstName').value = items[0];
+                        document.getElementById('lastName').value = items[1];
+                        document.getElementById('organisation').value = items[2];
+                        document.getElementById('place').value = items[3];
+                        document.getElementById('postalCode').value = items[4];
+                        document.getElementById('streat').value = items[5];
+                        document.getElementById('houseNumber').value = items[6];
+                        document.getElementById('telephone').value = items[7];
+                        document.getElementById('mobilephone').value = items[8];
+                    }
+                };
+                xhru.open('GET', '/HipsterRentalCorp/GetUserDataServlet', true);
+                xhru.send(null);
             } else {
                 var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                 document.getElementById('liLoginout').innerHTML = liLogin;

@@ -5,11 +5,7 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
 import de.wak.hrcg5.database.User;
-import de.wak.hrcg5.structure.Kategorie;
-import de.wak.hrcg5.structure.Kunde;
-import de.wak.hrcg5.structure.Mitarbeiter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -23,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author janFk
  */
-@WebServlet(name = "GetUserServlet", urlPatterns = {"/GetUserServlet"})
-public class GetUserServlet extends HttpServlet {
+@WebServlet(name = "ChangePasswordServlet", urlPatterns = {"/ChangePasswordServlet"})
+public class ChangePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +39,10 @@ public class GetUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetUserServlet</title>");
+            out.println("<title>Servlet ChangePasswordServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePasswordServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,25 +60,7 @@ public class GetUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("User");
-
-        StringBuilder data = new StringBuilder();
-        if (email != null && !email.equals("") && !email.equals("null")) {
-            Mitarbeiter e = User.getEmployee(email);
-            if (e != null) {
-                data.append(e.getVorname()).append(" ").append(e.getNachname()).append("<br>MitarbeiterNR - ").append(e.getMitarbeiterNR());
-            } else {
-                Kunde c = User.getCustomer(email);
-                if (c != null) {
-                    data.append(c.getVorname()).append(" ").append(c.getNachname());
-                }
-            }
-        }
-
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(data.toString());
+        processRequest(request, response);
     }
 
     /**
@@ -96,7 +74,19 @@ public class GetUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+
+        String email = (String) session.getAttribute("User");
+        String oldpass = request.getParameter("oldpassword");
+        String newpass = request.getParameter("newpassword");
+        String confirmnewpass = request.getParameter("confirmnewpassword");
+
+        if (User.checkCustomer(email, oldpass)) {
+            if (newpass.equals(confirmnewpass)) {
+                User.updateUser(email, oldpass, newpass);
+                getServletContext().getRequestDispatcher("/ChangePasswordSuccess.jsp").forward(request, response);
+            }
+        }
     }
 
     /**
