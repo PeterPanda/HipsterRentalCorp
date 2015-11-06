@@ -5,12 +5,10 @@
  */
 package de.wak.hrcg5.servlet;
 
+import de.wak.hrcg5.database.ShoppingCart;
 import de.wak.hrcg5.database.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,17 +18,11 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-@WebServlet(name = "loginServlet", urlPatterns = {"/loginServlet"})
-public class LoginServlet extends HttpServlet {
-    
-    private ServletContext context;
+@WebServlet(name = "GuestOrderToCustomerOrderServlet", urlPatterns = {"/GuestOrderToCustomerOrderServlet"})
+public class GuestOrderToCustomerOrderServlet extends HttpServlet {
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.context = config.getServletContext();
-    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet GuestOrderToCustomerOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GuestOrderToCustomerOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -83,23 +75,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         HttpSession session = request.getSession();
-
+        String oldOwner = (String)session.getAttribute("User");
+        
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
 
-        if (User.checkCustomer(email, pass)) {
+        if (User.checkCustomer(email, pass) && ShoppingCart.changeOwner(oldOwner, email)) {
             session.setAttribute("User", email);
-            request.setAttribute("customer", User.getCustomer(email));
-            context.getRequestDispatcher("/index.jsp").forward(request, response);
-        } else if(User.checkEmployee(email, pass)){  
-            session.setAttribute("User", email);
-            request.setAttribute("employee", User.getEmployee(email));
-            context.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.setAttribute("order", ShoppingCart.getShoppingCart(email));
+            getServletContext().getRequestDispatcher("/checkoutCustomer.jsp").forward(request, response);
         }else{
             session.setAttribute("User", null);
-            context.getRequestDispatcher("/Login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
         }
     }
 

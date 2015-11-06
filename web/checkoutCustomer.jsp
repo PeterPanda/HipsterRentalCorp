@@ -24,7 +24,7 @@
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        
+
 
     </head><!--/head-->
 
@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" />
+                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
@@ -65,157 +65,155 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="index.jsp">Home</a></li>
                         <li class="active">Kasse</li>
                     </ol>
                 </div><!--/breadcrums-->
-               
-                
-                                <div class="step-one">
+
+
+                <div class="step-one">
                     <h2 class="heading">Persönliche Informationen</h2>
                 </div>
-
-                <div class="register-req">
-                    <p>Bitte melden Sie sich mit ihren Accountdaten an oder bestellen Sie als Gast</p>
-                </div><!--/register-req-->
                 <div class="shopper-informations">
                     <div class="row">
-                         <div class="col-sm-5 clearfix">
-                                    <div class="bill-to">
-                                <div class="form-one">
-                                    <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
-                                            <b>Vorname: </b><input type="text" id="firstName" readonly="true" name="firstName" required=true placeholder="Vorname *" />
-                                            <b>Nachname: </b><input type="text" id="lastName" readonly="true" name="lastName" required=true placeholder="Nachname *" />
-                                            <b>Organisation: </b><input type="text" id="organisation" readonly="true" name="organisation" placeholder="Organisation" />
-                                            <b>Ort: </b><input type="text" id="place" name="place" readonly="true" required=true placeholder="Ort *" />
-                                            <b>Postleitzahl: </b><input type="text" id="postalCode" readonly="true" name="postalCode" required=true placeholder="PLZ *" />
-                                    </form>
-                                </div>
-                                <div class="form-two">
-                                    <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
-                                            <b>Straße: </b><input type="text" id="streat" name="streat" required=true placeholder="Stra&szlig;e *" />
-                                            <b>Hausnummer: </b><input type="text" id="houseNumber" readonly="true" name="houseNumber" required=true placeholder="Hausnummer *" />
-                                            <b>Telefonnummer: </b><input type="text" id="telephone" readonly="true" name="telephone" required=true placeholder="Telefonnummer *" />
-                                            <b>Handynummer: </b><input type="text" id="mobilephone" readonly="true" name="mobilephone" placeholder="Handynummer" />
-                                    </form>
+                        <div class="col-sm-4 col-sm-offset-1">
+                            <div class="bill-to">
+                                <div class="signup-form">
+                                    <table>
+                                        <tbody>
+
+                                            <tr><td><p>Vorname: </p></td><td><p id="firstName"></p></td></tr>
+                                            <tr><td><p>Nachname: </p></td><td><p id="lastName"></p></td></tr>
+                                            <tr><td><p>Organisation: </p></td><td><p id="organisation"></p></td></tr>
+                                            <tr><td><p>Ort: </p></td><td><p id="place"></p></td></tr>
+                                            <tr><td><p>PLZ: </p></td><td><p id="postalCode"></p></td></tr>
+                                            <tr><td><p>Stra&szlig;e: </p></td><td><p id="streat"></p></td></tr>
+                                            <tr><td><p>Hausnummer: </p></td><td><p id="houseNumber"></p></td></tr>
+                                            <tr><td><p>Telefonnummer: </p></td><td><p id="telephone"></p></td></tr>
+                                            <tr><td><p>Handynummer: </p></td><td><p id="mobilephone"></p></td></tr>
+                                        </tbody>
+                                    </table>
+                                    <font size="1"><b>* Sie können die Angaben in Ihrem Kundenportal &auml;ndern</b></font>
                                 </div>
                             </div>
-                               </div>
                         </div>
-                </div>
-                
-                <br>
-                
-                <div>
-                    <p>Wählen Sie den Zeitraum Ihrer Bestellung:</p>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    Von:
-                                </td>
-                                <td>
-                                    <input type="date" id="fromDate" onchange="calculateCost()">
-                                </td>
-                                <td>
-                                    <form action="#"> 
-                                        <select id="fromTime" onchange="calculateCost()"> 
-                                            <option>06:00</option> 
-                                            <option>06:30</option> 
-                                            <option>07:00</option> 
-                                            <option>07:30</option>
-                                            <option>08:00</option> 
-                                            <option>08:30</option>
-                                            <option>09:00</option> 
-                                            <option>09:30</option>
-                                            <option>10:00</option> 
-                                            <option>10:30</option>
-                                            <option>11:00</option> 
-                                            <option>11:30</option>
-                                            <option>12:00</option> 
-                                            <option>12:30</option>
-                                            <option>13:00</option> 
-                                            <option>13:30</option>
-                                            <option>14:00</option> 
-                                            <option>14:30</option>
-                                            <option>15:00</option> 
-                                            <option>15:30</option>
-                                            <option>16:00</option> 
-                                            <option>16:30</option>
-                                            <option>17:00</option> 
-                                            <option>17:30</option>
-                                        </select> 
-                                    </form> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Bis:
-                                </td>
-                                <td>
-                                    <input type="date" id="tillDate" onchange="calculateCost()">
-                                </td>
-                                <td>
-                                    <form action="#"> 
-                                        <select id="tillTime" onchange="calculateCost()"> 
-                                            <option>13:00</option> 
-                                            <option>13:30</option>
-                                            <option>14:00</option> 
-                                            <option>14:30</option>
-                                            <option>15:00</option> 
-                                            <option>15:30</option>
-                                            <option>16:00</option> 
-                                            <option>16:30</option>
-                                            <option>17:00</option>
-                                        </select> 
-                                    </form> 
-                                </td>
-                            </tr>
+                    </div>
 
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="review-payment">
-                    <h2>Bestell&uuml;bersicht</h2>
-                </div>
+                    <br>
 
-                <div class="table-responsive cart_info">
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr class="cart_menu">
-                                <td class="image">Posten</td>
-                                <td class="description">Beschreibung</td>
-                                <td class="total">Mietzins</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <div id="cart-products">
-                            ${requestScope.order.getBestellView()}
+                    <div>
+                        <div class="step-one">
+                            <h2 class="heading">Wählen Sie den Zeitraum Ihrer Bestellung:</h2>
+                        </div>
 
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                                <td colspan="2">
-                                    <table class="table table-condensed total-result">
-                                        <tr>
-                                            <td>Bestellsumme</td>
-                                            <td><p id="cost"></p></td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <td>
-                                <a class="btn btn-primary" href="">Kostenpflichtig bestellen</a>
-                            </td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Von:
+                                    </td>
+                                    <td>
+                                        <input type="date" id="fromDate" onchange="calculateCost()">
+                                    </td>
+                                    <td>
+                                        <form action="#"> 
+                                            <select id="fromTime" onchange="calculateCost()"> 
+                                                <option>06:00</option> 
+                                                <option>06:30</option> 
+                                                <option>07:00</option> 
+                                                <option>07:30</option>
+                                                <option>08:00</option> 
+                                                <option>08:30</option>
+                                                <option>09:00</option> 
+                                                <option>09:30</option>
+                                                <option>10:00</option> 
+                                                <option>10:30</option>
+                                                <option>11:00</option> 
+                                                <option>11:30</option>
+                                                <option>12:00</option> 
+                                                <option>12:30</option>
+                                                <option>13:00</option> 
+                                                <option>13:30</option>
+                                                <option>14:00</option> 
+                                                <option>14:30</option>
+                                                <option>15:00</option> 
+                                                <option>15:30</option>
+                                                <option>16:00</option> 
+                                                <option>16:30</option>
+                                                <option>17:00</option> 
+                                                <option>17:30</option>
+                                            </select> 
+                                        </form> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Bis:
+                                    </td>
+                                    <td>
+                                        <input type="date" id="tillDate" onchange="calculateCost()">
+                                    </td>
+                                    <td>
+                                        <form action="#"> 
+                                            <select id="tillTime" onchange="calculateCost()"> 
+                                                <option>13:00</option> 
+                                                <option>13:30</option>
+                                                <option>14:00</option> 
+                                                <option>14:30</option>
+                                                <option>15:00</option> 
+                                                <option>15:30</option>
+                                                <option>16:00</option> 
+                                                <option>16:30</option>
+                                                <option>17:00</option>
+                                            </select> 
+                                        </form> 
+                                    </td>
+                                </tr>
 
                             </tbody>
-                    </table>
+                        </table>
+                    </div>
+
+                    <div class="review-payment">
+                        <h2>Bestell&uuml;bersicht</h2>
+                    </div>
+
+                    <div class="table-responsive cart_info">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr class="cart_menu">
+                                    <td class="image">Posten</td>
+                                    <td class="description">Beschreibung</td>
+                                    <td class="total">Mietzins</td>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyOrder">
+                            <div id="cart-products">
+                                ${requestScope.order.getBestellView()}
+
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                    <td colspan="2">
+                                        <table class="table table-condensed total-result">
+                                            <tr>
+                                                <td>Bestellsumme</td>
+                                                <td><p id="cost"></p></td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <td>
+                                    <button class="btn btn-primary" onclick="createOrder()">Kostenpflichtig bestellen</button>
+                                </td>
+
+                                </tbody>
+                        </table>
+                    </div>
+
                 </div>
-                
-            </div>
         </section> <!--/#cart_items-->
-        
+
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -260,139 +258,159 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
-            $(function () {
-                $("#fromDate").datepicker({
-                    minDate: new Date(),
-                    dateFormat: "dd.mm.yy"
-                });
-            });
-            $(function () {
-                $("#tillDate").datepicker({
-                    minDate: new Date(),
-                    dateFormat: "dd.mm.yy"
-                });
-            });
+                                        $(function () {
+                                            $("#fromDate").datepicker({
+                                                minDate: new Date(),
+                                                dateFormat: "dd.mm.yy"
+                                            });
+                                        });
+                                        $(function () {
+                                            $("#tillDate").datepicker({
+                                                minDate: new Date(),
+                                                dateFormat: "dd.mm.yy"
+                                            });
+                                        });
 
-            function calculateCost() {
-                var rent = '<%= session.getAttribute("rent")%>';
+                                        function calculateCost() {
+                                            var rent = '<%= session.getAttribute("rent")%>';
 
-                var from = getFrom();
-                var till = getTill();
+                                            var from = getFrom();
+                                            var till = getTill();
 
-                /* Calculate the final costs */
-                var diff = Math.abs(till - from);
-                diff = diff / 1000 / 60 / 60 / 24;
-                diff = Math.ceil(diff);
-                var cost = diff * rent;
-                cost = cost.toFixed(2);
-                $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
-            
-            }
+                                            /* Calculate the final costs */
+                                            var diff = Math.abs(till - from);
+                                            diff = diff / 1000 / 60 / 60 / 24;
+                                            diff = Math.ceil(diff);
+                                            var cost = diff * rent;
+                                            cost = cost.toFixed(2);
+                                            $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
 
-            function validate() {
-                var from = document.getElementById('fromDate');
-                var till = document.getElementById('tillDate');
-                if (from.value.length === 0 || till.value.length === 0) {
-                    alert("Bitte geben Sie einen korrekten Zeitraum an.");
-                } else {
-                    parent.createOrder(getFrom(), getTill());
-                }
-            }
+                                        }
 
-            function getFrom() {
-                /* Get the 'timestamp' attribute for the order */
-                var fd = $('#fromDate').val();
-                var ft = $('#fromTime').val();
+                                        function validateTime() {
+                                            var from = document.getElementById('fromDate');
+                                            var till = document.getElementById('tillDate');
+                                            if (from.value.length === 0 || till.value.length === 0) {
+                                                alert("Bitte geben Sie einen korrekten Zeitraum an.");
+                                                return false;
+                                            }
+                                            return true;
+                                        }
 
-                var splitfromdate = fd.split('.');
-                var splitfromtime = ft.split(':');
+                                        function getFrom() {
+                                            /* Get the 'timestamp' attribute for the order */
+                                            var fd = $('#fromDate').val();
+                                            var ft = $('#fromTime').val();
 
-                var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
-                return from;
-            }
-            function getTill() {
-                /* Get the 'timestamp' attributes for the order */
-                var td = $('#tillDate').val();
-                var tt = $('#tillTime').val();
+                                            var splitfromdate = fd.split('.');
+                                            var splitfromtime = ft.split(':');
 
-                var splittilldate = td.split('.');
-                var splittilltime = tt.split(':');
+                                            var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
+                                            return from;
+                                        }
+                                        function getTill() {
+                                            /* Get the 'timestamp' attributes for the order */
+                                            var td = $('#tillDate').val();
+                                            var tt = $('#tillTime').val();
 
-                var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
-                return till;
-            }
-            function init() {
-                isUserLoggedIn();
-            }
+                                            var splittilldate = td.split('.');
+                                            var splittilltime = tt.split(':');
 
-            function isUserLoggedIn() {
-            var user = '<%= session.getAttribute("User")%>';
-            if (user !== null && user !== "" && user !== "null") {
+                                            var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
+                                            return till;
+                                        }
+                                        function init() {
+                                            isUserLoggedIn();
+                                        }
 
-                var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
-                document.getElementById('liLoginout').innerHTML = liLogin;
+                                        function isUserLoggedIn() {
+                                            var user = '<%= session.getAttribute("User")%>';
+                                            if (user !== null && user !== "" && user !== "null") {
 
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        var data = xhr.responseText;
-                        if (data.indexOf("MitarbeiterNR -") === -1) {
+                                                var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
+                                                document.getElementById('liLoginout').innerHTML = liLogin;
 
-                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
-                            document.getElementById('liCheckout').innerHTML = liCheckout;
+                                                var xhr = new XMLHttpRequest();
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState === 4) {
+                                                        var data = xhr.responseText;
+                                                        if (data.indexOf("MitarbeiterNR -") === -1) {
 
-                            var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
-                            document.getElementById('liAccount').innerHTML = liAccount;
+                                                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                            document.getElementById('liCheckout').innerHTML = liCheckout;
 
-                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                        } else {
-                            var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
-                            document.getElementById('liCheckout').innerHTML = liCheckout;
+                                                            var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                            document.getElementById('liAccount').innerHTML = liAccount;
 
-                            var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
-                            document.getElementById('liAccount').innerHTML = liAccount;
+                                                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                        } else {
+                                                            var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                                                            document.getElementById('liCheckout').innerHTML = liCheckout;
 
-                            var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
-                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                        }
-                    }
-                };
-                xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
-                xhr.send(null);
-                
-                var xhru = new XMLHttpRequest();
-                xhru.onreadystatechange = function () {
-                    if (xhru.readyState === 4) {
-                        var data = xhru.responseText;
-                        var items = data.split(',');
-                        document.getElementById('firstName').value = items[0];
-                        document.getElementById('lastName').value = items[1];
-                        document.getElementById('organisation').value = items[2];
-                        document.getElementById('place').value = items[3];
-                        document.getElementById('postalCode').value = items[4];
-                        document.getElementById('streat').value = items[5];
-                        document.getElementById('houseNumber').value = items[6];
-                        document.getElementById('telephone').value = items[7];
-                        document.getElementById('mobilephone').value = items[8];
-                    }
-                };
-                xhru.open('GET', '/HipsterRentalCorp/GetUserDataServlet', true);
-                xhru.send(null);
-            } else {
-                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
-                document.getElementById('liCheckout').innerHTML = liCheckout;
+                                                            var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                            document.getElementById('liAccount').innerHTML = liAccount;
 
-                var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
-                document.getElementById('liLoginout').innerHTML = liLogin;
+                                                            var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                                                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                        }
+                                                    }
+                                                };
+                                                xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
+                                                xhr.send(null);
 
-                var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
-                document.getElementById('liAccount').innerHTML = liAccount;
+                                                var xhru = new XMLHttpRequest();
+                                                xhru.onreadystatechange = function () {
+                                                    if (xhru.readyState === 4) {
+                                                        var data = xhru.responseText;
+                                                        var items = data.split(',');
+                                                        document.getElementById('firstName').innerHTML = items[0];
+                                                        document.getElementById('lastName').innerHTML = items[1];
+                                                        document.getElementById('organisation').innerHTML = items[2];
+                                                        document.getElementById('place').innerHTML = items[3];
+                                                        document.getElementById('postalCode').innerHTML = items[4];
+                                                        document.getElementById('streat').innerHTML = items[5];
+                                                        document.getElementById('houseNumber').innerHTML = items[6];
+                                                        document.getElementById('telephone').innerHTML = items[7];
+                                                        document.getElementById('mobilephone').innerHTML = items[8];
+                                                    }
+                                                };
+                                                xhru.open('GET', '/HipsterRentalCorp/GetUserDataServlet', true);
+                                                xhru.send(null);
+                                            } else {
+                                                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                document.getElementById('liCheckout').innerHTML = liCheckout;
 
-                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-            }
-        }
+                                                var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
+                                                document.getElementById('liLoginout').innerHTML = liLogin;
+
+                                                var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
+                                                document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                            }
+                                        }
+
+                                        function createOrder() {
+                                            var checkCart = document.getElementById('tbodyOrder').getElementsByTagName("tr").length - 3;
+                                            if (checkCart > 0) {
+                                                var checkTime = validateTime();
+                                                if (checkTime === true) {
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.onreadystatechange = function () {
+                                                        if (xhr.readyState === 4) {
+                                                            var data = xhr.responseText;
+                                                            if (data === "success") {
+                                                                window.open("checkoutDone.jsp", "_self")
+                                                            }
+                                                        }
+                                                    };
+                                                    xhr.open('GET', '/HipsterRentalCorp/CreateOrderServlet?from=' + getFrom() + '&till=' + getTill(), true);
+                                                    xhr.send(null);
+                                                }
+                                            }
+                                        }
 
         </script>
     </body>

@@ -88,7 +88,13 @@ public abstract class Orders {
         return packages;
     }
 
-    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guestNumber) {
+    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
+        String guestNumber = null;
+        if (guest != null) {
+            String[] g = guest.split(",");
+            User.addGuest(g[1], g[2], g[0], g[5], g[6], g[7], g[8], g[9], g[3], g[4]);
+            guestNumber = User.getGuest(g[0]).getGastNR();
+        }
         Bestellung b = shoppingCart.erzeugeBestellung(from, till);
 
         Connection con = Connector.getConnection();
@@ -98,9 +104,9 @@ public abstract class Orders {
                 ps.setString(1, b.getBestellNR());
                 ps.setString(2, b.getVon());
                 ps.setString(3, b.getBis());
-                ps.setString(4, (userEmail==null||userEmail.equals("")||userEmail.equals("null"))?null:User.getCustomer(userEmail).getKundenNR());
+                ps.setString(4, (userEmail == null || userEmail.equals("") || userEmail.equals("null")) ? null : User.getCustomer(userEmail).getKundenNR());
                 ps.setString(5, null);
-                ps.setString(6, (guestNumber==null||guestNumber.equals("")||guestNumber.equals("null"))?null:guestNumber);
+                ps.setString(6, (guestNumber == null || guestNumber.equals("") || guestNumber.equals("null")) ? null : guestNumber);
                 ps.executeUpdate();
 
                 for (Produkt p : b.getProdukte()) {

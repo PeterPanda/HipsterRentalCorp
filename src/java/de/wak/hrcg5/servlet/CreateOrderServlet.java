@@ -11,8 +11,6 @@ import de.wak.hrcg5.database.ShoppingCart;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,17 +20,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-@WebServlet(name = "CreateOrder", urlPatterns = {"/CreateOrder"})
-public class CreateOrder extends HttpServlet {
-
-    private ServletContext context;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.context = config.getServletContext();
-    }
+@WebServlet(name = "CreateOrderServlet", urlPatterns = {"/CreateOrderServlet"})
+public class CreateOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,10 +42,10 @@ public class CreateOrder extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateOrder</title>");
+            out.println("<title>Servlet CreateOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateOrder at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,25 +63,30 @@ public class CreateOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
 
         String userEmail = (String) session.getAttribute("User");
-        String guestNumber = (String) session.getAttribute("Guest");
+        String guest = (String)request.getParameter("guest"); 
+        
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
         String from = NumberHelper.dateParser((String) request.getParameter("from"));
         String till = NumberHelper.dateParser((String) request.getParameter("till"));
 
-        if (Orders.createOrder(from, till, shoppingCart, userEmail, guestNumber)) {
+        String msg = null;
+        if (Orders.createOrder(from, till, shoppingCart, userEmail, guest)) {
             if (ShoppingCart.clearShoppingCart(userEmail)) {
                 session.setAttribute("rent", null);
                 request.setAttribute("shoppingCart", null);
-                context.getRequestDispatcher("/Order/OrderFinished.jsp").forward(request, response);
+                msg = "success";
             }
         } else {
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            msg = "failure";
         }
+        
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(msg);
     }
 
     /**

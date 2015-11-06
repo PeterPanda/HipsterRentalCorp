@@ -1,18 +1,11 @@
-<%-- 
-    Document   : login
-    Created on : 04.11.2015, 15:47:40
-    Author     : Jan
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Login | Hipster Rental</title>
+        <title>Bestellung abgeschlossen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -29,7 +22,13 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-    </head>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+
+    </head><!--/head-->
+
     <body onload="init()">
         <header id="header"><!--header-->
 
@@ -63,46 +62,24 @@
 
         </header><!--/header-->
 
-        <section id="form"><!--form-->
+        <section id="cart_items">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-1">
-                        <div class="login-form"><!--login form-->
-                            <h2>Einloggen in ihr Benutzerkonto!</h2>
-                            <form  action="/HipsterRentalCorp/loginServlet" method="post">
-                                <input type="email" name="email" placeholder="Email Addresse" />
-                                <input type="password" name="password" placeholder="Passwort" />
-                                <button type="submit" class="btn btn-default">Anmelden</button>
-                            </form>
-                        </div><!--/login form-->
-                    </div>
-                    <div class="col-sm-1">
-                        <h2 class="or">oder</h2>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>Als Kunde registrieren!</h2>
-                            <form action="/HipsterRentalCorp/RegisterNewUserServlet" method="post">
-                                <input type="email" name="email" required=true placeholder="Email Addresse *"/>
-                                <input type="password" name="password" required=true placeholder="Passwort *"/>
-                                <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
-                                <input type="text" name="firstName" required=true placeholder="Vorname *" />
-                                <input type="text" name="lastName" required=true placeholder="Nachname *" />
-                                <input type="text" name="organisation" placeholder="Organisation" />
-                                <input type="text" name="place" required=true placeholder="Ort *" />
-                                <input type="text" name="postalCode" required=true placeholder="PLZ *" />
-                                <input type="text" name="streat" required=true placeholder="Stra&szlig;e *" />
-                                <input type="text" name="houseNumber" required=true placeholder="Hausnummer *" />
-                                <input type="text" name="telephone" required=true placeholder="Telefonnummer *" />
-                                <input type="text" name="mobilephone" placeholder="Handynummer" />
-                                <button type="submit" class="btn btn-default">Registrieren</button>
-                            </form>
-                        </div><!--/sign up form-->
-                    </div>
-                </div>
-            </div>
-        </section><!--/form-->
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="index.jsp">Home</a></li>
+                        <li class="active">Kasse</li>
+                    </ol>
+                </div><!--/breadcrums-->
 
+                <div class="step-one">
+                    <h2 class="heading">Bestellung Abgeschlossen</h2>
+                </div>
+
+                <div class="register-req">
+                    <p>Ihre Bestellung wird von unseren Sachbearbeitern in Empfang genommen. Sie erhalten eine Nachricht, sobald Ihre Bestellung freigegeben ist.</p>
+                </div><!--/register-req-->
+            </div>
+        </section> <!--/#cart_items-->
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -111,7 +88,7 @@
                         <div class="col-sm-2">
                             <div class="companyinfo">
                                 <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                <p>Veranstaltungstechnik fÃ¼r Schleswig-Holstein</p>
+                                <p>Veranstaltungstechnik für Schleswig-Holstein</p>
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -119,7 +96,7 @@
                         <div class="col-sm-3">
                             <div class="address">
                                 <img src="images/home/map.png" alt="" />
-                                <p>Zum SchlÃ¼sbeker Moor 50 | 24145 Kiel</p>
+                                <p>Zum Schlüsbeker Moor 50 | 24145 Kiel</p>
                             </div>
                         </div>
                     </div>
@@ -140,16 +117,94 @@
 
 
         <script src="js/jquery.js"></script>
-        <script src="js/price-range.js"></script>
-        <script src="js/jquery.scrollUp.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.scrollUp.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
-            function init(){
-                isUserLoggedIn();
+        $(function () {
+            $("#fromDate").datepicker({
+                minDate: new Date(),
+                dateFormat: "dd.mm.yy"
+            });
+        });
+        $(function () {
+            $("#tillDate").datepicker({
+                minDate: new Date(),
+                dateFormat: "dd.mm.yy"
+            });
+        });
+
+        function calculateCost() {
+            var rent = '<%= session.getAttribute("rent")%>';
+
+            var from = getFrom();
+            var till = getTill();
+
+            /* Calculate the final costs */
+            var diff = Math.abs(till - from);
+            diff = diff / 1000 / 60 / 60 / 24;
+            diff = Math.ceil(diff);
+            var cost = diff * rent;
+            cost = cost.toFixed(2);
+            $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
+        }
+
+        function validateTime() {
+            var from = document.getElementById('fromDate');
+            var till = document.getElementById('tillDate');
+            if (from.value.length === 0 || till.value.length === 0) {
+                alert("Bitte geben Sie einen korrekten Zeitraum an.");
+                return false;
             }
-            function isUserLoggedIn() {
+            return true;
+        }
+        function validateGuest() {
+            var email = document.getElementById('email');
+            var firstName = document.getElementById('firstName');
+            var lastName = document.getElementById('lastName');
+            var telephone = document.getElementById('telephone');
+            var place = document.getElementById('place');
+            var postalCode = document.getElementById('postalCode');
+            var streat = document.getElementById('streat');
+            var houseNumber = document.getElementById('houseNumber');
+
+            if (email.value.length === 0 || firstName.value.length === 0 || lastName.value.length === 0 || telephone.value.length === 0 || place.value.length === 0 || postalCode.value.length === 0 || streat.value.length === 0 || houseNumber.value.length === 0) {
+                alert("Bitte überprüfen Sie Ihre Kontaktdaten.");
+                return false;
+            }
+            return true;
+
+        }
+        function getFrom() {
+            /* Get the 'timestamp' attribute for the order */
+            var fd = $('#fromDate').val();
+            var ft = $('#fromTime').val();
+
+            var splitfromdate = fd.split('.');
+            var splitfromtime = ft.split(':');
+
+            var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
+            return from;
+        }
+        function getTill() {
+            /* Get the 'timestamp' attributes for the order */
+            var td = $('#tillDate').val();
+            var tt = $('#tillTime').val();
+
+            var splittilldate = td.split('.');
+            var splittilltime = tt.split(':');
+
+            var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
+            return till;
+        }
+        function init() {
+            isUserLoggedIn();
+        }
+
+        function isUserLoggedIn() {
             var user = '<%= session.getAttribute("User")%>'
             if (user !== null && user !== "" && user !== "null") {
 
@@ -198,7 +253,38 @@
                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
         }
+        function createOrder() {
+            var checkCart = document.getElementById('tbodyOrder').getElementsByTagName("tr").length - 3;
+            if (checkCart > 0) {
+                var checkTime = validateTime();
+                if (checkTime === true) {
+                    var checkGuest = validateGuest();
+                    if (checkGuest === true) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4) {
+                                var data = xhr.responseText;
 
+                            }
+                        };
+
+                        var email = document.getElementById('email');
+                        var firstName = document.getElementById('firstName');
+                        var lastName = document.getElementById('lastName');
+                        var telephone = document.getElementById('telephone');
+                        var mobilephone = document.getElementById('mobilephone');
+                        var organisation = document.getElementById('organisation');
+                        var place = document.getElementById('place');
+                        var postalCode = document.getElementById('postalCode');
+                        var streat = document.getElementById('streat');
+                        var houseNumber = document.getElementById('houseNumber');
+                        var guest = email + "," + firstName + "," + lastName + "," + telephone + "," + mobilephone + "," + organisation + "," + place + "," + postalCode + "," + streat + "," + houseNumber;
+                        xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + getFrom() + '&till=' + getTill() + '&guest=' + guest, true);
+                        xhr.send(null);
+                    }
+                }
+            }
+        }
         </script>
     </body>
 </html>
