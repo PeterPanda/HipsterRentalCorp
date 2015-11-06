@@ -80,7 +80,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="signup-form"><!--sign up form-->
-                                    <h2>Produkt anlegen</h2>
+                                    <h2>Kategorie anlegen</h2>
                                     <form action="/HipsterRentalCorp/AddCategoryServlet" method="post">
                                         <input type="text" name="name" required=true placeholder="Name *"/>
                                         <select id="selectCategory" name="subcategory">

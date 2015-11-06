@@ -23,122 +23,9 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
-        <script>
-            $(function () {
-                $("#fromDate").datepicker({
-                    minDate: new Date(),
-                    dateFormat: "dd.mm.yy"
-                });
-            });
-            $(function () {
-                $("#tillDate").datepicker({
-                    minDate: new Date(),
-                    dateFormat: "dd.mm.yy"
-                });
-            });
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-            function calculateCost() {
-                var rent = '<%= session.getAttribute("rent")%>';
 
-                var from = getFrom();
-                var till = getTill();
-
-                /* Calculate the final costs */
-                var diff = Math.abs(till - from);
-                diff = diff / 1000 / 60 / 60 / 24;
-                diff = Math.ceil(diff);
-                var cost = diff * rent;
-                cost = cost.toFixed(2);
-                $('#cost').html("<p class='cart_total_price'>"+cost + "&euro;</p>");
-            }
-
-            function validate() {
-                var from = document.getElementById('fromDate');
-                var till = document.getElementById('tillDate');
-                if (from.value.length === 0 || till.value.length === 0) {
-                    alert("Bitte geben Sie einen korrekten Zeitraum an.");
-                } else {
-                    parent.createOrder(getFrom(), getTill());
-                }
-            }
-
-            function getFrom() {
-                /* Get the 'timestamp' attribute for the order */
-                var fd = $('#fromDate').val();
-                var ft = $('#fromTime').val();
-
-                var splitfromdate = fd.split('.');
-                var splitfromtime = ft.split(':');
-
-                var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
-                return from;
-            }
-            function getTill() {
-                /* Get the 'timestamp' attributes for the order */
-                var td = $('#tillDate').val();
-                var tt = $('#tillTime').val();
-
-                var splittilldate = td.split('.');
-                var splittilltime = tt.split(':');
-
-                var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
-                return till;
-            }
-            function init() {
-                isUserLoggedIn();
-            }
-
-            function isUserLoggedIn() {
-                var user = '<%= session.getAttribute("User")%>'
-                if (user !== null && user !== "" && user !== "null") {
-
-                    var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
-                    document.getElementById('liLoginout').innerHTML = liLogin;
-
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
-                            var data = xhr.responseText;
-                            if (data.indexOf("MitarbeiterNR -") === -1) {
-
-                                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
-                                document.getElementById('liCheckout').innerHTML = liCheckout;
-
-                                var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
-                                document.getElementById('liAccount').innerHTML = liAccount;
-
-                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                            } else {
-                                var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
-                                document.getElementById('liCheckout').innerHTML = liCheckout;
-
-                                var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
-                                document.getElementById('liAccount').innerHTML = liAccount;
-
-                                var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
-                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                            }
-                        }
-                    };
-                    xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
-                    xhr.send(null);
-                } else {
-                    var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
-                    document.getElementById('liCheckout').innerHTML = liCheckout;
-
-                    var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
-                    document.getElementById('liLoginout').innerHTML = liLogin;
-
-                    var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
-                    document.getElementById('liAccount').innerHTML = liAccount;
-
-                    var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                    document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                }
-            }
-
-        </script>
 
     </head><!--/head-->
 
@@ -204,9 +91,12 @@
                                 <a class="btn btn-primary" href="">Anmelden</a>
                             </div>
                         </div>
+                        <div class="col-sm-1">
+                            <h2 class="or">oder</h2>
+                        </div>
                         <div class="col-sm-5 clearfix">
                             <div class="bill-to">
-                                <p>Benötigte Angaben von Gästen</p>
+                                <p>Bestellen Sie als Gast</p>
                                 <div class="form-one">
                                     <form>
                                         <input type="text" name="companyName" placeholder="Firmenname">
@@ -227,7 +117,9 @@
                         </div>				
                     </div>
                 </div>
-
+                
+                <br>
+                
                 <div>
                     <p>Wählen Sie den Zeitraum Ihrer Bestellung:</p>
                     <table>
@@ -313,7 +205,7 @@
                         </thead>
                         <tbody>
                         <div id="cart-products">
-                            ${requestScope.order.getItemsView()}
+                            ${requestScope.order.getBestellView()}
 
                             <tr>
                                 <td colspan="2">&nbsp;</td>
@@ -377,5 +269,123 @@
         <script src="js/jquery.scrollUp.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+                                            $(function () {
+                                                $("#fromDate").datepicker({
+                                                    minDate: new Date(),
+                                                    dateFormat: "dd.mm.yy"
+                                                });
+                                            });
+                                            $(function () {
+                                                $("#tillDate").datepicker({
+                                                    minDate: new Date(),
+                                                    dateFormat: "dd.mm.yy"
+                                                });
+                                            });
+
+                                            function calculateCost() {
+                                                var rent = '<%= session.getAttribute("rent")%>';
+
+                                                var from = getFrom();
+                                                var till = getTill();
+
+                                                /* Calculate the final costs */
+                                                var diff = Math.abs(till - from);
+                                                diff = diff / 1000 / 60 / 60 / 24;
+                                                diff = Math.ceil(diff);
+                                                var cost = diff * rent;
+                                                cost = cost.toFixed(2);
+                                                $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
+                                            }
+
+                                            function validate() {
+                                                var from = document.getElementById('fromDate');
+                                                var till = document.getElementById('tillDate');
+                                                if (from.value.length === 0 || till.value.length === 0) {
+                                                    alert("Bitte geben Sie einen korrekten Zeitraum an.");
+                                                } else {
+                                                    parent.createOrder(getFrom(), getTill());
+                                                }
+                                            }
+
+                                            function getFrom() {
+                                                /* Get the 'timestamp' attribute for the order */
+                                                var fd = $('#fromDate').val();
+                                                var ft = $('#fromTime').val();
+
+                                                var splitfromdate = fd.split('.');
+                                                var splitfromtime = ft.split(':');
+
+                                                var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
+                                                return from;
+                                            }
+                                            function getTill() {
+                                                /* Get the 'timestamp' attributes for the order */
+                                                var td = $('#tillDate').val();
+                                                var tt = $('#tillTime').val();
+
+                                                var splittilldate = td.split('.');
+                                                var splittilltime = tt.split(':');
+
+                                                var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
+                                                return till;
+                                            }
+                                            function init() {
+                                                isUserLoggedIn();
+                                            }
+
+                                            function isUserLoggedIn() {
+                                                var user = '<%= session.getAttribute("User")%>'
+                                                if (user !== null && user !== "" && user !== "null") {
+
+                                                    var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = liLogin;
+
+                                                    var xhr = new XMLHttpRequest();
+                                                    xhr.onreadystatechange = function () {
+                                                        if (xhr.readyState === 4) {
+                                                            var data = xhr.responseText;
+                                                            if (data.indexOf("MitarbeiterNR -") === -1) {
+
+                                                                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                                document.getElementById('liCheckout').innerHTML = liCheckout;
+
+                                                                var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                                document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                            } else {
+                                                                var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                                                                document.getElementById('liCheckout').innerHTML = liCheckout;
+
+                                                                var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                                document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                            }
+                                                        }
+                                                    };
+                                                    xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
+                                                    xhr.send(null);
+                                                } else {
+                                                    var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                    document.getElementById('liCheckout').innerHTML = liCheckout;
+
+                                                    var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
+                                                    document.getElementById('liLoginout').innerHTML = liLogin;
+
+                                                    var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
+                                                    document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                    var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                    document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                }
+                                            }
+
+        </script>
     </body>
 </html>

@@ -77,11 +77,11 @@
                         </div><!--/login form-->
                     </div>
                     <div class="col-sm-1">
-                        <h2 class="or">OR</h2>
+                        <h2 class="or">oder</h2>
                     </div>
                     <div class="col-sm-4">
                         <div class="signup-form"><!--sign up form-->
-                            <h2>Benutzer registrieren!</h2>
+                            <h2>Als Kunde registrieren!</h2>
                             <form action="/HipsterRentalCorp/RegisterNewUserServlet" method="post">
                                 <input type="email" name="email" required=true placeholder="Email Addresse *"/>
                                 <input type="password" name="password" required=true placeholder="Passwort *"/>

@@ -130,10 +130,11 @@
         function init() {
             initCategory();
             isUserLoggedIn();
+            document.getElementById('divContent').innerHTML = "Willkommen";
         }
 
         function isUserLoggedIn() {
-            var user = '<%= session.getAttribute("User")%>'
+            var user = '<%= session.getAttribute("User")%>';
             if (user !== null && user !== "" && user !== "null") {
 
                 var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';

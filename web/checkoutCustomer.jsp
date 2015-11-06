@@ -23,6 +23,134 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        
+
+    </head><!--/head-->
+
+    <body onload="init()">
+        <header id="header"><!--header-->
+
+            <div class="header-middle"><!--header-middle-->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="logo pull-left">
+                                <a href="index.html"><img src="images/home/logo.png" alt="" />
+                                    <div class="companyinfo">
+                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="shop-menu pull-right">
+                                <ul class="nav navbar-nav">
+                                    <li id="liAccount"</li>
+                                    <li id="liCheckout"></li>
+                                    <li id="liShoppingCart"></li>
+                                    <li id="liLoginout"></li>
+                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/header-middle-->
+
+
+        </header><!--/header-->
+
+        <section id="cart_items">
+            <div class="container">
+                <div class="breadcrumbs">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Home</a></li>
+                        <li class="active">Kasse</li>
+                    </ol>
+                </div><!--/breadcrums-->
+
+                <div class="review-payment">
+                    <h2>Bestellübersicht</h2>
+                </div>
+
+                <div class="table-responsive cart_info">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr class="cart_menu">
+                                <td class="image">Posten</td>
+                                <td class="description">Beschreibung</td>
+                                <td class="total">Preis</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <div id="cart-products">
+                            ${requestScope.order.getBestellView()}
+
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                                <td colspan="2">
+                                    <table class="table table-condensed total-result">
+                                        <tr>
+                                            <td>Warenkorb Summe</td>
+                                            <td><p id="cost"></p></td>
+                                        </tr>
+
+                                    </table>
+                                </td>
+                            </tr>
+                            <td>
+                                <a class="btn btn-primary" href="">Kostenpflichtig bestellen</a>
+                            </td>
+
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section> <!--/#cart_items-->
+
+        <footer id="footer"><!--Footer-->
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="companyinfo">
+                                <h2><span>H</span>ipster <span>R</span>ental</h2>
+                                <p>Veranstaltungstechnik für Schleswig-Holstein</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="address">
+                                <img src="images/home/map.png" alt="" />
+                                <p>Zum Schlüsbeker Moor 50 | 24145 Kiel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <p class="pull-left">Copyright Â© 2015 Hipster Rental Corp.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                    </div>
+                </div>
+            </div>
+
+        </footer><!--/Footer-->
+
+
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="js/jquery.prettyPhoto.js"></script>
+        <script src="js/main.js"></script>    
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
             $(function () {
                 $("#fromDate").datepicker({
@@ -139,129 +267,5 @@
         }
 
         </script>
-
-    </head><!--/head-->
-
-    <body onload="init()">
-        <header id="header"><!--header-->
-
-            <div class="header-middle"><!--header-middle-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" />
-                                    <div class="companyinfo">
-                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="shop-menu pull-right">
-                                <ul class="nav navbar-nav">
-                                    <li id="liAccount"</li>
-                                    <li id="liCheckout"></li>
-                                    <li id="liShoppingCart"></li>
-                                    <li id="liLoginout"></li>
-                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!--/header-middle-->
-
-
-        </header><!--/header-->
-
-        <section id="cart_items">
-            <div class="container">
-                <div class="breadcrumbs">
-                    <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
-                        <li class="active">Kasse</li>
-                    </ol>
-                </div><!--/breadcrums-->
-
-                <div class="review-payment">
-                    <h2>Bestellübersicht</h2>
-                </div>
-
-                <div class="table-responsive cart_info">
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr class="cart_menu">
-                                <td class="image">Posten</td>
-                                <td class="description">Beschreibung</td>
-                                <td class="total">Preis</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <div id="cart-products">
-                            ${requestScope.order.getItemsView()}
-
-                            <tr>
-                                <td colspan="2">&nbsp;</td>
-                                <td colspan="2">
-                                    <table class="table table-condensed total-result">
-                                        <tr>
-                                            <td>Warenkorb Summe</td>
-                                            <td><p id="cost"></p></td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                            </tr>
-                            <td>
-                                <a class="btn btn-primary" href="">Kostenpflichtig bestellen</a>
-                            </td>
-
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </section> <!--/#cart_items-->
-
-        <footer id="footer"><!--Footer-->
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <div class="companyinfo">
-                                <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                <p>Veranstaltungstechnik für Schleswig-Holstein</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="address">
-                                <img src="images/home/map.png" alt="" />
-                                <p>Zum Schlüsbeker Moor 50 | 24145 Kiel</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="row">
-                        <p class="pull-left">Copyright Â© 2015 Hipster Rental Corp.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-                    </div>
-                </div>
-            </div>
-
-        </footer><!--/Footer-->
-
-
-
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.scrollUp.min.js"></script>
-        <script src="js/jquery.prettyPhoto.js"></script>
-        <script src="js/main.js"></script>
     </body>
 </html>

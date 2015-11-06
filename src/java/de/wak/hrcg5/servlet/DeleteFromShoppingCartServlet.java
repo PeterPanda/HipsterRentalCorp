@@ -88,7 +88,7 @@ public class DeleteFromShoppingCartServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("User");
-        String toDeleteNumber = request.getParameter("deleteButton");
+        String toDeleteNumber = request.getParameter("toDeleteNumber");
         if (NumberHelper.isProductNumber(toDeleteNumber)) {
             ShoppingCart.deleteProduct(toDeleteNumber, userEmail);
         } else {
@@ -98,7 +98,7 @@ public class DeleteFromShoppingCartServlet extends HttpServlet {
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
         session.setAttribute("rent", shoppingCart.getMietzins());
         request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart/ShoppingCart.jsp").forward(request, response);
+        context.getRequestDispatcher("/ShoppingCart.jsp").forward(request, response);
     }
 
     /**
