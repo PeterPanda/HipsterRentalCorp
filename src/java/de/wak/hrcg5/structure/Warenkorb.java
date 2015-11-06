@@ -48,10 +48,7 @@ public class Warenkorb {
            sb.append("<td class='cart_total'>");
            sb.append("<p class='cart_total_price'>");       
            sb.append(p.getMietzins());
-           sb.append("</p>");
-           sb.append("</td>");
-           sb.append("<td class='cart_delete'>");
-           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
+           sb.append("&euro;</p>");
            sb.append("</td>");
            sb.append("</tr>");
            
@@ -70,10 +67,7 @@ public class Warenkorb {
            sb.append("<td class='cart_total'>");
            sb.append("<p class='cart_total_price'>");       
            sb.append(p.getMietzins());
-           sb.append("</p>");
-           sb.append("</td>");
-           sb.append("<td class='cart_delete'>");
-           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
+           sb.append("&euro;</p>");
            sb.append("</td>");
            sb.append("</tr>");
         }

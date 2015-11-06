@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Kundenportal | Hipster Rental</title>
+        <title>Kategorie anlegen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -62,28 +62,14 @@
 
 
         </header><!--/header-->
-
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                            <h2>Navigation</h2>
+                            <h2>Kategorie</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
-                                    </div>
+                                <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
 
@@ -92,9 +78,9 @@
 
                     <div class="col-sm-9 padding-right">
                         <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Bestellungen</h2>
+                            <h2 class="title text-center">Kategorie anlegen</h2>
                             <div id="divContent">
-
+                                Die Kategorie wurde erfolgreich angelegt.
                             </div>
                         </div><!--features_items-->
 
@@ -147,6 +133,7 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
+            initCategory();
             isUserLoggedIn();
         }
 

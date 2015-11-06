@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Kundenportal | Hipster Rental</title>
+        <title>Kategorie anlegen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -62,7 +62,6 @@
 
 
         </header><!--/header-->
-
         <section>
             <div class="container">
                 <div class="row">
@@ -70,39 +69,31 @@
                         <div class="left-sidebar">
                             <h2>Navigation</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
-                                    </div>
+                                <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
 
                         </div>
                     </div>
 
-                    <div class="col-sm-9 padding-right">
-                        <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Bestellungen</h2>
-                            <div id="divContent">
-
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="signup-form"><!--sign up form-->
+                                    <h2>Produkt anlegen</h2>
+                                    <form action="/HipsterRentalCorp/AddCategoryServlet" method="post">
+                                        <input type="text" name="name" required=true placeholder="Name *"/>
+                                        <select id="selectCategory" name="subcategory">
+                                        </select> 
+                                        <button type="submit" class="btn btn-default">Anlegen</button>
+                                    </form>
+                                </div><!--/sign up form-->
                             </div>
-                        </div><!--features_items-->
-
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -147,7 +138,34 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
+            initCategory();
             isUserLoggedIn();
+            initCategorySelector();
+        }
+
+        function initCategorySelector() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var data = xhr.responseText;
+                    var items = data.split('|');
+                    var select = document.getElementById('selectCategory');
+
+                    for (var i = 0; i < items.length; i++) {
+                        var idandname = items[i].split(',');
+                        if (idandname[0] !== "") {
+
+                            var opt = document.createElement('option');
+                            opt.value = idandname[0];
+                            opt.text = idandname[1];
+                            select.add(opt);
+
+                        }
+                    }
+                }
+            };
+            xhr.open('GET', '/HipsterRentalCorp/CategorySelectorServlet', true);
+            xhr.send(null);
         }
 
         function isUserLoggedIn() {

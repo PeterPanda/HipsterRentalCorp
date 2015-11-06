@@ -42,8 +42,8 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li id="liAccount"></li>
-                                    <li><a href="#" onclick="loadCheckout();"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li id="liAccount"</li>
+                                    <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
@@ -63,45 +63,6 @@
                         <div class="left-sidebar">
                             <h2>Kategorie</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Lichttechnik
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="sportswear" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="">Beamer </a></li>
-                                                <li><a href="">Beleuchtung </a></li>
-                                                <li><a href="">Nebelmaschine </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Tontechnik
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="mens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="">CD-Player </a></li>
-                                                <li><a href="">Mischpulte</a></li>
-                                                <li><a href="">Verstärker</a></li>
-                                                <li><a href="">Lautsprecher</a></li>
-                                                <li><a href="">Mikrofone</a></li></ul>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
@@ -109,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-9 padding-right">
+                    <div class="col-sm-9 padding-right" id="divContent">
                         <div class="product-details"><!--product-details-->
                             <div class="col-sm-5">
                                 <div class="view-product">
@@ -247,12 +208,19 @@
                                                                     if (xhr.readyState === 4) {
                                                                         var data = xhr.responseText;
                                                                         if (data.indexOf("MitarbeiterNR -") === -1) {
+
+                                                                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                             var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                             document.getElementById('liAccount').innerHTML = liAccount;
 
-                                                                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
                                                                             document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                         } else {
+                                                                            var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                                                                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                             var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                             document.getElementById('liAccount').innerHTML = liAccount;
 
@@ -264,13 +232,16 @@
                                                                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                                                                 xhr.send(null);
                                                             } else {
+                                                                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                                document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                 var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                                                                 document.getElementById('liLoginout').innerHTML = liLogin;
 
                                                                 var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
                                                                 document.getElementById('liAccount').innerHTML = liAccount;
 
-                                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
                                                                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                             }
                                                         }

@@ -196,4 +196,8 @@ public abstract class NumberHelper {
         }
         return incementLastNumber(lastNumber);
     }
+
+    static String getNextKATEGORIENR() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
