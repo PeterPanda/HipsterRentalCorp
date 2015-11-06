@@ -69,9 +69,115 @@
                         <li class="active">Kasse</li>
                     </ol>
                 </div><!--/breadcrums-->
+               
+                
+                                <div class="step-one">
+                    <h2 class="heading">Persönliche Informationen</h2>
+                </div>
 
+                <div class="register-req">
+                    <p>Bitte melden Sie sich mit ihren Accountdaten an oder bestellen Sie als Gast</p>
+                </div><!--/register-req-->
+                <div class="shopper-informations">
+                    <div class="row">
+                         <div class="col-sm-5 clearfix">
+                                    <div class="bill-to">
+                                <div class="form-one">
+                                    <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
+                                            <b>Vorname: </b><input type="text" id="firstName" readonly="true" name="firstName" required=true placeholder="Vorname *" />
+                                            <b>Nachname: </b><input type="text" id="lastName" readonly="true" name="lastName" required=true placeholder="Nachname *" />
+                                            <b>Organisation: </b><input type="text" id="organisation" readonly="true" name="organisation" placeholder="Organisation" />
+                                            <b>Ort: </b><input type="text" id="place" name="place" readonly="true" required=true placeholder="Ort *" />
+                                            <b>Postleitzahl: </b><input type="text" id="postalCode" readonly="true" name="postalCode" required=true placeholder="PLZ *" />
+                                    </form>
+                                </div>
+                                <div class="form-two">
+                                    <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
+                                            <b>Straße: </b><input type="text" id="streat" name="streat" required=true placeholder="Stra&szlig;e *" />
+                                            <b>Hausnummer: </b><input type="text" id="houseNumber" readonly="true" name="houseNumber" required=true placeholder="Hausnummer *" />
+                                            <b>Telefonnummer: </b><input type="text" id="telephone" readonly="true" name="telephone" required=true placeholder="Telefonnummer *" />
+                                            <b>Handynummer: </b><input type="text" id="mobilephone" readonly="true" name="mobilephone" placeholder="Handynummer" />
+                                    </form>
+                                </div>
+                            </div>
+                               </div>
+                        </div>
+                </div>
+                
+                <br>
+                
+                <div>
+                    <p>Wählen Sie den Zeitraum Ihrer Bestellung:</p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Von:
+                                </td>
+                                <td>
+                                    <input type="date" id="fromDate" onchange="calculateCost()">
+                                </td>
+                                <td>
+                                    <form action="#"> 
+                                        <select id="fromTime" onchange="calculateCost()"> 
+                                            <option>06:00</option> 
+                                            <option>06:30</option> 
+                                            <option>07:00</option> 
+                                            <option>07:30</option>
+                                            <option>08:00</option> 
+                                            <option>08:30</option>
+                                            <option>09:00</option> 
+                                            <option>09:30</option>
+                                            <option>10:00</option> 
+                                            <option>10:30</option>
+                                            <option>11:00</option> 
+                                            <option>11:30</option>
+                                            <option>12:00</option> 
+                                            <option>12:30</option>
+                                            <option>13:00</option> 
+                                            <option>13:30</option>
+                                            <option>14:00</option> 
+                                            <option>14:30</option>
+                                            <option>15:00</option> 
+                                            <option>15:30</option>
+                                            <option>16:00</option> 
+                                            <option>16:30</option>
+                                            <option>17:00</option> 
+                                            <option>17:30</option>
+                                        </select> 
+                                    </form> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bis:
+                                </td>
+                                <td>
+                                    <input type="date" id="tillDate" onchange="calculateCost()">
+                                </td>
+                                <td>
+                                    <form action="#"> 
+                                        <select id="tillTime" onchange="calculateCost()"> 
+                                            <option>13:00</option> 
+                                            <option>13:30</option>
+                                            <option>14:00</option> 
+                                            <option>14:30</option>
+                                            <option>15:00</option> 
+                                            <option>15:30</option>
+                                            <option>16:00</option> 
+                                            <option>16:30</option>
+                                            <option>17:00</option>
+                                        </select> 
+                                    </form> 
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                
                 <div class="review-payment">
-                    <h2>Bestellübersicht</h2>
+                    <h2>Bestell&uuml;bersicht</h2>
                 </div>
 
                 <div class="table-responsive cart_info">
@@ -80,7 +186,7 @@
                             <tr class="cart_menu">
                                 <td class="image">Posten</td>
                                 <td class="description">Beschreibung</td>
-                                <td class="total">Preis</td>
+                                <td class="total">Mietzins</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,7 +198,7 @@
                                 <td colspan="2">
                                     <table class="table table-condensed total-result">
                                         <tr>
-                                            <td>Warenkorb Summe</td>
+                                            <td>Bestellsumme</td>
                                             <td><p id="cost"></p></td>
                                         </tr>
 
@@ -106,8 +212,10 @@
                             </tbody>
                     </table>
                 </div>
+                
             </div>
         </section> <!--/#cart_items-->
+        
 
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
@@ -177,7 +285,8 @@
                 diff = Math.ceil(diff);
                 var cost = diff * rent;
                 cost = cost.toFixed(2);
-                $('#cost').html(cost + ' â‚¬');
+                $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
+            
             }
 
             function validate() {
@@ -217,7 +326,7 @@
             }
 
             function isUserLoggedIn() {
-            var user = '<%= session.getAttribute("User")%>'
+            var user = '<%= session.getAttribute("User")%>';
             if (user !== null && user !== "" && user !== "null") {
 
                 var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
@@ -251,6 +360,25 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
+                
+                var xhru = new XMLHttpRequest();
+                xhru.onreadystatechange = function () {
+                    if (xhru.readyState === 4) {
+                        var data = xhru.responseText;
+                        var items = data.split(',');
+                        document.getElementById('firstName').value = items[0];
+                        document.getElementById('lastName').value = items[1];
+                        document.getElementById('organisation').value = items[2];
+                        document.getElementById('place').value = items[3];
+                        document.getElementById('postalCode').value = items[4];
+                        document.getElementById('streat').value = items[5];
+                        document.getElementById('houseNumber').value = items[6];
+                        document.getElementById('telephone').value = items[7];
+                        document.getElementById('mobilephone').value = items[8];
+                    }
+                };
+                xhru.open('GET', '/HipsterRentalCorp/GetUserDataServlet', true);
+                xhru.send(null);
             } else {
                 var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
                 document.getElementById('liCheckout').innerHTML = liCheckout;

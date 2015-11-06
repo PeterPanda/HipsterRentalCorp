@@ -200,7 +200,7 @@
                             <tr class="cart_menu">
                                 <td class="image">Posten</td>
                                 <td class="description">Beschreibung</td>
-                                <td class="total">Preis</td>
+                                <td class="total">Mietzins</td>
                             </tr>
                         </thead>
                         <tbody>
