@@ -141,7 +141,7 @@ public class Warenkorb {
     }
 
     public Bestellung erzeugeBestellung(String von, String bis) {
-        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis);
+        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis, null);
         b.getProdukte().addAll(this.produkte);
         b.getPakete().addAll(this.pakete);
         return b;

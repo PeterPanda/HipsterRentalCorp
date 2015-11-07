@@ -91,23 +91,21 @@
                     </div>
                     <section id="cart_items">
                         <div class="container">
-
-                            <h2 class="title text-center">Bestellungen</h2>
+                            <h2 class="title text-center">Bestellungsdetails</h2>
                             <div class="table-responsive cart_info">
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr class="cart_menu">
-                                            <td class="total">Bestellnummer</td>
-                                            <td class="description">Von</td>
-                                            <td class="description">Bis</td>
-                                            <td class="total">Kosten</td>
-                                            <td class="description">Freigegeben</td>
-                                            <td class="description">Stornieren</td>
+                                            <td class="image">Posten</td>
+                                            <td class="description">Beschreibung</td>
+                                            <td class="total">Preis</td>
+                                            <td></td>
                                         </tr>
                                     </thead>
-                                    <tbody id="orders">
+                                    <tbody>
 
-                                    <div>
+                                    <div id="cart-products">
+                                        ${requestScope.order.getBestellView()}
                                     </div>
                                     </tbody>
                                 </table>
