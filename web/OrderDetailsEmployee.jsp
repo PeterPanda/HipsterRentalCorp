@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Bestellungen | Hipster Rental</title>
+        <title>Kundenportal | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -62,6 +62,7 @@
 
 
         </header><!--/header-->
+
         <section>
             <div class="container">
                 <div class="row">
@@ -75,32 +76,30 @@
 
                         </div>
                     </div>
-
                     <section id="cart_items">
                         <div class="container">
-
-                            <h2 class="title text-center">Bestellungen</h2>
+                            <h2 class="title text-center">Bestellungsdetails</h2>
                             <div class="table-responsive cart_info">
                                 <table class="table table-condensed">
                                     <thead>
                                         <tr class="cart_menu">
-                                            <td class="total">Bestellnummer</td>
-                                            <td class="description">Von</td>
-                                            <td class="description">Bis</td>
-                                            <td class="total">Kosten</td>
-                                            <td class="description">Freigegeben</td>
-                                            <td class="description">Freigabe erteilen</td>
+                                            <td class="image">Posten</td>
+                                            <td class="description">Beschreibung</td>
+                                            <td class="total">Preis</td>
+                                            <td></td>
                                         </tr>
                                     </thead>
-                                    <tbody id="orders">
+                                    <tbody>
 
-                                    <div>
+                                    <div id="cart-products">
+                                        ${requestScope.order.getBestellView()}
                                     </div>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </section> <!--/#cart_items-->
+
                 </div>
             </div>
         </section>
@@ -149,9 +148,8 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
-            initCategory();
             isUserLoggedIn();
-            loadOrders();
+            loadCustomerOrders();
         }
 
         function isUserLoggedIn() {
@@ -204,7 +202,7 @@
             }
         }
 
-        function loadOrders() {
+        function loadCustomerOrders() {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
@@ -215,6 +213,7 @@
             xhr.open('GET', '/HipsterRentalCorp/LoadOrdersServlet', true);
             xhr.send(null);
         }
+
 
         function initLogin() {
             var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";

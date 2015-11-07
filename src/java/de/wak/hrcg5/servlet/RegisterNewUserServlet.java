@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,12 +23,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "RegisterNewUserServlet", urlPatterns = {"/RegisterNewUserServlet"})
 public class RegisterNewUserServlet extends HttpServlet {
+
     private ServletContext context;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         this.context = config.getServletContext();
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +48,7 @@ public class RegisterNewUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegisterNewUserServlet</title>");            
+            out.println("<title>Servlet RegisterNewUserServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet RegisterNewUserServlet at " + request.getContextPath() + "</h1>");
@@ -80,7 +83,7 @@ public class RegisterNewUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
@@ -93,11 +96,13 @@ public class RegisterNewUserServlet extends HttpServlet {
         String houseNumber = request.getParameter("houseNumber");
         String telephone = request.getParameter("telephone");
         String mobilephone = request.getParameter("mobilephone");
-        
-        if(User.addCustomer(firstName, lastName, email, password, organisation, place, postalCode, streat, houseNumber, telephone, mobilephone)){
-            context.getRequestDispatcher("/RegistrationForm/CustomerAdded.jsp").forward(request, response);
+
+        if (User.addCustomer(firstName, lastName, email, password, organisation, place, postalCode, streat, houseNumber, telephone, mobilephone)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("User", email);
+            context.getRequestDispatcher("/index.jsp").forward(request, response);
         }
-        
+
     }
 
     /**

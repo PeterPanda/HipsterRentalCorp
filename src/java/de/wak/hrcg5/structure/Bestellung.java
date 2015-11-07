@@ -43,15 +43,15 @@ public class Bestellung {
 
         Calendar cal = Calendar.getInstance();
 
-        cal.set(Integer.parseInt(von.split(" ")[0].split("-")[0]), Integer.parseInt(von.split(" ")[0].split("-")[1])-1, Integer.parseInt(von.split(" ")[0].split("-")[2]), Integer.parseInt(von.split(" ")[1].split(":")[0]), Integer.parseInt(von.split(" ")[1].split(":")[1]),0);
+        cal.set(Integer.parseInt(von.split(" ")[0].split("-")[0]), Integer.parseInt(von.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(von.split(" ")[0].split("-")[2]), Integer.parseInt(von.split(" ")[1].split(":")[0]), Integer.parseInt(von.split(" ")[1].split(":")[1]), 0);
         Date v = cal.getTime();
-        cal.set(Integer.parseInt(bis.split(" ")[0].split("-")[0]), Integer.parseInt(bis.split(" ")[0].split("-")[1])-1, Integer.parseInt(bis.split(" ")[0].split("-")[2]), Integer.parseInt(bis.split(" ")[1].split(":")[0]), Integer.parseInt(bis.split(" ")[1].split(":")[1]),0);
+        cal.set(Integer.parseInt(bis.split(" ")[0].split("-")[0]), Integer.parseInt(bis.split(" ")[0].split("-")[1]) - 1, Integer.parseInt(bis.split(" ")[0].split("-")[2]), Integer.parseInt(bis.split(" ")[1].split(":")[0]), Integer.parseInt(bis.split(" ")[1].split(":")[1]), 0);
         Date b = cal.getTime();
-        float mil=Math.abs(b.getTime()-v.getTime());
-        float days = mil/1000/60/60/24;
-        double starteddays =Math.ceil(days);
-        
-        return String.valueOf(Double.parseDouble(sum)*starteddays);
+        float mil = Math.abs(b.getTime() - v.getTime());
+        float days = mil / 1000 / 60 / 60 / 24;
+        double starteddays = Math.ceil(days);
+
+        return String.valueOf(Double.parseDouble(sum) * starteddays);
     }
 
     public String getKundenBestellView() {
@@ -79,7 +79,7 @@ public class Bestellung {
         sb.append("</td>");
         sb.append("<td class='cart_description'>");
         sb.append("<h4>");
-        sb.append((bestaetigt==null)?"Nein":"Ja");
+        sb.append((bestaetigt == null) ? "Nein" : "Ja");
         sb.append("</h4>");
         sb.append("</td>");
         sb.append("<td class='cart_delete'>");
@@ -87,6 +87,49 @@ public class Bestellung {
         sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
         sb.append("</form>");
         sb.append("</td>");
+        sb.append("</tr>");
+
+        return sb.toString();
+    }
+
+    public String getMitarbeiterBestellView() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<tr>");
+        sb.append("<td>");
+        sb.append("<form action='/HipsterRentalCorp/LoadOrderDetailsServlet?orderNumber=").append(bestellNR).append("' method='post'>");
+        sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'>").append(bestellNR).append("</a>");
+        sb.append("</form>");
+        sb.append("</td>");
+        sb.append("<td class='cart_description'>");
+        sb.append("<h4>");
+        sb.append(von);
+        sb.append("</h4>");
+        sb.append("</td>");
+        sb.append("<td class='cart_description'>");
+        sb.append("<h4>");
+        sb.append(bis);
+        sb.append("</h4>");
+        sb.append("</td>");
+        sb.append("<td class='cart_total'>");
+        sb.append("<p class='cart_total_price'>");
+        sb.append(getKosten());
+        sb.append("&euro;</p>");
+        sb.append("</td>");
+        sb.append("<td class='cart_description'>");
+        sb.append("<h4>");
+        sb.append((bestaetigt == null || bestaetigt.equals("") || bestaetigt.equals("null")) ? "Nein" : "Ja");
+        sb.append("</h4>");
+        sb.append("</td>");
+        if (bestaetigt == null || bestaetigt.equals("") || bestaetigt.equals("null")) {
+            sb.append("<td class='cart_delete'>");
+            sb.append("<form action='/HipsterRentalCorp/SwitchOrderStatusServlet?orderNumber=").append(bestellNR).append("' method='post'>");
+            sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
+            sb.append("</form>");
+            sb.append("</td>");
+        } else {
+            sb.append("<td>");
+            sb.append("</td>");
+        }
         sb.append("</tr>");
 
         return sb.toString();

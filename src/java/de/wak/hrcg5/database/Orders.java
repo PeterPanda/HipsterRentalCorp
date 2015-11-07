@@ -185,11 +185,11 @@ public abstract class Orders {
             PreparedStatement ps = con.prepareStatement("delete from BESTELLPAKETPOS where BESTELLNR=?");
             ps.setString(1, orderNumber);
             ps.executeUpdate();
-            
+
             ps = con.prepareStatement("delete from BESTELLPRODUKTPOS where BESTELLNR=?");
             ps.setString(1, orderNumber);
             ps.executeUpdate();
-            
+
             ps = con.prepareStatement("delete from BESTELLUNG where BESTELLNR=?");
             ps.setString(1, orderNumber);
             ps.executeUpdate();
@@ -198,5 +198,17 @@ public abstract class Orders {
             e.printStackTrace();
         }
 
+    }
+
+    public static void setOrderStatusTrue(String orderNumber) {
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("update BESTELLUNG set BESTAETIGT='j' where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
