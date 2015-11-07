@@ -5,7 +5,9 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.ShoppingCart;
+import de.wak.hrcg5.database.Orders;
+import de.wak.hrcg5.structure.Bestellung;
+import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +15,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-@WebServlet(name = "ClearShoppingCartForUnregisteredUserServlet", urlPatterns = {"/ClearShoppingCartForUnregisteredUserServlet"})
-public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
+@WebServlet(name = "LoadOrderDetailsServlet", urlPatterns = {"/LoadOrderDetailsServlet"})
+public class LoadOrderDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +40,10 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ClearShoppingCartForUnregisteredUserServlet</title>");            
+            out.println("<title>Servlet LoadOrderDetailsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ClearShoppingCartForUnregisteredUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoadOrderDetailsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +61,7 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
-        response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-        
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        
-        if(userEmail == null||userEmail.equals("")||userEmail.equals("null")){
-            ShoppingCart.clearDummyShoppingCart();
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,7 +75,16 @@ public class ClearShoppingCartForUnregisteredUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String orderNumber = (String) request.getParameter("orderNumber");
+
+        Bestellung b = Orders.getOrder(orderNumber);
+        Warenkorb s = new Warenkorb();
+        s.getPakete().addAll(b.getPakete());
+        s.getProdukte().addAll(b.getProdukte());
+
+        request.setAttribute("order", s);
+        getServletContext().getRequestDispatcher("/OrderDetails.jsp").forward(request, response);
     }
 
     /**

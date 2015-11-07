@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : 07.10.2015, 10:17:07
-    Author     : janFk
+    Document   : login
+    Created on : 04.11.2015, 15:47:40
+    Author     : Jan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Home | Hipster Rental</title>
+        <title>Kategorie anlegen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -31,13 +31,14 @@
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
     </head>
     <body onload="init()">
-        <header id="header"><!--header-->		
+        <header id="header"><!--header-->
+
             <div class="header-middle"><!--header-middle-->
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" />
+                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
@@ -59,6 +60,7 @@
                 </div>
             </div><!--/header-middle-->
 
+
         </header><!--/header-->
         <section>
             <div class="container">
@@ -76,15 +78,18 @@
 
                     <div class="col-sm-9 padding-right">
                         <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Features Items</h2>
-
-                            <div id="divContent"></div>
+                            <h2 class="title text-center">Kategorie anlegen</h2>
+                            <div id="divContent">
+                                Die Kategorie wurde erfolgreich angelegt.
+                            </div>
                         </div><!--features_items-->
 
                     </div>
                 </div>
             </div>
         </section>
+
+
         <footer id="footer"><!--Footer-->
             <div class="footer-top">
                 <div class="container">
@@ -121,20 +126,19 @@
 
 
         <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.scrollUp.min.js"></script>
         <script src="js/price-range.js"></script>
+        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>
         <script>
         function init() {
             initCategory();
             isUserLoggedIn();
-            document.getElementById('divContent').innerHTML = "Willkommen";
         }
 
         function isUserLoggedIn() {
-            var user = '<%= session.getAttribute("User")%>';
+            var user = '<%= session.getAttribute("User")%>'
             if (user !== null && user !== "" && user !== "null") {
 
                 var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
@@ -182,6 +186,7 @@
                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
         }
+
 
         function initLogin() {
             var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";
@@ -353,58 +358,5 @@
             }
         }
         </script>
-
-        <!--
-                <table id="tableMain">
-                    <thead>
-                        <tr>
-                            <th id="cellShopName"><h1>Hipster Rental Corp</h1></th>
-        
-                            <th>
-                                <table id="tableSearchAndLogin">
-                                    <thead>
-                                        <tr>
-                                            <th id="cellSearch">
-                                                <input type="text"
-                                                       size="40"
-                                                       id="complete-field"
-                                                       onkeyup="doCompletion();">
-                                                <button id="buttonSearch" type="button" class="btn btn-default">Suche</button>
-                                            </th>
-                                            <th id="cellLogin">
-                                                <div id="divLogin">
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <div id="divShoppingCart" onclick="loadShoppingCart();">
-                                                    <img id="imgShoppingCart" src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/shoppingcart.png" alt="shoppingcart" >
-                                                    <p id="pShoppingCartCount">0</p>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </th>
-        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-        <!--<form action="/HipsterRentalCorp/ProductsByCategoryServlet" method="post">
-        <div id="divNavigation">
-            Navigation
-        </div>
-        <!--</form>
-    </td>
-    <td id="cellContent">
-        <div id="divContent" class="border margin">
-            Contentt
-        </div>
-    </td>
-</tr>
-</tbody>
-</table>
-        -->                              
     </body>
 </html>

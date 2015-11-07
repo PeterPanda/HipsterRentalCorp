@@ -34,48 +34,95 @@ public class Warenkorb {
 
     public String getItemsView() {
         StringBuilder sb = new StringBuilder();
-        
+
         for (Produkt p : produkte) {
-           sb.append("<tr>");
-           sb.append("<td class=\'cart_product\'>");
-           sb.append(p.firstImage());
-           sb.append("</td>");
-           sb.append("<td class='cart_description'>");
-           sb.append("<h4>");
-           sb.append(p.getBezeichnung());
-           sb.append("</h4>");
-           sb.append("</td>");
-           sb.append("<td class='cart_total'>");
-           sb.append("<p class='cart_total_price'>");       
-           sb.append(p.getMietzins());
-           sb.append("</p>");
-           sb.append("</td>");
-           sb.append("<td class='cart_delete'>");
-           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
-           sb.append("</td>");
-           sb.append("</tr>");
-           
+            sb.append("<tr>");
+            sb.append("<td class=\'cart_product\'>");
+            sb.append(p.firstImage());
+            sb.append("</td>");
+            sb.append("<td class='cart_description'>");
+            sb.append("<h4>");
+            sb.append(p.getBezeichnung());
+            sb.append("</h4>");
+            sb.append("</td>");
+            sb.append("<td class='cart_total'>");
+            sb.append("<p class='cart_total_price'>");
+            sb.append(p.getMietzins());
+            sb.append("&euro;</p>");
+            sb.append("</td>");
+            sb.append("<td class='cart_delete'>");           
+            sb.append("<form action='/HipsterRentalCorp/DeleteFromShoppingCartServlet?toDeleteNumber=").append(p.getProduktNR()).append("' method='post'>");
+            sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
+            sb.append("</form>");
+            sb.append("</td>");
+            sb.append("</tr>");
+
         }
 
-          for (Paket p : pakete) {
+        for (Paket p : pakete) {
             sb.append("<tr>");
-           sb.append("<td class=\'cart_product\'>");
-           sb.append("<img src='"+p.getFoto()+"' width='100px' height='100px'/>");
-           sb.append("</td>");
-           sb.append("<td class='cart_description'>");
-           sb.append("<h4>");
-           sb.append(p.getBezeichnung());
-           sb.append("</h4>");
-           sb.append("</td>");
-           sb.append("<td class='cart_total'>");
-           sb.append("<p class='cart_total_price'>");       
-           sb.append(p.getMietzins());
-           sb.append("</p>");
-           sb.append("</td>");
-           sb.append("<td class='cart_delete'>");
-           sb.append("<a class='cart_quantity_delete' href=''><i class='fa fa-times'></i></a>");
-           sb.append("</td>");
-           sb.append("</tr>");
+            sb.append("<td class=\'cart_product\'>");
+            sb.append("<img src='").append(p.getFoto()).append("' width='100px' height='100px'/>");
+            sb.append("</td>");
+            sb.append("<td class='cart_description'>");
+            sb.append("<h4>");
+            sb.append(p.getBezeichnung());
+            sb.append("</h4>");
+            sb.append("</td>");
+            sb.append("<td class='cart_total'>");
+            sb.append("<p class='cart_total_price'>");
+            sb.append(p.getMietzins());
+            sb.append("&euro;</p>");
+            sb.append("</td>");
+            sb.append("<td class='cart_delete'>");
+            sb.append("<form action='/HipsterRentalCorp/DeleteFromShoppingCartServlet?toDeleteNumber=").append(p.getPaketNR()).append("' method='post'>");
+            sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
+            sb.append("</form>");
+            sb.append("</td>");
+            sb.append("</tr>");
+        }
+
+        return sb.toString();
+    }
+
+    public String getBestellView() {
+        StringBuilder sb = new StringBuilder();
+
+        for (Produkt p : produkte) {
+            sb.append("<tr>");
+            sb.append("<td class=\'cart_product\'>");
+            sb.append(p.firstImage());
+            sb.append("</td>");
+            sb.append("<td class='cart_description'>");
+            sb.append("<h4>");
+            sb.append(p.getBezeichnung());
+            sb.append("</h4>");
+            sb.append("</td>");
+            sb.append("<td class='cart_total'>");
+            sb.append("<p class='cart_total_price'>");
+            sb.append(p.getMietzins());
+            sb.append("&euro;</p>");
+            sb.append("</td>");
+            sb.append("</tr>");
+
+        }
+
+        for (Paket p : pakete) {
+            sb.append("<tr>");
+            sb.append("<td class=\'cart_product\'>");
+            sb.append("<img src='" + p.getFoto() + "' width='100px' height='100px'/>");
+            sb.append("</td>");
+            sb.append("<td class='cart_description'>");
+            sb.append("<h4>");
+            sb.append(p.getBezeichnung());
+            sb.append("</h4>");
+            sb.append("</td>");
+            sb.append("<td class='cart_total'>");
+            sb.append("<p class='cart_total_price'>");
+            sb.append(p.getMietzins());
+            sb.append("&euro;</p>");
+            sb.append("</td>");
+            sb.append("</tr>");
         }
 
         return sb.toString();
@@ -94,7 +141,7 @@ public class Warenkorb {
     }
 
     public Bestellung erzeugeBestellung(String von, String bis) {
-        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis);
+        Bestellung b = new Bestellung(NumberHelper.getNextBESTELLNR(), von, bis, null);
         b.getProdukte().addAll(this.produkte);
         b.getPakete().addAll(this.pakete);
         return b;

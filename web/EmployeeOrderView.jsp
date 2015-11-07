@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Mitarbeiter anlegen | Hipster Rental</title>
+        <title>Bestellungen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -49,8 +49,8 @@
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
                                     <li id="liAccount"</li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
+                                    <li id="liCheckout"></li>
+                                    <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
@@ -62,26 +62,48 @@
 
 
         </header><!--/header-->
-
-        <section id="form"><!--form-->
+        <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="signup-form"><!--sign up form-->
-                            <h2>Mitarbeiter anlegen</h2>
-                            <form action="/HipsterRentalCorp/AddEmployeeServlet" method="post">
-                                <input type="email" name="email" required=true placeholder="Email Addresse *"/>
-                                <input type="password" name="password" required=true placeholder="Passwort *"/>
-                                <input type="password" name="password2" required=true placeholder="Passwort wiederholen *"/>
-                                <input type="text" name="firstName" required=true placeholder="Vorname *" />
-                                <input type="text" name="lastName" required=true placeholder="Nachname *" />
-                                <button type="submit" class="btn btn-default">Anlegen</button>
-                            </form>
-                        </div><!--/sign up form-->
+                    <div class="col-sm-3">
+                        <div class="left-sidebar">
+                            <h2>Navigation</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <div id="divNavigation">
+                                </div>
+                            </div><!--/category-products-->
+
+                        </div>
                     </div>
+
+                    <section id="cart_items">
+                        <div class="container">
+
+                            <h2 class="title text-center">Bestellungen</h2>
+                            <div class="table-responsive cart_info">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="total">Bestellnummer</td>
+                                            <td class="description">Von</td>
+                                            <td class="description">Bis</td>
+                                            <td class="total">Kosten</td>
+                                            <td class="description">Freigegeben</td>
+                                            <td class="description">Freigabe erteilen</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders">
+
+                                    <div>
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section> <!--/#cart_items-->
                 </div>
             </div>
-        </section><!--/form-->
+        </section>
 
 
         <footer id="footer"><!--Footer-->
@@ -129,6 +151,7 @@
         function init() {
             initCategory();
             isUserLoggedIn();
+            loadOrders();
         }
 
         function isUserLoggedIn() {
@@ -143,22 +166,54 @@
                     if (xhr.readyState === 4) {
                         var data = xhr.responseText;
                         if (data.indexOf("MitarbeiterNR -") === -1) {
+
+                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                             var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
                             document.getElementById('liAccount').innerHTML = liAccount;
+
+                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                         } else {
+                            var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                             var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
                             document.getElementById('liAccount').innerHTML = liAccount;
+
+                            var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                         }
                     }
                 };
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
             } else {
+                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                document.getElementById('liCheckout').innerHTML = liCheckout;
+
                 var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                 document.getElementById('liLoginout').innerHTML = liLogin;
+
                 var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
                 document.getElementById('liAccount').innerHTML = liAccount;
+
+                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
+        }
+
+        function loadOrders() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var data = xhr.responseText;
+                    document.getElementById('orders').innerHTML = data;
+                }
+            };
+            xhr.open('GET', '/HipsterRentalCorp/LoadOrdersServlet', true);
+            xhr.send(null);
         }
 
         function initLogin() {

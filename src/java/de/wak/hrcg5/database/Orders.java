@@ -6,6 +6,7 @@
 package de.wak.hrcg5.database;
 
 import de.wak.hrcg5.structure.Bestellung;
+import de.wak.hrcg5.structure.Kunde;
 import de.wak.hrcg5.structure.Paket;
 import de.wak.hrcg5.structure.Produkt;
 import de.wak.hrcg5.structure.Warenkorb;
@@ -31,7 +32,34 @@ public abstract class Orders {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3)));
+                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(5)));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Bestellung o : orders) {
+            o.getProdukte().addAll(getProducts(o.getBestellNR()));
+            o.getPakete().addAll(getPackages(o.getBestellNR()));
+        }
+
+        return orders;
+    }
+
+    public static List<Bestellung> getCustomerOrders(String email) {
+        Kunde c = User.getCustomer(email);
+        List<Bestellung> orders = new ArrayList<>();
+
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from BESTELLUNG where KUNDENNR=?");
+            ps.setString(1, c.getKundenNR());
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(5)));
             }
 
         } catch (Exception e) {
@@ -88,7 +116,13 @@ public abstract class Orders {
         return packages;
     }
 
-    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guestNumber) {
+    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
+        String guestNumber = null;
+        if (guest != null) {
+            String[] g = guest.split(",");
+            User.addGuest(g[1], g[2], g[0], g[5], g[6], g[7], g[8], g[9], g[3], g[4]);
+            guestNumber = User.getGuest(g[0]).getGastNR();
+        }
         Bestellung b = shoppingCart.erzeugeBestellung(from, till);
 
         Connection con = Connector.getConnection();
@@ -98,9 +132,9 @@ public abstract class Orders {
                 ps.setString(1, b.getBestellNR());
                 ps.setString(2, b.getVon());
                 ps.setString(3, b.getBis());
-                ps.setString(4, (userEmail==null||userEmail.equals("")||userEmail.equals("null"))?null:User.getCustomer(userEmail).getKundenNR());
+                ps.setString(4, (userEmail == null || userEmail.equals("") || userEmail.equals("null")) ? null : User.getCustomer(userEmail).getKundenNR());
                 ps.setString(5, null);
-                ps.setString(6, (guestNumber==null||guestNumber.equals("")||guestNumber.equals("null"))?null:guestNumber);
+                ps.setString(6, (guestNumber == null || guestNumber.equals("") || guestNumber.equals("null")) ? null : guestNumber);
                 ps.executeUpdate();
 
                 for (Produkt p : b.getProdukte()) {
@@ -120,5 +154,61 @@ public abstract class Orders {
             }
         }
         return true;
+    }
+
+    public static Bestellung getOrder(String orderNumber) {
+        Bestellung o = null;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from BESTELLUNG where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                o = new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(5));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        o.getProdukte().addAll(getProducts(o.getBestellNR()));
+        o.getPakete().addAll(getPackages(o.getBestellNR()));
+
+        return o;
+    }
+
+    public static void deleteOrder(String orderNumber) {
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("delete from BESTELLPAKETPOS where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+            ps = con.prepareStatement("delete from BESTELLPRODUKTPOS where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+            ps = con.prepareStatement("delete from BESTELLUNG where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void setOrderStatusTrue(String orderNumber) {
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("update BESTELLUNG set BESTAETIGT='j' where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

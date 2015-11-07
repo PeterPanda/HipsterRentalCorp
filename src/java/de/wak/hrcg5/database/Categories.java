@@ -69,4 +69,21 @@ public abstract class Categories {
         }
         return cat;
     }
+    
+    public static boolean addCategory(String name, String subCategory, String fotoNR){
+        Connection con = Connector.getConnection();
+        if(con!=null){
+            try{
+                PreparedStatement ps = con.prepareStatement("insert into KATEGORIE values (?,?,?,?)");
+                ps.setString(1, NumberHelper.getNextKATEGORIENR());
+                ps.setString(2, name);
+                ps.setString(3, fotoNR);
+                ps.setString(4, subCategory);
+                ps.executeUpdate();
+            }catch(Exception e){
+                return false;
+            }
+        }
+        return true;
+    }
 }

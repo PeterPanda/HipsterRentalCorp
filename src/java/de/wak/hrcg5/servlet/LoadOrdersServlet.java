@@ -5,10 +5,8 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.Categories;
 import de.wak.hrcg5.database.Orders;
 import de.wak.hrcg5.structure.Bestellung;
-import de.wak.hrcg5.structure.Kategorie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -62,20 +60,13 @@ public class LoadOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        StringBuilder data = new StringBuilder();
-        data.append("<div>\n");
-        for (Bestellung o : Orders.getOrders()) {
-            data.append(o.getBestellNR());
-            data.append("<br>");
-            data.append(o.getVon());
-            data.append("<br>");
-            data.append(o.getBis());
+        StringBuilder sb = new StringBuilder();
+        for (Bestellung b : Orders.getOrders()) {
+            sb.append(b.getMitarbeiterBestellView());
         }
-        data.append("</div>");
-
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(data.toString());
+        response.getWriter().write(sb.toString());
     }
 
     /**

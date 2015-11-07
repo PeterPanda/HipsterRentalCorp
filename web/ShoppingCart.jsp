@@ -48,8 +48,8 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li id="liAccount"></li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li id="liAccount"</li>
+                                    <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
@@ -84,8 +84,8 @@
 
                         <div id="cart-products">
                             ${requestScope.shoppingCart.getItemsView()}
-
-                            </tbody>
+                        </div>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -100,10 +100,11 @@
                         <div class="total_area">
                             <ul>
                                 <li>Warenkorb Summe <span>${requestScope.shoppingCart.getMietzins()}</span></li>
-                                <li>Gesamtkosten <span>${requestScope.shoppingCart.getMietzins()}</span></li>
                             </ul>
                             <!--<a class="btn btn-default update" href="">Kosten Neu berechnen</a>-->
-                            <a class="btn btn-default check_out" href="">Check Out</a>
+                            <form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get">
+                                <a class="btn btn-default check_out" href="#" onclick="this.parentNode.submit();">Check Out</a>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -151,49 +152,60 @@
         <script src="js/jquery.prettyPhoto.js"></script>
         <script src="js/main.js"></script>   
         <script>
-            function init(){
-                isUserLoggedIn();
-            }
-            
-            function isUserLoggedIn() {
-                var user = '<%= session.getAttribute("User")%>'
-                if (user !== null && user !== "" && user !== "null") {
+                                    function init() {
+                                        isUserLoggedIn();
+                                    }
 
-                    var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
-                    document.getElementById('liLoginout').innerHTML = liLogin;
+                                    function isUserLoggedIn() {
+                                        var user = '<%= session.getAttribute("User")%>'
+                                        if (user !== null && user !== "" && user !== "null") {
 
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState === 4) {
-                            var data = xhr.responseText;
-                            if (data.indexOf("MitarbeiterNR -") === -1) {
-                                var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
-                                document.getElementById('liAccount').innerHTML = liAccount;
+                                            var liLogin = '<li id="liLoginout"><a href="/HipsterRentalCorp/LogoutServlet"><i class="fa fa-lock"></i> Logout</a></li>';
+                                            document.getElementById('liLoginout').innerHTML = liLogin;
 
-                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                            } else {
-                                var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
-                                document.getElementById('liAccount').innerHTML = liAccount;
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.onreadystatechange = function () {
+                                                if (xhr.readyState === 4) {
+                                                    var data = xhr.responseText;
+                                                    if (data.indexOf("MitarbeiterNR -") === -1) {
 
-                                var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
-                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                            }
-                        }
-                    };
-                    xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
-                    xhr.send(null);
-                } else {
-                    var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
-                    document.getElementById('liLoginout').innerHTML = liLogin;
+                                                        var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                        document.getElementById('liCheckout').innerHTML = liCheckout;
 
-                    var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
-                    document.getElementById('liAccount').innerHTML = liAccount;
+                                                        var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                        document.getElementById('liAccount').innerHTML = liAccount;
 
-                    var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
-                    document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
-                }
-            }
+                                                        var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                        document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                    } else {
+                                                        var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                                                        document.getElementById('liCheckout').innerHTML = liCheckout;
+
+                                                        var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
+                                                        document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                        var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                                                        document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                                    }
+                                                }
+                                            };
+                                            xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
+                                            xhr.send(null);
+                                        } else {
+                                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
+                                            var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
+                                            document.getElementById('liLoginout').innerHTML = liLogin;
+
+                                            var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
+                                            document.getElementById('liAccount').innerHTML = liAccount;
+
+                                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                            document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
+                                        }
+                                    }
+
         </script>
         <!-- <div>
  

@@ -49,7 +49,7 @@
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
                                     <li id="liAccount"</li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
@@ -89,19 +89,32 @@
 
                         </div>
                     </div>
+                    <section id="cart_items">
+                        <div class="container">
 
-                    <div class="col-sm-9 padding-right">
-                        <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Kundenportal</h2>
-                            <div id="divContent">
-                                Willkommen in Ihrem Kundenportal.<br>
-                                Hier können Sie Ihre Bestellungen überprüfen und Ihre Benutzerdaten ändern.<br>
-                                <br>
-                                Die HRC bedankt sich für Ihre Registration als Kunde und möchte Sie auf den Bonus hinweisen, den angemeldete Nutzer erhalten:
+                            <h2 class="title text-center">Bestellungen</h2>
+                            <div class="table-responsive cart_info">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="total">Bestellnummer</td>
+                                            <td class="description">Von</td>
+                                            <td class="description">Bis</td>
+                                            <td class="total">Kosten</td>
+                                            <td class="description">Freigegeben</td>
+                                            <td class="description">Stornieren</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders">
+
+                                    <div>
+                                    </div>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div><!--features_items-->
+                        </div>
+                    </section> <!--/#cart_items-->
 
-                    </div>
                 </div>
             </div>
         </section>
@@ -151,6 +164,7 @@
         <script>
         function init() {
             isUserLoggedIn();
+            loadCustomerOrders();
         }
 
         function isUserLoggedIn() {
@@ -165,12 +179,19 @@
                     if (xhr.readyState === 4) {
                         var data = xhr.responseText;
                         if (data.indexOf("MitarbeiterNR -") === -1) {
+
+                            var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                             var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
                             document.getElementById('liAccount').innerHTML = liAccount;
 
-                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                            var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
                             document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                         } else {
+                            var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                            document.getElementById('liCheckout').innerHTML = liCheckout;
+
                             var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
                             document.getElementById('liAccount').innerHTML = liAccount;
 
@@ -182,16 +203,32 @@
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
             } else {
+                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                document.getElementById('liCheckout').innerHTML = liCheckout;
+
                 var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                 document.getElementById('liLoginout').innerHTML = liLogin;
 
                 var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
                 document.getElementById('liAccount').innerHTML = liAccount;
 
-                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
         }
+
+        function loadCustomerOrders() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var data = xhr.responseText;
+                    document.getElementById('orders').innerHTML = data;
+                }
+            };
+            xhr.open('GET', '/HipsterRentalCorp/LoadCustomerOrdersServlet', true);
+            xhr.send(null);
+        }
+
 
         function initLogin() {
             var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";

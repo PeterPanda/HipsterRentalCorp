@@ -5,33 +5,21 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.User;
-import de.wak.hrcg5.structure.Kunde;
-import de.wak.hrcg5.structure.Mitarbeiter;
+import de.wak.hrcg5.database.Orders;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-@WebServlet(name = "UserStillLogedInServlet", urlPatterns = {"/UserStillLogedInServlet"})
-public class UserStillLogedInServlet extends HttpServlet {
-
-    private ServletContext context;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.context = config.getServletContext();
-    }
+@WebServlet(name = "DeleteOrderServlet", urlPatterns = {"/DeleteOrderServlet"})
+public class DeleteOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,10 +38,10 @@ public class UserStillLogedInServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserStillLogedInServlet</title>");
+            out.println("<title>Servlet DeleteOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserStillLogedInServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,20 +59,7 @@ public class UserStillLogedInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        String email = (String) session.getAttribute("User");
-        Kunde k = User.getCustomer(email);
-        if (k != null) {
-            request.setAttribute("customer", k);
-            context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormCustomer.jsp").forward(request, response);
-        } else {
-            Mitarbeiter m = User.getEmployee(email);
-            if (m != null) {
-                request.setAttribute("employee", m);
-                context.getRequestDispatcher("/LoginForm/WelcomeForm/WelcomeFormEmployee.jsp").forward(request, response);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -98,7 +73,12 @@ public class UserStillLogedInServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String orderNumber = (String) request.getParameter("orderNumber");
+
+        Orders.deleteOrder(orderNumber);
+        
+        
+        getServletContext().getRequestDispatcher("/CustomerOrderView.jsp").forward(request, response);
     }
 
     /**

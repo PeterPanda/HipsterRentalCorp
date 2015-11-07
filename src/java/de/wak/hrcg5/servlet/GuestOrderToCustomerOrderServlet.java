@@ -5,13 +5,10 @@
  */
 package de.wak.hrcg5.servlet;
 
-import de.wak.hrcg5.database.NumberHelper;
 import de.wak.hrcg5.database.ShoppingCart;
-import de.wak.hrcg5.structure.Warenkorb;
+import de.wak.hrcg5.database.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,17 +18,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author janFk
+ * @author Jan
  */
-@WebServlet(name = "DeleteFromShoppingCartServlet", urlPatterns = {"/DeleteFromShoppingCartServlet"})
-public class DeleteFromShoppingCartServlet extends HttpServlet {
-
-    private ServletContext context;
-
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        this.context = config.getServletContext();
-    }
+@WebServlet(name = "GuestOrderToCustomerOrderServlet", urlPatterns = {"/GuestOrderToCustomerOrderServlet"})
+public class GuestOrderToCustomerOrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,10 +40,10 @@ public class DeleteFromShoppingCartServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteFromShoppingCartServlet</title>");
+            out.println("<title>Servlet GuestOrderToCustomerOrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteFromShoppingCartServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GuestOrderToCustomerOrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -85,20 +75,20 @@ public class DeleteFromShoppingCartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("User");
-        String toDeleteNumber = request.getParameter("toDeleteNumber");
-        if (NumberHelper.isProductNumber(toDeleteNumber)) {
-            ShoppingCart.deleteProduct(toDeleteNumber, userEmail);
-        } else {
-            ShoppingCart.deletePackage(toDeleteNumber, userEmail);
-        }
+        String oldOwner = (String)session.getAttribute("User");
+        
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
 
-        Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
-        session.setAttribute("rent", shoppingCart.getMietzins());
-        request.setAttribute("shoppingCart", shoppingCart);
-        context.getRequestDispatcher("/ShoppingCart.jsp").forward(request, response);
+        if (User.checkCustomer(email, pass) && ShoppingCart.changeOwner(oldOwner, email)) {
+            session.setAttribute("User", email);
+            request.setAttribute("order", ShoppingCart.getShoppingCart(email));
+            getServletContext().getRequestDispatcher("/checkoutCustomer.jsp").forward(request, response);
+        }else{
+            session.setAttribute("User", null);
+            getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
+        }
     }
 
     /**

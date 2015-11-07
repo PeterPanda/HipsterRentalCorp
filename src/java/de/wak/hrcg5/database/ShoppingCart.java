@@ -229,10 +229,17 @@ public abstract class ShoppingCart {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPRODUKT wp, WARENKORB w, Kunde k where wp.PRODUKTNR=? and wp.WARENKORBPRODUKTNR=w.WARENKORBPRODUKTNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL=?");
-                ps.setString(1, productNumber);
-                ps.setString(2, userEmail);
-                ps.executeUpdate();
+                if (userEmail != null) {
+                    PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPRODUKT wp, WARENKORB w, Kunde k where wp.PRODUKTNR=? and wp.WARENKORBPRODUKTNR=w.WARENKORBPRODUKTNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL=?");
+                    ps.setString(1, productNumber);
+                    ps.setString(2, userEmail);
+                    ps.executeUpdate();
+                } else {
+                    PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPRODUKT wp, WARENKORB w, Kunde k where wp.PRODUKTNR=? and wp.WARENKORBPRODUKTNR=w.WARENKORBPRODUKTNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL is ?");
+                    ps.setString(1, productNumber);
+                    ps.setString(2, userEmail);
+                    ps.executeUpdate();
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -244,15 +251,54 @@ public abstract class ShoppingCart {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
-                PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPAKET wp, WARENKORB w, Kunde k where wp.PAKETNR=? and wp.WARENKORBPAKETNR=w.WARENKORBPAKETNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL=?");
-                ps.setString(1, packageNumber);
-                ps.setString(2, userEmail);
-                ps.executeUpdate();
+                if (userEmail != null) {
+                    PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPAKET wp, WARENKORB w, Kunde k where wp.PAKETNR=? and wp.WARENKORBPAKETNR=w.WARENKORBPAKETNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL=?");
+                    ps.setString(1, packageNumber);
+                    ps.setString(2, userEmail);
+                    ps.executeUpdate();
+                } else {
+                    PreparedStatement ps = con.prepareStatement("delete wp.* from WARENKORBPAKET wp, WARENKORB w, Kunde k where wp.PAKETNR=? and wp.WARENKORBPAKETNR=w.WARENKORBPAKETNR and w.KUNDENNR=k.KUNDENNR and k.EMAIL is ?");
+                    ps.setString(1, packageNumber);
+                    ps.setString(2, userEmail);
+                    ps.executeUpdate();
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static boolean changeOwner(String oldOwner, String newOwner) {
+        Kunde oldC = User.getCustomer(oldOwner);
+        Kunde newC = User.getCustomer(newOwner);
+        if (oldC != null && newC != null) {
+            if (User.hasShoppingCart(newC.getKundenNR())) {
+                Warenkorb w = getShoppingCart(oldOwner);
+                for(Produkt p : w.getProdukte()){
+                    addProduct(newOwner, p.getProduktNR());
+                }
+                for(Paket p:w.getPakete()){
+                    addPackage(newOwner, p.getPaketNR());
+                }
+                clearShoppingCart(oldOwner);
+            } else {
+                Connection con = Connector.getConnection();
+                if (con != null) {
+                    try {
+                        PreparedStatement ps = con.prepareStatement("update WARENKORB set KUNDENNR=? where KUNDENNR=?");
+                        ps.setString(1, newC.getKundenNR());
+                        ps.setString(2, oldC.getKundenNR());
+                        ps.executeUpdate();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -49,8 +49,8 @@
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
                                     <li id="liAccount"</li>
-                                    <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>
+                                    <li id="liCheckout"></li>
+                                    <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
                                     <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
@@ -67,82 +67,8 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                            <h2>Kategorie</h2>
+                            <h2>Navigation</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Sportswear
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="sportswear" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Nike </a></li>
-                                                <li><a href="#">Under Armour </a></li>
-                                                <li><a href="#">Adidas </a></li>
-                                                <li><a href="#">Puma</a></li>
-                                                <li><a href="#">ASICS </a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Mens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="mens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                                <li><a href="#">Armani</a></li>
-                                                <li><a href="#">Prada</a></li>
-                                                <li><a href="#">Dolce and Gabbana</a></li>
-                                                <li><a href="#">Chanel</a></li>
-                                                <li><a href="#">Gucci</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                                Womens
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <div id="womens" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <ul>
-                                                <li><a href="#">Fendi</a></li>
-                                                <li><a href="#">Guess</a></li>
-                                                <li><a href="#">Valentino</a></li>
-                                                <li><a href="#">Dior</a></li>
-                                                <li><a href="#">Versace</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a onclick="alert('abc')" href="#">Bags</a></h4>
-                                    </div>
-                                </div>
                                 <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
@@ -262,8 +188,8 @@
 
                                                                 var row = table.insertRow(-1);
 
-                                                                row.id=items[0].split('<br>')[1];
-                                                                
+                                                                row.id = items[0].split('<br>')[1];
+
                                                                 var cell0 = row.insertCell();
                                                                 cell0.classname = "cart_product";
                                                                 var cell1 = row.insertCell();
@@ -274,14 +200,14 @@
                                                                 cell0.classname = "cart_delete";
 
                                                                 cell0.innerHTML = '<img src=\"' + items[1] + '\" width="100px" height="100px">';
-                                                                cell1.innerHTML = items[0]+"<input type='hidden' name='products' value='"+row.id+"' />";
-                                                                cell2.innerHTML = items[2]+"€";
-                                                                cell3.innerHTML = '<a class="cart_quantity_delete" onclick="clearRow('+row.id+');"><i class="fa fa-times"></i></a>';
-                                                                table.value=table.value+","+row.id;
+                                                                cell1.innerHTML = items[0] + "<input type='hidden' name='products' value='" + row.id + "' />";
+                                                                cell2.innerHTML = items[2] + "€";
+                                                                cell3.innerHTML = '<a class="cart_quantity_delete" onclick="clearRow(' + row.id + ');"><i class="fa fa-times"></i></a>';
+                                                                table.value = table.value + "," + row.id;
                                                             }
-                                                            function clearRow(id){
+                                                            function clearRow(id) {
                                                                 document.getElementById("productTable").deleteRow(id);
-                                                                document.getElementById("productTable").value =document.getElementById("productTable").value.toString().replace(id,"");
+                                                                document.getElementById("productTable").value = document.getElementById("productTable").value.toString().replace(id, "");
                                                             }
                                                             function initProductSelector() {
                                                                 var xhr = new XMLHttpRequest();
@@ -342,23 +268,44 @@
                                                                         if (xhr.readyState === 4) {
                                                                             var data = xhr.responseText;
                                                                             if (data.indexOf("MitarbeiterNR -") === -1) {
+
+                                                                                var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                                                document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                                 var liAccount = '<li><a href="Account.jsp"><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                                 document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                                var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                             } else {
+                                                                                var liCheckout = '<li><a><i class="fa fa-crosshairs"></i> Checkout</a></li>';
+                                                                                document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                                 var liAccount = '<li><a><i class="fa fa-user"></i>' + data + '</a></li>';
                                                                                 document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                                var liShoppingCart = '<li><a><i class="fa fa-shopping-cart"></i> Warenkorb</a></li>';
+                                                                                document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                             }
                                                                         }
                                                                     };
                                                                     xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                                                                     xhr.send(null);
                                                                 } else {
+                                                                    var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
+                                                                    document.getElementById('liCheckout').innerHTML = liCheckout;
+
                                                                     var liLogin = '<li id="liLoginout"><a href="Login.jsp"><i class="fa fa-lock"></i> Login</a></li>';
                                                                     document.getElementById('liLoginout').innerHTML = liLogin;
+
                                                                     var liAccount = '<li><a href="Login.jsp"><i class="fa fa-user"></i> Konto</a></li>';
                                                                     document.getElementById('liAccount').innerHTML = liAccount;
+
+                                                                    var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
+                                                                    document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
                                                                 }
                                                             }
+
 
                                                             function initLogin() {
                                                                 var loginForm = "<object type='text/html' data='LoginForm/LoginForm.jsp' width='100%' height='100%'></object>";

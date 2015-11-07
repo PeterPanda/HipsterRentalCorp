@@ -95,6 +95,13 @@ public class CategoryServlet extends HttpServlet {
             data.append("</div>");
             data.append("</div>");
             data.append("</div>");
+            data.append("</div>");
+            data.append("<div class='panel panel-default'>");
+            data.append("<div class='panel-heading'>");
+            data.append("<h4 class='panel-title'><a href='AddCategory.jsp'>Kategorie anlegen</a></h4>");
+            data.append("</div>");
+            data.append("</div>");
+            data.append("</div>");
         } else {
             data.append("<div>\n");
             for (Kategorie c : filterCategories(Categories.getCategories())) {
@@ -102,7 +109,7 @@ public class CategoryServlet extends HttpServlet {
                 data.append("<div class='panel panel-default'>");
                 if (c.getUnterkategorie().size() < 1) {
                     data.append("<div class='panel-heading'>");
-                    data.append("<h4 class='panel-title'><a onclick='getProducts(\"");
+                    data.append("<h4 class='panel-title'><a href='#" + c.getName() + "' onclick='getProducts(\"");
                     data.append(c.getKategorieNR());
                     data.append("\")'>");
                     data.append(c.getName());
@@ -111,7 +118,7 @@ public class CategoryServlet extends HttpServlet {
                 } else {
                     data.append("<div class='panel-heading'>");
                     data.append("<h4 class='panel-title'>");
-                    data.append("<a data-toggle='collapse' data-parent='#accordian' href='#"+c.getName()+"' onclick='getProducts(\"");
+                    data.append("<a data-toggle='collapse' data-parent='#accordian' href='#" + c.getName() + "' onclick='getProducts(\"");
                     data.append(c.getKategorieNR());
                     data.append("\")'>");
                     data.append("<span class='badge pull-right'><i class='fa fa-plus'></i></span>");
@@ -185,7 +192,7 @@ public class CategoryServlet extends HttpServlet {
             }
         }
         filtered.addAll(toAdd);
-        
+
         /* Remove those doubles. We don't need them any more. */
         List<Kategorie> toRemove = new ArrayList<>();
         for (Kategorie c : filtered) {
