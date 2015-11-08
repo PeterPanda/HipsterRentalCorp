@@ -78,6 +78,18 @@
                 <div class="register-req">
                     <p>Ihre Bestellung wird von unseren Sachbearbeitern in Empfang genommen. Sie erhalten eine Nachricht, sobald Ihre Bestellung freigegeben ist.</p>
                 </div><!--/register-req-->
+
+                <div class="register-req">
+                    Teilen Sie Ihre Bestellung auf Twitter!
+                    <form target="_blank" name="tweet" action="https://twitter.com/share" method="get"> 
+                        <input type="hidden" name="original_referer" value="http://www.HRC.de"> 
+                        <input type="hidden" name="source" value="tweetbutton"> 
+                        <input type="hidden" name="url" value="http://www.HRC.de"> 
+                        <textarea style="width:430px; height:68px; font-size:18px" type="text"  name="text" maxlength="98">Ich habe soeben bei Hipster Rental bestellt. #HRC</textarea>
+                        <button type="submit"><img src="http://localhost:8084/HipsterRentalCorp/FileZillaImageRessource/twitter.png" width="25px" alt=''>Tweet this!</button>    
+                    </form>
+                </div><!--/register-req-->
+
             </div>
         </section> <!--/#cart_items-->
 

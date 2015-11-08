@@ -50,15 +50,21 @@ public abstract class Products {
 
         /* Adding the products from the subcategories */
         List<Produkt> sub = new ArrayList<>();
-        for (String catnumb : Categories.getCategory(categoryNumber).getUnterkategorie()) {
-            if (!catnumb.equals("")) {
-                Kategorie cat = Categories.getCategory(catnumb);
+        Kategorie c = Categories.getCategory(categoryNumber);
+        if (c != null) {
+            if (c.getUnterkategorie() != null) {
+                if (c.getUnterkategorie().size() > 0) {
+                    for (String catnumb : c.getUnterkategorie()) {
+                        if (catnumb != null && !catnumb.equals("") && !catnumb.equals("null")) {
+                            Kategorie cat = Categories.getCategory(catnumb);
 
-                sub.addAll(getProductsByCategory(cat.getKategorieNR()));
+                            sub.addAll(getProductsByCategory(cat.getKategorieNR()));
+                        }
+                    }
+                    productsByCategory.addAll(productsByCategory.size(), sub);
+                }
             }
         }
-        productsByCategory.addAll(productsByCategory.size(), sub);
-
         return productsByCategory;
     }
 

@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.html"><img src="images/home/logo.png" alt="" />
+                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
                                     <div class="companyinfo">
                                         <h2><span>H</span>ipster <span>R</span>ental</h2>
                                     </div>
