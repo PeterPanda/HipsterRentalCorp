@@ -8,6 +8,10 @@ package de.wak.hrcg5.structure;
 import java.util.ArrayList;
 import java.util.List;
 import de.wak.hrcg5.database.NumberHelper;
+import de.wak.hrcg5.database.Orders;
+import de.wak.hrcg5.database.User;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,8 +54,16 @@ public class Bestellung {
         float mil = Math.abs(b.getTime() - v.getTime());
         float days = mil / 1000 / 60 / 60 / 24;
         double starteddays = Math.ceil(days);
+        starteddays--;
+        String cost = String.valueOf(Double.parseDouble(sum) * starteddays * 0.6 + Double.parseDouble(sum));
 
-        return String.valueOf(Double.parseDouble(sum) * starteddays);
+        if (Orders.didThreeOrders(Orders.getCustomerEmail(bestellNR), von)) {
+            cost = String.valueOf(Double.parseDouble(cost) * 0.8);
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        cost = df.format(Double.parseDouble(cost));
+        return cost;
     }
 
     public String getKundenBestellView() {

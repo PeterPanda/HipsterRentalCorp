@@ -5,11 +5,15 @@
  */
 package de.wak.hrcg5.servlet;
 
+import de.wak.hrcg5.database.NumberHelper;
+import de.wak.hrcg5.database.Orders;
 import de.wak.hrcg5.database.ShoppingCart;
 import de.wak.hrcg5.structure.Bestellung;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -70,9 +74,11 @@ public class LoadCheckoutServlet extends HttpServlet {
         session.setAttribute("rent", shoppingCart.getMietzins());
         request.setAttribute("order", shoppingCart);
         if (userEmail != null && !userEmail.equals("") && !userEmail.equals("null")) {
+            Calendar cal = Calendar.getInstance();
+            String now = cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.MONTH)+"-"+cal.get(Calendar.DAY_OF_MONTH)+" "+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+":"+cal.get(Calendar.SECOND);
+            request.setAttribute("ordercount", Orders.didThreeOrders(userEmail, now));
             getServletContext().getRequestDispatcher("/checkoutCustomer.jsp").forward(request, response);
-        }
-        else{
+        } else {
             getServletContext().getRequestDispatcher("/checkout.jsp").forward(request, response);
         }
     }

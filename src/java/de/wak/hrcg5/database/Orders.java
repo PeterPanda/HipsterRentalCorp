@@ -179,6 +179,44 @@ public abstract class Orders {
         return o;
     }
 
+    public static String getCustomerEmail(String orderNumber) {
+        String customerNumber = null;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select k.EMAIL from BESTELLUNG b, KUNDE K where b.KUNDENNR=k.KUNDENNR and b.BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                customerNumber = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customerNumber;
+    }
+
+    public static String getGuestEmail(String orderNumber) {
+        String guestNumber = null;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select g.EMAIL from BESTELLUNG b, GAST g where b.GASTNR=g.GASTNR and b.BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                guestNumber = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return guestNumber;
+    }
+
     public static void deleteOrder(String orderNumber) {
         Connection con = Connector.getConnection();
         try {
@@ -210,5 +248,26 @@ public abstract class Orders {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean didThreeOrders(String email, String from) {
+        int count = 0;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select b.* from BESTELLUNG b, KUNDE k where k.EMAIL=? and k.KUNDENNR=b.KUNDENNR and b.BIS<?");
+            ps.setString(1, email);
+            ps.setString(2, from);
+            ResultSet rs;
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                count++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return (count >= 3);
     }
 }

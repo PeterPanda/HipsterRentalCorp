@@ -172,6 +172,8 @@
 
                             </tbody>
                         </table>
+                        <br>
+                        <font size="1"><b>* 40% Rabatt ab einschlieﬂlich dem 2. Tag.<br>** 20% Rabatt gesamt, wenn mindestens 3 Bestellungen get&auml;tigt.</b></font>
                     </div>
 
                     <div class="review-payment">
@@ -273,7 +275,7 @@
 
                                         function calculateCost() {
                                             var rent = '<%= session.getAttribute("rent")%>';
-
+                                            var cost = 0;
                                             var from = getFrom();
                                             var till = getTill();
 
@@ -281,7 +283,15 @@
                                             var diff = Math.abs(till - from);
                                             diff = diff / 1000 / 60 / 60 / 24;
                                             diff = Math.ceil(diff);
-                                            var cost = diff * rent;
+                                            diff = diff - 1;
+                                            cost = diff * rent;
+                                            cost = cost * 60;
+                                            cost = cost / 100;
+                                            cost = cost + rent * 1;
+
+                                            if (${requestScope.ordercount}) {
+                                                cost = cost * 0.8;
+                                            }
                                             cost = cost.toFixed(2);
                                             $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
 

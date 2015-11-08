@@ -97,9 +97,9 @@
                                 Willkommen in Ihrem Kundenportal.<br>
                                 Hier können Sie Ihre Bestellungen überprüfen und Ihre Benutzerdaten ändern.<br>
                                 <br>
-                                Ihre Kundennummer ist:
                                 <br>
-                                Die HRC bedankt sich für Ihre Registration als Kunde und möchte Sie auf den Bonus hinweisen, den angemeldete Nutzer erhalten:
+                                Die HRC bedankt sich für Ihre Registration als Kunde und möchte Sie auf den Bonus hinweisen, den angemeldete Nutzer erhalten:<br>
+                                Nach 3 abgeschlossenen Bestellungen erhalten Sie einen Rabatt von 20% ab dem ersten Tag auf Ihre weiteren Bestellungen.
                             </div>
                         </div><!--features_items-->
 
