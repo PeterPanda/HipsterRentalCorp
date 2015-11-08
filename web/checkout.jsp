@@ -37,10 +37,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
-                                    <div class="companyinfo">
-                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                    </div>
+                                <a href="index.jsp"><img src="FileZillaImageRessource/logo.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -51,7 +48,6 @@
                                     <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
-                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
                         </div>
@@ -103,17 +99,17 @@
                                         <input type="email" id="email" required=true placeholder="Email Addresse *"/>
                                         <input type="text" id="firstName" required=true placeholder="Vorname *" />
                                         <input type="text" id="lastName" required=true placeholder="Nachname *" />
-                                        <input type="text" id="telephone" required=true placeholder="Telefonnummer *" />
+                                        <input type="text" id="telephone" placeholder="Telefonnummer" />
                                         <input type="text" id="mobilephone" placeholder="Handynummer" />
                                     </form>
                                 </div>
                                 <div class="form-two">
                                     <form>
                                         <input type="text" id="organisation" placeholder="Organisation" />
-                                        <input type="text" id="place" required=true placeholder="Ort *" />
-                                        <input type="text" id="postalCode" required=true placeholder="PLZ *" />
-                                        <input type="text" id="streat" required=true placeholder="Stra&szlig;e *" />
-                                        <input type="text" id="houseNumber" required=true placeholder="Hausnummer *" />
+                                        <input type="text" id="place" placeholder="Ort" />
+                                        <input type="text" id="postalCode"  placeholder="PLZ" />
+                                        <input type="text" id="streat" placeholder="Stra&szlig;e" />
+                                        <input type="text" id="houseNumber"  placeholder="Hausnummer" />
                                     </form>
                                 </div>
                             </div>
@@ -324,13 +320,8 @@
                                         var email = document.getElementById('email');
                                         var firstName = document.getElementById('firstName');
                                         var lastName = document.getElementById('lastName');
-                                        var telephone = document.getElementById('telephone');
-                                        var place = document.getElementById('place');
-                                        var postalCode = document.getElementById('postalCode');
-                                        var streat = document.getElementById('streat');
-                                        var houseNumber = document.getElementById('houseNumber');
 
-                                        if (email.value.length === 0 || firstName.value.length === 0 || lastName.value.length === 0 || telephone.value.length === 0 || place.value.length === 0 || postalCode.value.length === 0 || streat.value.length === 0 || houseNumber.value.length === 0) {
+                                        if (email.value.length === 0 || firstName.value.length === 0 || lastName.value.length === 0) {
                                             alert("Bitte überprüfen Sie Ihre Kontaktdaten.");
                                             return false;
                                         }

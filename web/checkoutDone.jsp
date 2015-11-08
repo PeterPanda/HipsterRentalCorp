@@ -37,10 +37,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
-                                    <div class="companyinfo">
-                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                    </div>
+                                <a href="index.jsp"><img src="FileZillaImageRessource/logo.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -51,7 +48,6 @@
                                     <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
-                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
                         </div>
@@ -136,82 +132,6 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script>
-        $(function () {
-            $("#fromDate").datepicker({
-                minDate: new Date(),
-                dateFormat: "dd.mm.yy"
-            });
-        });
-        $(function () {
-            $("#tillDate").datepicker({
-                minDate: new Date(),
-                dateFormat: "dd.mm.yy"
-            });
-        });
-
-        function calculateCost() {
-            var rent = '<%= session.getAttribute("rent")%>';
-
-            var from = getFrom();
-            var till = getTill();
-
-            /* Calculate the final costs */
-            var diff = Math.abs(till - from);
-            diff = diff / 1000 / 60 / 60 / 24;
-            diff = Math.ceil(diff);
-            var cost = diff * rent;
-            cost = cost.toFixed(2);
-            $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
-        }
-
-        function validateTime() {
-            var from = document.getElementById('fromDate');
-            var till = document.getElementById('tillDate');
-            if (from.value.length === 0 || till.value.length === 0) {
-                alert("Bitte geben Sie einen korrekten Zeitraum an.");
-                return false;
-            }
-            return true;
-        }
-        function validateGuest() {
-            var email = document.getElementById('email');
-            var firstName = document.getElementById('firstName');
-            var lastName = document.getElementById('lastName');
-            var telephone = document.getElementById('telephone');
-            var place = document.getElementById('place');
-            var postalCode = document.getElementById('postalCode');
-            var streat = document.getElementById('streat');
-            var houseNumber = document.getElementById('houseNumber');
-
-            if (email.value.length === 0 || firstName.value.length === 0 || lastName.value.length === 0 || telephone.value.length === 0 || place.value.length === 0 || postalCode.value.length === 0 || streat.value.length === 0 || houseNumber.value.length === 0) {
-                alert("Bitte überprüfen Sie Ihre Kontaktdaten.");
-                return false;
-            }
-            return true;
-
-        }
-        function getFrom() {
-            /* Get the 'timestamp' attribute for the order */
-            var fd = $('#fromDate').val();
-            var ft = $('#fromTime').val();
-
-            var splitfromdate = fd.split('.');
-            var splitfromtime = ft.split(':');
-
-            var from = new Date(splitfromdate[2], splitfromdate[1] - 1, splitfromdate[0], splitfromtime[0], splitfromtime[1], '0');
-            return from;
-        }
-        function getTill() {
-            /* Get the 'timestamp' attributes for the order */
-            var td = $('#tillDate').val();
-            var tt = $('#tillTime').val();
-
-            var splittilldate = td.split('.');
-            var splittilltime = tt.split(':');
-
-            var till = new Date(splittilldate[2], splittilldate[1] - 1, splittilldate[0], splittilltime[0], splittilltime[1], '0');
-            return till;
-        }
         function init() {
             isUserLoggedIn();
         }
@@ -265,38 +185,7 @@
                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
         }
-        function createOrder() {
-            var checkCart = document.getElementById('tbodyOrder').getElementsByTagName("tr").length - 3;
-            if (checkCart > 0) {
-                var checkTime = validateTime();
-                if (checkTime === true) {
-                    var checkGuest = validateGuest();
-                    if (checkGuest === true) {
-                        var xhr = new XMLHttpRequest();
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === 4) {
-                                var data = xhr.responseText;
-
-                            }
-                        };
-
-                        var email = document.getElementById('email');
-                        var firstName = document.getElementById('firstName');
-                        var lastName = document.getElementById('lastName');
-                        var telephone = document.getElementById('telephone');
-                        var mobilephone = document.getElementById('mobilephone');
-                        var organisation = document.getElementById('organisation');
-                        var place = document.getElementById('place');
-                        var postalCode = document.getElementById('postalCode');
-                        var streat = document.getElementById('streat');
-                        var houseNumber = document.getElementById('houseNumber');
-                        var guest = email + "," + firstName + "," + lastName + "," + telephone + "," + mobilephone + "," + organisation + "," + place + "," + postalCode + "," + streat + "," + houseNumber;
-                        xhr.open('GET', '/HipsterRentalCorp/CreateOrder?from=' + getFrom() + '&till=' + getTill() + '&guest=' + guest, true);
-                        xhr.send(null);
-                    }
-                }
-            }
-        }
+        
         </script>
     </body>
 </html>

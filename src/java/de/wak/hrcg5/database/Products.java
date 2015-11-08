@@ -150,4 +150,27 @@ public abstract class Products {
         }
     }
 
+    public static List<Produkt> getBestProducts(int max) {
+        int count = 1;
+        List<Produkt> products = new ArrayList<>();
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select bp.PRODUKTNR, count(*) as ANZAHL FROM BESTELLPRODUKTPOS bp, BESTELLUNG b where b.BESTELLNR = bp.BESTELLNR group by bp.PRODUKTNR order by ANZAHL DESC");
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    products.add(getProduct(rs.getString(1)));
+                    count++;
+                    if(count>=max){
+                        break;
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return products;
+    }
+
 }

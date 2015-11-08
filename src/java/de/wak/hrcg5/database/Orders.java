@@ -119,7 +119,7 @@ public abstract class Orders {
     public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
         String guestNumber = null;
         if (guest != null) {
-            String[] g = guest.split(",");
+            String[] g = guest.split(",",-1);
             User.addGuest(g[1], g[2], g[0], g[5], g[6], g[7], g[8], g[9], g[3], g[4]);
             guestNumber = User.getGuest(g[0]).getGastNR();
         }
