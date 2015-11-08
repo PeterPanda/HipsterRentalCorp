@@ -6,6 +6,7 @@
 package de.wak.hrcg5.servlet;
 
 import de.wak.hrcg5.database.Orders;
+import de.wak.hrcg5.structure.Bestellung;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.util.*;
 
 /**
  *
@@ -38,7 +42,7 @@ public class SwitchOrderStatusServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SwitchOrderStatusServlet</title>");            
+            out.println("<title>Servlet SwitchOrderStatusServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SwitchOrderStatusServlet at " + request.getContextPath() + "</h1>");
@@ -74,10 +78,45 @@ public class SwitchOrderStatusServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String orderNumber = (String) request.getParameter("orderNumber");
-        
+
         Orders.setOrderStatusTrue(orderNumber);
-        
+        String email = Orders.getCustomerEmail(orderNumber);
+        if (email == null || email.equals("") || email.equals("null")) {
+            email = Orders.getGuestEmail(orderNumber);
+        }
+        if (email != null && !email.equals("") && !email.equals("null")) {
+            sendMail(email, orderNumber);
+        }
         getServletContext().getRequestDispatcher("/EmployeeOrderView.jsp").forward(request, response);
+    }
+
+    private void sendMail(String email, String orderNumber) {
+        try {
+            Properties props = System.getProperties();
+            // -- Attaching to default Session, or we could start a new one --
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "voltoviper.de");
+            props.put("mail.smtp.ssl.trust", "voltoviper.de");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.auth", "true");
+            Authenticator auth = new SMTPAuthenticator();
+            Session session = Session.getInstance(props, auth);
+            // -- Create a new message --
+            Message msg = new MimeMessage(session);
+            // -- Set the FROM and TO fields --
+            msg.setFrom(new InternetAddress("noreply@hrc.de"));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
+            msg.setSubject("Bestellbestätigung");
+            msg.setText("Ihre Bestellung mit der Bestellnummer "+orderNumber+" wurde von unseren Sachbearbeitern freigegeben.");
+            // -- Set some other header information --
+            msg.setHeader("MyMail", "Mr. XYZ");
+            msg.setSentDate(new Date());
+            // -- Send the message --
+            Transport.send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -90,4 +129,12 @@ public class SwitchOrderStatusServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private class SMTPAuthenticator extends javax.mail.Authenticator {
+        @Override
+        public PasswordAuthentication getPasswordAuthentication() {
+            String username = "software2@voltoviper.de";
+            String password = "meinkennwort";
+            return new PasswordAuthentication(username, password);
+        }
+    }
 }

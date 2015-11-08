@@ -38,10 +38,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
-                                    <div class="companyinfo">
-                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                    </div>
+                                <a href="index.jsp"><img src="FileZillaImageRessource/logo.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -52,7 +49,6 @@
                                     <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
-                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
                         </div>
@@ -89,11 +85,11 @@
                                 <input type="text" name="firstName" required=true placeholder="Vorname *" />
                                 <input type="text" name="lastName" required=true placeholder="Nachname *" />
                                 <input type="text" name="organisation" placeholder="Organisation" />
-                                <input type="text" name="place" required=true placeholder="Ort *" />
-                                <input type="text" name="postalCode" required=true placeholder="PLZ *" />
-                                <input type="text" name="streat" required=true placeholder="Stra&szlig;e *" />
-                                <input type="text" name="houseNumber" required=true placeholder="Hausnummer *" />
-                                <input type="text" name="telephone" required=true placeholder="Telefonnummer *" />
+                                <input type="text" name="place" placeholder="Ort" />
+                                <input type="text" name="postalCode" placeholder="PLZ" />
+                                <input type="text" name="streat" placeholder="Stra&szlig;e" />
+                                <input type="text" name="houseNumber" placeholder="Hausnummer" />
+                                <input type="text" name="telephone" placeholder="Telefonnummer" />
                                 <input type="text" name="mobilephone" placeholder="Handynummer" />
                                 <button type="submit" class="btn btn-default">Registrieren</button>
                             </form>

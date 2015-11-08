@@ -6,6 +6,8 @@
 package de.wak.hrcg5.servlet;
 
 import de.wak.hrcg5.database.Categories;
+import de.wak.hrcg5.database.Packages;
+import de.wak.hrcg5.database.Products;
 import de.wak.hrcg5.database.User;
 import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Mitarbeiter;
@@ -72,12 +74,14 @@ public class CategoryServlet extends HttpServlet {
         Mitarbeiter e = User.getEmployee(userEmail);
         if (e != null) {
             data.append("<div>");
-            if (User.isAdmin(userEmail)) {
-                data.append("<div class='panel panel-default'>");
-                data.append("<div class='panel-heading'>");
-                data.append("<h4 class='panel-title'><a href='AddEmployee.jsp'>Mitarbeiter anlegen</a></h4>");
-                data.append("</div>");
-                data.append("</div>");
+            if (userEmail != null && !userEmail.equals("") && !userEmail.equals("null")) {
+                if (User.isAdmin(userEmail)) {
+                    data.append("<div class='panel panel-default'>");
+                    data.append("<div class='panel-heading'>");
+                    data.append("<h4 class='panel-title'><a href='AddEmployee.jsp'>Mitarbeiter anlegen</a></h4>");
+                    data.append("</div>");
+                    data.append("</div>");
+                }
             }
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
@@ -103,6 +107,10 @@ public class CategoryServlet extends HttpServlet {
             data.append("</div>");
             data.append("</div>");
         } else {
+            
+            Products.checkAvailability();
+            Packages.checkAvailability();
+            
             data.append("<div>\n");
             for (Kategorie c : filterCategories(Categories.getCategories())) {
 
@@ -181,20 +189,34 @@ public class CategoryServlet extends HttpServlet {
                 }
             }
         }
+        List<Kategorie> toRemove = new ArrayList<>();
+        for (Kategorie c : unsorted) {
+            for (Kategorie d : filtered) {
+                if (c.getKategorieNR().equals(d.getKategorieNR())) {
+                    toRemove.add(c);
+                }
+            }
+        }
+        unsorted.removeAll(toRemove);
+
         /* Get the rest of the pack back. Filtered only
            knows what happened in the previous loop*/
         List<Kategorie> toAdd = new ArrayList<>();
         for (Kategorie c : unsorted) {
             for (Kategorie d : filtered) {
                 if (!d.getKategorieNR().equals(c.getKategorieNR())) {
-                    toAdd.add(c);
+                    if (!toAdd.contains(c)) {
+                        if (!filtered.contains(c)) {
+                            toAdd.add(c);
+                        }
+                    }
                 }
             }
         }
         filtered.addAll(toAdd);
 
         /* Remove those doubles. We don't need them any more. */
-        List<Kategorie> toRemove = new ArrayList<>();
+        toRemove = new ArrayList<>();
         for (Kategorie c : filtered) {
             for (Kategorie d : filtered) {
                 if (!c.equals(d)) {

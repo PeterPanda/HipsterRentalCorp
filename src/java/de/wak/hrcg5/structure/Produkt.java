@@ -141,4 +141,8 @@ public class Produkt {
         return null;
     }
 
+    public boolean verfuegbar() {
+        return (verfuegbar.equals("j"));
+    }
+
 }

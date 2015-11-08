@@ -119,7 +119,7 @@ public abstract class Orders {
     public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
         String guestNumber = null;
         if (guest != null) {
-            String[] g = guest.split(",");
+            String[] g = guest.split(",",-1);
             User.addGuest(g[1], g[2], g[0], g[5], g[6], g[7], g[8], g[9], g[3], g[4]);
             guestNumber = User.getGuest(g[0]).getGastNR();
         }
@@ -179,6 +179,44 @@ public abstract class Orders {
         return o;
     }
 
+    public static String getCustomerEmail(String orderNumber) {
+        String customerNumber = null;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select k.EMAIL from BESTELLUNG b, KUNDE K where b.KUNDENNR=k.KUNDENNR and b.BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                customerNumber = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return customerNumber;
+    }
+
+    public static String getGuestEmail(String orderNumber) {
+        String guestNumber = null;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select g.EMAIL from BESTELLUNG b, GAST g where b.GASTNR=g.GASTNR and b.BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                guestNumber = rs.getString(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return guestNumber;
+    }
+
     public static void deleteOrder(String orderNumber) {
         Connection con = Connector.getConnection();
         try {
@@ -210,5 +248,26 @@ public abstract class Orders {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean didThreeOrders(String email, String from) {
+        int count = 0;
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select b.* from BESTELLUNG b, KUNDE k where k.EMAIL=? and k.KUNDENNR=b.KUNDENNR and b.BIS<?");
+            ps.setString(1, email);
+            ps.setString(2, from);
+            ResultSet rs;
+            rs=ps.executeQuery();
+            
+            while(rs.next()){
+                count++;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return (count >= 3);
     }
 }

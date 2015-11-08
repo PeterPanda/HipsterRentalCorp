@@ -38,10 +38,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="logo pull-left">
-                                <a href="index.jsp"><img src="images/home/logo.png" alt="" />
-                                    <div class="companyinfo">
-                                        <h2><span>H</span>ipster <span>R</span>ental</h2>
-                                    </div>
+                                <a href="index.jsp"><img src="FileZillaImageRessource/logo.png" alt="" />
                                 </a>
                             </div>
                         </div>
@@ -52,7 +49,6 @@
                                     <li id="liCheckout"></li>
                                     <li id="liShoppingCart"></li>
                                     <li id="liLoginout"></li>
-                                    <li><div class="search_box pull-right"><input type="text" placeholder="Suche"/></div></li>
                                 </ul>
                             </div>
                         </div>
@@ -66,7 +62,7 @@
             <div class="container">
                 <div class="breadcrumbs">
                     <ol class="breadcrumb">
-                        <li><a href="#">Home</a></li>
+                        <li><a href="index.jsp">Home</a></li>
                         <li class="active">Warenkorb</li>
                     </ol>
                 </div>
@@ -207,28 +203,5 @@
                                     }
 
         </script>
-        <!-- <div>
- 
-             <table>
-                 <tbody>
-                     <tr>
-                         <td>
-                             <form action="/HipsterRentalCorp/DeleteFromShoppingCartServlet" method="post">  
-                                 {requestScope.shoppingCart.getItemsView()}
-                             </form>
-                         </td>
-                         <td>
-                         </td>
-                     </tr>
-                     <tr>
-                         <td>
-                         </td>
-                         <td>
-                             <button type="button" onclick="parent.validateUser();">Weiter zur Bestellung</button>
-                         </td>
-                     </tr>
-                 </tbody>
-             </table>
-         </div> -->
     </body> 
 </html>
