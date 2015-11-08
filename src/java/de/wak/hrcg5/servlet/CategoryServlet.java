@@ -6,6 +6,8 @@
 package de.wak.hrcg5.servlet;
 
 import de.wak.hrcg5.database.Categories;
+import de.wak.hrcg5.database.Packages;
+import de.wak.hrcg5.database.Products;
 import de.wak.hrcg5.database.User;
 import de.wak.hrcg5.structure.Kategorie;
 import de.wak.hrcg5.structure.Mitarbeiter;
@@ -105,6 +107,10 @@ public class CategoryServlet extends HttpServlet {
             data.append("</div>");
             data.append("</div>");
         } else {
+            
+            Products.checkAvailability();
+            Packages.checkAvailability();
+            
             data.append("<div>\n");
             for (Kategorie c : filterCategories(Categories.getCategories())) {
 

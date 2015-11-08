@@ -81,24 +81,26 @@ public class ProductsByCategoryServlet extends HttpServlet {
                 data.append("<div>\n");
                 for (Produkt p : products) {
                     if (p != null) {
-                        data.append("<div class='col-sm-4'>");
-                        data.append("<div class='product-image-wrapper'>");
-                        data.append("<div class='single-products'>");
-                        data.append("<div class='productinfo text-center'>");
-                        data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
-                        data.append("<div onclick='this.parentNode.submit();'>");
-                        data.append("<img src='").append((p.getFotos().size() > 0) ? p.getFotos().get(0) : "images/home/logo.png").append("' height='150px' alt='' />");
-                        data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
-                        data.append("<p>").append(p.getBezeichnung()).append("</p>");
-                        data.append("</div>");
-                        data.append("</form>");
-                        data.append("<form action='/HipsterRentalCorp/AddProductToShoppingCartServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
-                        data.append("<button type='submit' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</button>");
-                        data.append("</form>");
-                        data.append("</div>");
-                        data.append("</div>");
-                        data.append("</div>");
-                        data.append("</div>");
+                        if (p.verfuegbar()) {
+                            data.append("<div class='col-sm-4'>");
+                            data.append("<div class='product-image-wrapper'>");
+                            data.append("<div class='single-products'>");
+                            data.append("<div class='productinfo text-center'>");
+                            data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                            data.append("<div onclick='this.parentNode.submit();'>");
+                            data.append("<img src='").append((p.getFotos().size() > 0) ? p.getFotos().get(0) : "images/home/logo.png").append("' height='150px' alt='' />");
+                            data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
+                            data.append("<p>").append(p.getBezeichnung()).append("</p>");
+                            data.append("</div>");
+                            data.append("</form>");
+                            data.append("<form action='/HipsterRentalCorp/AddProductToShoppingCartServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                            data.append("<button type='submit' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</button>");
+                            data.append("</form>");
+                            data.append("</div>");
+                            data.append("</div>");
+                            data.append("</div>");
+                            data.append("</div>");
+                        }
                     }
                 }
                 data.append("</div>");

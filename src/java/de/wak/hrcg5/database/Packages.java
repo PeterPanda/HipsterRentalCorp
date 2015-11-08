@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -122,4 +123,34 @@ public abstract class Packages {
         return true;
     }
 
+    
+    public static void checkAvailability() {
+        Calendar cal = Calendar.getInstance();
+        String now = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select distinct(pp.PRODUKTNR) FROM PAKETPOS pp, PAKET p, BESTELLPAKETPOS bp, BESTELLUNG b where b.BESTELLNR = bp.BESTELLNR and pp.PAKETNR = p.PAKETNR and p.PAKETNR = bp.PAKETNR and b.von<? and b.bis>?");
+                ps.setString(1, now);
+                ps.setString(2, now);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    ps = con.prepareStatement("update PRODUKT set VERFUEGBAR='' where PRODUKTNR=?");
+                    ps.setString(1, rs.getString(1));
+                    ps.executeUpdate();
+                }
+                ps = con.prepareStatement("select distinct(pp.PRODUKTNR) FROM PAKETPOS pp, PAKET p, BESTELLPAKETPOS bp, BESTELLUNG b where b.BESTELLNR = bp.BESTELLNR and pp.PAKETNR = p.PAKETNR and p.PAKETNR = bp.PAKETNR and b.bis<?");
+                ps.setString(1, now);
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    ps = con.prepareStatement("update PRODUKT set VERFUEGBAR='j' where PRODUKTNR=?");
+                    ps.setString(1, rs.getString(1));
+                    ps.executeUpdate();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
