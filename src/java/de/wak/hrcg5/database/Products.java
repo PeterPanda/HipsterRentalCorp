@@ -86,7 +86,9 @@ public abstract class Products {
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                    if (rs.getString(10)==null||rs.getString(10).equals("")) {
+                        product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+                    }
                 }
 
             } catch (Exception e) {
@@ -101,7 +103,7 @@ public abstract class Products {
         if (con != null) {
             try {
                 /* Retrieve products */
-                PreparedStatement ps = con.prepareStatement("insert into PRODUKT values(?,?,?,?,?,?,?,?,?)");
+                PreparedStatement ps = con.prepareStatement("insert into PRODUKT values(?,?,?,?,?,?,?,?,?,?)");
                 ps.setString(1, NumberHelper.getNextPRODUKTNR());
                 ps.setString(2, bezeichnung);
                 ps.setString(3, herstellername);
@@ -111,6 +113,7 @@ public abstract class Products {
                 ps.setString(7, kategorie);
                 ps.setString(8, alternative.equals("") ? null : alternative);
                 ps.setString(9, "j");
+                ps.setString(10, null);
                 ps.executeUpdate();
             } catch (Exception e) {
                 return false;
@@ -122,7 +125,7 @@ public abstract class Products {
 
     public static void checkAvailability() {
         Calendar cal = Calendar.getInstance();
-        String now = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
+        String now = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -161,7 +164,7 @@ public abstract class Products {
                 while (rs.next()) {
                     products.add(getProduct(rs.getString(1)));
                     count++;
-                    if(count>=max){
+                    if (count >= max) {
                         break;
                     }
                 }
@@ -173,4 +176,34 @@ public abstract class Products {
         return products;
     }
 
+    public static List<Produkt> getProducts() {
+        List<Produkt> products = new ArrayList<>();
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from PRODUKT");
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    products.add(getProduct(rs.getString(1)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return products;
+    }
+
+    public static void delete(String productNumber) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("update PRODUKT set GELOESCHT='j' where PRODUKTNR=?");
+                ps.setString(1, productNumber);
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

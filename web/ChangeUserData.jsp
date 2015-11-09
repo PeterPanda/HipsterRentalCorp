@@ -81,6 +81,11 @@
                                         <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
                                     </div>
                                 </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="DeleteSelf.jsp">Konto l&ouml;schen</a></h4>
+                                    </div>
+                                </div>
                             </div><!--/category-products-->
 
                         </div>
@@ -196,7 +201,7 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
-                
+
                 var xhru = new XMLHttpRequest();
                 xhru.onreadystatechange = function () {
                     if (xhru.readyState === 4) {

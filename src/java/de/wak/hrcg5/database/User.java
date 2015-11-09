@@ -414,4 +414,18 @@ public abstract class User {
             }
         }
     }
+
+    public static void deleteUser(String email) {
+        Connection con = Connector.getConnection();
+
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("delete * from USER EMAIL=?");
+                ps.setString(1, email);
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

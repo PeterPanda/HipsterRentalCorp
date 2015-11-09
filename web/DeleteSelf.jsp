@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="DeleteSelf.jsp">Konto l&ouml;schen</a></h4>
+                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Konto l&ouml;schen</a></h4>
                                     </div>
                                 </div>
                             </div><!--/category-products-->
@@ -97,12 +97,10 @@
                             <div id="divContent">
                                 <div class="col-sm-4 col-sm-offset-1">
                                     <div class="login-form"><!--login form-->
-                                        <h2>Passwort &auml;ndern</h2>
-                                        <form  action="/HipsterRentalCorp/ChangePasswordServlet" method="post">
-                                            <input type="password" name="oldpassword" required=true placeholder="Altes Passwort *" />
-                                            <input type="password" name="newpassword" required=true placeholder="Neues Passwort *" />
-                                            <input type="password" name="confirmnewpassword" required=true placeholder="Neues Passwort wiederholen *" />
-                                            <button type="submit" class="btn btn-default">&Auml;ndern</button>
+                                        <h2>Konto l&ouml;schen</h2>
+                                        Achtung! Wenn SIe fortfahren wird ihr Account gel&ouml;scht. Sollten SIe aus versehen fortfahren, k&ouml;nnen Sie uns telefonisch kontaktieren.
+                                        <form  action="/HipsterRentalCorp/DeleteSelfServlet" method="post">
+                                            <button type="submit" class="btn btn-default">L&ouml;schen</button>
                                         </form>
                                     </div><!--/login form-->
                                 </div>
