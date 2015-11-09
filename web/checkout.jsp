@@ -134,20 +134,6 @@
                                 <td>
                                     <form action="#"> 
                                         <select id="fromTime" onchange="calculateCost()"> 
-                                            <option>06:00</option> 
-                                            <option>06:30</option> 
-                                            <option>07:00</option> 
-                                            <option>07:30</option>
-                                            <option>08:00</option> 
-                                            <option>08:30</option>
-                                            <option>09:00</option> 
-                                            <option>09:30</option>
-                                            <option>10:00</option> 
-                                            <option>10:30</option>
-                                            <option>11:00</option> 
-                                            <option>11:30</option>
-                                            <option>12:00</option> 
-                                            <option>12:30</option>
                                             <option>13:00</option> 
                                             <option>13:30</option>
                                             <option>14:00</option> 
@@ -156,8 +142,7 @@
                                             <option>15:30</option>
                                             <option>16:00</option> 
                                             <option>16:30</option>
-                                            <option>17:00</option> 
-                                            <option>17:30</option>
+                                            <option>17:00</option>
                                         </select> 
                                     </form> 
                                 </td>
@@ -302,7 +287,7 @@
                                         cost = cost * 60;
                                         cost = cost / 100;
                                         cost = cost + rent * 1;
-                                        
+
                                         cost = cost.toFixed(2);
                                         $('#cost').html("<p class='cart_total_price'>" + cost + "&euro;</p>");
                                     }

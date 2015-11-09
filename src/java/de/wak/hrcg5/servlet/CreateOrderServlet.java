@@ -8,6 +8,9 @@ package de.wak.hrcg5.servlet;
 import de.wak.hrcg5.database.NumberHelper;
 import de.wak.hrcg5.database.Orders;
 import de.wak.hrcg5.database.ShoppingCart;
+import de.wak.hrcg5.database.User;
+import de.wak.hrcg5.structure.Paket;
+import de.wak.hrcg5.structure.Produkt;
 import de.wak.hrcg5.structure.Warenkorb;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,7 +45,7 @@ public class CreateOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateOrderServlet</title>");            
+            out.println("<title>Servlet CreateOrderServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CreateOrderServlet at " + request.getContextPath() + "</h1>");
@@ -66,24 +69,61 @@ public class CreateOrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String userEmail = (String) session.getAttribute("User");
-        String guest = (String)request.getParameter("guest"); 
-        
+        String guest = (String) request.getParameter("guest");
+
         Warenkorb shoppingCart = ShoppingCart.getShoppingCart(userEmail);
 
         String from = NumberHelper.dateParser((String) request.getParameter("from"));
         String till = NumberHelper.dateParser((String) request.getParameter("till"));
 
         String msg = null;
-        if (Orders.createOrder(from, till, shoppingCart, userEmail, guest)) {
+        String orderNumber = Orders.createOrder(from, till, shoppingCart, userEmail, guest);
+        if (orderNumber != null) {
             if (ShoppingCart.clearShoppingCart(userEmail)) {
                 session.setAttribute("rent", null);
                 request.setAttribute("shoppingCart", null);
                 msg = "success";
+
+                StringBuilder mailtext = new StringBuilder();
+                mailtext.append("Sie haben folgende Bestellung aufgegeben:\r\n");
+                mailtext.append("Bestellnummer: ");
+                mailtext.append(orderNumber);
+                mailtext.append("\r\n");
+                mailtext.append("\r\n");
+
+                mailtext.append("Produkte:");
+                mailtext.append("\r\n");
+                for (Produkt p : shoppingCart.getProdukte()) {
+                    mailtext.append(p.getBezeichnung());
+                    mailtext.append("\r\n");
+                }
+
+                mailtext.append("\r\n");
+
+                mailtext.append("Pakete:");
+                mailtext.append("\r\n");
+                for (Paket p : shoppingCart.getPakete()) {
+                    mailtext.append(p.getBezeichnung());
+                    mailtext.append("\r\n");
+                }
+                mailtext.append("\r\n");
+                mailtext.append("Sie erhalten eine weitere Mail, sobald Ihre Bestellung durch unsere Sachbearbeiter geprüft wurde.");
+
+                if (userEmail == null) {
+                    if (guest != null) {
+                        String[] g = guest.split(",", -1);
+                        String email = g[0];
+                        new Mailer().sendMail(email, mailtext.toString());
+                    }
+                }
+                else{
+                    new Mailer().sendMail(userEmail, mailtext.toString());
+                }
             }
         } else {
             msg = "failure";
         }
-        
+
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(msg);

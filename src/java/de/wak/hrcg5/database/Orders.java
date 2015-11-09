@@ -116,7 +116,7 @@ public abstract class Orders {
         return packages;
     }
 
-    public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
+    public static String createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
         String guestNumber = null;
         if (guest != null) {
             String[] g = guest.split(",", -1);
@@ -150,10 +150,10 @@ public abstract class Orders {
                     ps.executeUpdate();
                 }
             } catch (Exception e) {
-                return false;
+                return null;
             }
         }
-        return true;
+        return b.getBestellNR();
     }
 
     public static Bestellung getOrder(String orderNumber) {
