@@ -31,7 +31,9 @@ public abstract class Packages {
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    p = new Paket(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), Images.getPackageImage(rs.getString(7)));
+                    if (rs.getString(8) == null || rs.getString(8).equals("")) {
+                        p = new Paket(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), Images.getPackageImage(rs.getString(7)));
+                    }
                 }
 
                 if (p != null) {
@@ -123,10 +125,9 @@ public abstract class Packages {
         return true;
     }
 
-    
     public static void checkAvailability() {
         Calendar cal = Calendar.getInstance();
-        String now = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH)+1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
+        String now = cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
         Connection con = Connector.getConnection();
         if (con != null) {
             try {
@@ -148,6 +149,37 @@ public abstract class Packages {
                     ps.executeUpdate();
                 }
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static List<Paket> getPackages() {
+        List<Paket> packages = new ArrayList<>();
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select * from PAKET");
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    packages.add(getPackage(rs.getString(1)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return packages;
+    }
+    
+        public static void delete(String packageNumber) {
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("update PAKET set GELOESCHT='j' where PAKETNR=?");
+                ps.setString(1, packageNumber);
+                ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
             }

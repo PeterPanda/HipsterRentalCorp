@@ -107,7 +107,7 @@ public class CategoryServlet extends HttpServlet {
             data.append("<h4 class='panel-title'><a href='AddProduct.jsp'>Produkt anlegen</a></h4>");
             data.append("</div>");
             data.append("</div>");
-            
+
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
             data.append("<form action='/HipsterRentalCorp/LoadProductsForDeletionServlet' method='post'>");
@@ -115,13 +115,21 @@ public class CategoryServlet extends HttpServlet {
             data.append("</form>");
             data.append("</div>");
             data.append("</div>");
-            
+
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
             data.append("<h4 class='panel-title'><a href='AddPackage.jsp'>Paket anlegen</a></h4>");
             data.append("</div>");
             data.append("</div>");
-            
+
+            data.append("<div class='panel panel-default'>");
+            data.append("<div class='panel-heading'>");
+            data.append("<form action='/HipsterRentalCorp/LoadPackagesForDeletionServlet' method='post'>");
+            data.append("<h4 class='panel-title'><a onclick='this.parentNode.parentNode.submit()' href='#'>Paket löschen</a></h4>");
+            data.append("</form>");
+            data.append("</div>");
+            data.append("</div>");
+
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
             data.append("<h4 class='panel-title'><a href='AddCategory.jsp'>Kategorie anlegen</a></h4>");
