@@ -119,7 +119,7 @@ public abstract class Orders {
     public static boolean createOrder(String from, String till, Warenkorb shoppingCart, String userEmail, String guest) {
         String guestNumber = null;
         if (guest != null) {
-            String[] g = guest.split(",",-1);
+            String[] g = guest.split(",", -1);
             User.addGuest(g[1], g[2], g[0], g[5], g[6], g[7], g[8], g[9], g[3], g[4]);
             guestNumber = User.getGuest(g[0]).getGastNR();
         }
@@ -220,15 +220,7 @@ public abstract class Orders {
     public static void deleteOrder(String orderNumber) {
         Connection con = Connector.getConnection();
         try {
-            PreparedStatement ps = con.prepareStatement("delete from BESTELLPAKETPOS where BESTELLNR=?");
-            ps.setString(1, orderNumber);
-            ps.executeUpdate();
-
-            ps = con.prepareStatement("delete from BESTELLPRODUKTPOS where BESTELLNR=?");
-            ps.setString(1, orderNumber);
-            ps.executeUpdate();
-
-            ps = con.prepareStatement("delete from BESTELLUNG where BESTELLNR=?");
+            PreparedStatement ps = con.prepareStatement("update BESTELLUNG set BESTAETIGT='s' where BESTELLNR=?");
             ps.setString(1, orderNumber);
             ps.executeUpdate();
 
@@ -258,16 +250,54 @@ public abstract class Orders {
             ps.setString(1, email);
             ps.setString(2, from);
             ResultSet rs;
-            rs=ps.executeQuery();
-            
-            while(rs.next()){
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
                 count++;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return (count >= 3);
+    }
+
+    public static void denialOrder(String orderNumber) {
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("update BESTELLUNG set BESTAETIGT='a' where BESTELLNR=?");
+            ps.setString(1, orderNumber);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Bestellung> getOrdersByStatus(String statShort) {
+        List<Bestellung> orders = new ArrayList<>();
+
+        Connection con = Connector.getConnection();
+        try {
+            PreparedStatement ps = con.prepareStatement("select * from BESTELLUNG where BESTAETIGT=?");
+            ps.setString(1, statShort);
+            ResultSet rs;
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                orders.add(new Bestellung(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(5)));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Bestellung o : orders) {
+            o.getProdukte().addAll(getProducts(o.getBestellNR()));
+            o.getPakete().addAll(getPackages(o.getBestellNR()));
+        }
+
+        return orders;
     }
 }

@@ -6,20 +6,23 @@
 package de.wak.hrcg5.servlet;
 
 import de.wak.hrcg5.database.Orders;
+import de.wak.hrcg5.database.User;
 import de.wak.hrcg5.structure.Bestellung;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  *
- * @author Jan
+ * @author janFk
  */
-@WebServlet(name = "SwitchOrderStatusServlet", urlPatterns = {"/SwitchOrderStatusServlet"})
-public class SwitchOrderStatusServlet extends HttpServlet {
+@WebServlet(name = "EmployeeOrderViewServlet", urlPatterns = {"/EmployeeOrderViewServlet"})
+public class EmployeeOrderViewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +41,10 @@ public class SwitchOrderStatusServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SwitchOrderStatusServlet</title>");
+            out.println("<title>Servlet EmployeeOrderViewServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SwitchOrderStatusServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EmployeeOrderViewServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,21 +76,36 @@ public class SwitchOrderStatusServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String orderNumber = (String) request.getParameter("orderNumber");
+        List<Bestellung> orders = null;
+        String status = request.getParameter("status");
+        String statShort = "";
+        if (status.equals("nnf")) {
+            statShort = "";
+        }
+        if (status.equals("alle")) {
+            orders = Orders.getOrders();
+        }
+        if (status.equals("storniert")) {
+            statShort = "s";
+        }
+        if (status.equals("abgelehnt")) {
+            statShort = "a";
+        }
+        if (status.equals("bestaetigt")) {
+            statShort = "j";
+        }
+        if (orders == null) {
 
-        Orders.setOrderStatusTrue(orderNumber);
-        String email = Orders.getCustomerEmail(orderNumber);
-        if (email == null || email.equals("") || email.equals("null")) {
-            email = Orders.getGuestEmail(orderNumber);
+            orders = Orders.getOrdersByStatus(statShort);
         }
-        if (email != null && !email.equals("") && !email.equals("null")) {
-            String msg ="Ihre Bestellung mit der Bestellnummer " + orderNumber + " wurde von unseren Sachbearbeitern freigegeben.";
-            new Mailer().sendMail(email,  msg);
+        String all = "";
+        for(Bestellung o: orders){
+            all += o.getMitarbeiterBestellView();
         }
+        request.setAttribute("orders", all);
         getServletContext().getRequestDispatcher("/EmployeeOrderView.jsp").forward(request, response);
-    }
 
-   
+    }
 
     /**
      * Returns a short description of the servlet.

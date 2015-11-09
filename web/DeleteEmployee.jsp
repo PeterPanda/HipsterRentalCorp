@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Kundenportal | Hipster Rental</title>
+        <title>Mitarbeiter l&ouml;schen | Hipster Rental</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/prettyPhoto.css" rel="stylesheet">
@@ -58,7 +58,6 @@
 
 
         </header><!--/header-->
-
         <section>
             <div class="container">
                 <div class="row">
@@ -66,51 +65,39 @@
                         <div class="left-sidebar">
                             <h2>Navigation</h2>
                             <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="CustomerOrderView.jsp">Meine Bestellungen</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangePassword.jsp">Passwort &auml;ndern</a></h4>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title"><a href="ChangeUserData.jsp">Kontaktinformationen &auml;ndern</a></h4>
-                                    </div>
+                                <div id="divNavigation">
                                 </div>
                             </div><!--/category-products-->
 
                         </div>
                     </div>
+                    <section id="cart_items">
+                        <div class="container">
 
-                    <div class="col-sm-9 padding-right">
-                        <div class="features_items" ><!--features_items-->
-                            <h2 class="title text-center">Kundenportal</h2>
-                            <div id="divContent">
-                                <div class="col-sm-4">
-                                    <div class="signup-form"><!--sign up form-->
-                                        <h2>Kontaktinformationen &auml;ndern</h2>
-                                        <form action="/HipsterRentalCorp/ChangeUserDataServlet" method="post">
-                                            <input type="text" id="firstName" name="firstName" required=true placeholder="Vorname *" />
-                                            <input type="text" id="lastName" name="lastName" required=true placeholder="Nachname *" />
-                                            <input type="text" id="organisation" name="organisation" placeholder="Organisation" />
-                                            <input type="text" id="place" name="place" placeholder="Ort" />
-                                            <input type="text" id="postalCode" name="postalCode" placeholder="PLZ" />
-                                            <input type="text" id="streat" name="streat" placeholder="Stra&szlig;e" />
-                                            <input type="text" id="houseNumber" name="houseNumber" placeholder="Hausnummer" />
-                                            <input type="text" id="telephone" name="telephone" placeholder="Telefonnummer" />
-                                            <input type="text" id="mobilephone" name="mobilephone" placeholder="Handynummer" />
-                                            <button type="submit" class="btn btn-default">&Auml;ndern</button>
-                                        </form>
-                                    </div><!--/sign up form-->
-                                </div>
+                            <div class="signup-form"><!--sign up form-->
+                                <h2>Mitarbeiter l&ouml;schen</h2>
                             </div>
-                        </div><!--features_items-->
+                            <div class="table-responsive cart_info">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr class="cart_menu">
+                                            <td class="total">Mitarbeiternummer</td>
+                                            <td class="description">Vorname</td>
+                                            <td class="description">Nachname</td>
+                                            <td class="total">Email</td>
+                                            <td class="description">L&ouml;schen</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <div>
+                                        ${requestScope.employees}
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section> <!--/#cart_items-->
 
-                    </div>
                 </div>
             </div>
         </section>
@@ -159,8 +146,10 @@
         <script src="js/main.js"></script>
         <script>
         function init() {
+            initCategory();
             isUserLoggedIn();
         }
+
         function isUserLoggedIn() {
             var user = '<%= session.getAttribute("User")%>'
             if (user !== null && user !== "" && user !== "null") {
@@ -196,25 +185,6 @@
                 };
                 xhr.open('GET', '/HipsterRentalCorp/GetUserServlet', true);
                 xhr.send(null);
-                
-                var xhru = new XMLHttpRequest();
-                xhru.onreadystatechange = function () {
-                    if (xhru.readyState === 4) {
-                        var data = xhru.responseText;
-                        var items = data.split(',');
-                        document.getElementById('firstName').value = items[0];
-                        document.getElementById('lastName').value = items[1];
-                        document.getElementById('organisation').value = items[2];
-                        document.getElementById('place').value = items[3];
-                        document.getElementById('postalCode').value = items[4];
-                        document.getElementById('streat').value = items[5];
-                        document.getElementById('houseNumber').value = items[6];
-                        document.getElementById('telephone').value = items[7];
-                        document.getElementById('mobilephone').value = items[8];
-                    }
-                };
-                xhru.open('GET', '/HipsterRentalCorp/GetUserDataServlet', true);
-                xhru.send(null);
             } else {
                 var liCheckout = '<li><form  action="/HipsterRentalCorp/LoadCheckoutServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-crosshairs"></i> Checkout</a></form></li>';
                 document.getElementById('liCheckout').innerHTML = liCheckout;
@@ -228,6 +198,19 @@
                 var liShoppingCart = '<li><form  action="/HipsterRentalCorp/LoadShoppingCartServlet" method="get"><a href="#" onclick="this.parentNode.submit();"><i class="fa fa-shopping-cart"></i> Warenkorb</a><form></li>';
                 document.getElementById('liShoppingCart').innerHTML = liShoppingCart;
             }
+        }
+
+        /* Initializes the product-category-navigation via servlet */
+        function initCategory() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var data = xhr.responseText;
+                    document.getElementById('divNavigation').innerHTML = data;
+                }
+            };
+            xhr.open('GET', '/HipsterRentalCorp/CategoryServlet', true);
+            xhr.send(null);
         }
         </script>
     </body>

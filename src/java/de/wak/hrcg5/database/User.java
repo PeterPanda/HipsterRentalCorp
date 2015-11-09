@@ -11,6 +11,8 @@ import de.wak.hrcg5.structure.Mitarbeiter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -367,9 +369,45 @@ public abstract class User {
                 ps.setString(6, postalcode);
                 ps.setString(7, telephonenumber);
                 ps.setString(8, mobilenumber);
-                
+
                 ps.setString(9, email);
 
+                ps.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static List<Mitarbeiter> getEmployees() {
+        List<Mitarbeiter> employees = new ArrayList<>();
+        Connection con = Connector.getConnection();
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("select m.* from MITARBEITER m, USER u where m.EMAIL=u.EMAIL and (u.ISADMIN is null or u.ISADMIN='')");
+                ResultSet rs;
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    employees.add(new Mitarbeiter(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return employees;
+    }
+
+    public static void deleteEmployee(String employeeNumber) {
+        Connection con = Connector.getConnection();
+
+        if (con != null) {
+            try {
+                PreparedStatement ps = con.prepareStatement("delete u.* from USER u, MITARBEITER m where m.EMAIL=u.EMAIL and m.MITARBEITERNR=?");
+                ps.setString(1, employeeNumber);
+                ps.executeUpdate();
+                ps = con.prepareStatement("delete m.* MITARBEITER m where m.MITARBEITERNR=?");
+                ps.setString(1, employeeNumber);
                 ps.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();

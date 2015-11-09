@@ -67,6 +67,21 @@ public class Bestellung {
     }
 
     public String getKundenBestellView() {
+        String status = getStatus();
+
+        if (status == null) {
+            status = "Noch nicht freigegeben";
+        } else {
+            if (status.equals("j")) {
+                status = "Bestätigt";
+            }
+            if (status.equals("s")) {
+                status = "Storniert";
+            }
+            if (status.equals("a")) {
+                status = "Abgelehnt";
+            }
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("<tr>");
         sb.append("<td >");
@@ -91,20 +106,40 @@ public class Bestellung {
         sb.append("</td>");
         sb.append("<td class='cart_description'>");
         sb.append("<h4>");
-        sb.append((bestaetigt == null) ? "Nein" : "Ja");
+        sb.append(status);
         sb.append("</h4>");
         sb.append("</td>");
-        sb.append("<td class='cart_delete'>");
-        sb.append("<form action='/HipsterRentalCorp/DeleteOrderServlet?orderNumber=").append(bestellNR).append("' method='post'>");
-        sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
-        sb.append("</form>");
-        sb.append("</td>");
+        if (status.equals("Noch nicht freigegeben")) {
+            sb.append("<td class='cart_delete'>");
+            sb.append("<form action='/HipsterRentalCorp/DeleteOrderServlet?orderNumber=").append(bestellNR).append("' method='post'>");
+            sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
+            sb.append("</form>");
+            sb.append("</td>");
+        } else {
+            sb.append("<td>");
+            sb.append("</td>");
+        }
         sb.append("</tr>");
 
         return sb.toString();
     }
 
     public String getMitarbeiterBestellView() {
+        String status = getStatus();
+
+        if (status == null) {
+            status = "Noch nicht freigegeben";
+        } else {
+            if (status.equals("j")) {
+                status = "Bestätigt";
+            }
+            if (status.equals("s")) {
+                status = "Storniert";
+            }
+            if (status.equals("a")) {
+                status = "Abgelehnt";
+            }
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("<tr>");
         sb.append("<td>");
@@ -129,22 +164,37 @@ public class Bestellung {
         sb.append("</td>");
         sb.append("<td class='cart_description'>");
         sb.append("<h4>");
-        sb.append((bestaetigt == null || bestaetigt.equals("") || bestaetigt.equals("null")) ? "Nein" : "Ja");
+        sb.append(status);
         sb.append("</h4>");
         sb.append("</td>");
-        if (bestaetigt == null || bestaetigt.equals("") || bestaetigt.equals("null")) {
+        if (status.equals("Noch nicht freigegeben")) {
             sb.append("<td class='cart_delete'>");
             sb.append("<form action='/HipsterRentalCorp/SwitchOrderStatusServlet?orderNumber=").append(bestellNR).append("' method='post'>");
-            sb.append("<a class='cart_quantity_delete' onclick='this.parentNode.submit();' href='#'><i class='fa fa-times'></i></a>");
+            sb.append("<button type='submit'></i>Freigeben</button>");
+            sb.append("</form>");
+            sb.append("</td>");
+
+            sb.append("<td class='cart_delete'>");
+            sb.append("<form action='/HipsterRentalCorp/DenialOrderServlet?orderNumber=").append(bestellNR).append("' method='post'>");
+            sb.append("<button type='submit'><i class='fa fa-times'></i>Ablehenen</button>");
             sb.append("</form>");
             sb.append("</td>");
         } else {
+            sb.append("<td>");
+            sb.append("</td>");
             sb.append("<td>");
             sb.append("</td>");
         }
         sb.append("</tr>");
 
         return sb.toString();
+    }
+
+    private String getStatus() {
+        if (bestaetigt == null || bestaetigt.equals("") || bestaetigt.equals("null")) {
+            return null;
+        }
+        return bestaetigt;
     }
 
     /**

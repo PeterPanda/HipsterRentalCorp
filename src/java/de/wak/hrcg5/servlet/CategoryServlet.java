@@ -81,13 +81,27 @@ public class CategoryServlet extends HttpServlet {
                     data.append("<h4 class='panel-title'><a href='AddEmployee.jsp'>Mitarbeiter anlegen</a></h4>");
                     data.append("</div>");
                     data.append("</div>");
+                    data.append("<div class='panel panel-default'>");
+                    data.append("<div class='panel-heading'>");
+                    data.append("<form action='/HipsterRentalCorp/GetEmployeesServlet' method='post'>");
+                    data.append("<h4 class='panel-title'><a href='#' onclick='this.parentNode.parentNode.submit()' >Mitarbeiter l&ouml;schen</a></h4>");
+                    data.append("</form>");
+                    data.append("</div>");
+                    data.append("</div>");
                 }
             }
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
-            data.append("<h4 class='panel-title'><a href='EmployeeOrderView.jsp'>Bestellungen anzeigen</a></h4>");
+            data.append("<h4 class='panel-title'>");
+            data.append("<form action='/HipsterRentalCorp/EmployeeOrderViewServlet?status=alle' method='post'>");
+            data.append("<a onclick='this.parentNode.submit();' href=\"#status\">");
+            data.append("Bestellungen anzeigen");
+            data.append("</a>");
+            data.append("</form>");
+            data.append("</h4>");
             data.append("</div>");
             data.append("</div>");
+
             data.append("<div class='panel panel-default'>");
             data.append("<div class='panel-heading'>");
             data.append("<h4 class='panel-title'><a href='AddProduct.jsp'>Produkt anlegen</a></h4>");
@@ -107,10 +121,10 @@ public class CategoryServlet extends HttpServlet {
             data.append("</div>");
             data.append("</div>");
         } else {
-            
+
             Products.checkAvailability();
             Packages.checkAvailability();
-            
+
             data.append("<div>\n");
             for (Kategorie c : filterCategories(Categories.getCategories())) {
 
