@@ -95,6 +95,7 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#details" data-toggle="tab">Beschreibung</a></li>
                                     <li><a href="#companyprofile" data-toggle="tab">Spezifikationen</a></li>
+                                    <li><a href="#products" data-toggle="tab">Produkte</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">
@@ -110,7 +111,11 @@
                                         ${requestScope.loadedPackage.getDetails()}
                                     </div>
                                 </div>
-
+                                <div class="tab-pane fade" id="products" >
+                                    <div class="col-sm-3">
+                                        ${requestScope.loadedPackage.getProduktView()}
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -251,7 +256,7 @@
             xhr.open('GET', '/HipsterRentalCorp/ProductsByCategoryServlet?categoryNumber=' + categoryNumber, true);
             xhr.send(null);
         }
-        
+
         function loadPackage(packageNumber) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {

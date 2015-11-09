@@ -91,15 +91,32 @@ public class Paket {
         return produkte;
     }
 
-    public String getProduktView(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div>");
-        for(Produkt p:produkte){
-            sb.append("<button>");
-            sb.append(p.getBezeichnung());
-            sb.append("</button>");
+    public String getProduktView() {
+        StringBuilder data = new StringBuilder();
+        data.append("<div>\n");
+        for (Produkt p : produkte) {
+            if (p != null) {
+                if (p.verfuegbar()) {
+                    data.append("<div class='product-image-wrapper'>");
+                    data.append("<div class='single-products'>");
+                    data.append("<div class='productinfo text-center'>");
+                    data.append("<form action='/HipsterRentalCorp/LoadProductServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                    data.append("<div onclick='this.parentNode.submit();'>");
+                    data.append("<img src='").append((p.getFotos().size() > 0) ? p.getFotos().get(0) : "images/home/logo.png").append("' height='150px' alt='' />");
+                    data.append(" <h2>").append(p.getMietzins()).append("€</h2>");
+                    data.append("<p>").append(p.getBezeichnung()).append("</p>");
+                    data.append("</div>");
+                    data.append("</form>");
+                    data.append("<form action='/HipsterRentalCorp/AddProductToShoppingCartServlet?productNumber=").append(p.getProduktNR()).append("' method='post'>");
+                    data.append("<button type='submit' class='btn btn-default add-to-cart'><i class='fa fa-shopping-cart'></i>Zum Warenkorb hinzuf&uuml;gen</button>");
+                    data.append("</form>");
+                    data.append("</div>");
+                    data.append("</div>");
+                    data.append("</div>");
+                }
+            }
         }
-        sb.append("</div>");
-        return sb.toString();
+        data.append("</div>");
+        return data.toString();
     }
 }

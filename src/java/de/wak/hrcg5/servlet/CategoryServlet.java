@@ -169,11 +169,13 @@ public class CategoryServlet extends HttpServlet {
                     data.append("<ul>");
                     for (String s : c.getUnterkategorie()) {
                         Kategorie k = Categories.getCategory(s);
-                        data.append("<li><a href='#' onclick='getProducts(\"");
-                        data.append(k.getKategorieNR());
-                        data.append("\")'>");
-                        data.append(k.getName());
-                        data.append("</a></li>");
+                        if (k != null) {
+                            data.append("<li><a href='#' onclick='getProducts(\"");
+                            data.append(k.getKategorieNR());
+                            data.append("\")'>");
+                            data.append(k.getName());
+                            data.append("</a></li>");
+                        }
                     }
                     data.append("</ul>");
                     data.append("</div>");
