@@ -83,8 +83,9 @@ public abstract class Packages {
                     for (String catnumb : c.getUnterkategorie()) {
                         if (catnumb != null && !catnumb.equals("") && !catnumb.equals("null")) {
                             Kategorie cat = Categories.getCategory(catnumb);
-
-                            sub.addAll(getPackagesByCategory(cat.getKategorieNR()));
+                            if (cat != null) {
+                                sub.addAll(getPackagesByCategory(cat.getKategorieNR()));
+                            }
                         }
                     }
                     productsByCategory.addAll(productsByCategory.size(), sub);
@@ -172,8 +173,8 @@ public abstract class Packages {
         }
         return packages;
     }
-    
-        public static void delete(String packageNumber) {
+
+    public static void delete(String packageNumber) {
         Connection con = Connector.getConnection();
         if (con != null) {
             try {

@@ -58,8 +58,9 @@ public abstract class Products {
                     for (String catnumb : c.getUnterkategorie()) {
                         if (catnumb != null && !catnumb.equals("") && !catnumb.equals("null")) {
                             Kategorie cat = Categories.getCategory(catnumb);
-
-                            sub.addAll(getProductsByCategory(cat.getKategorieNR()));
+                            if (cat != null) {
+                                sub.addAll(getProductsByCategory(cat.getKategorieNR()));
+                            }
                         }
                     }
                     productsByCategory.addAll(productsByCategory.size(), sub);
@@ -86,7 +87,7 @@ public abstract class Products {
                 rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    if (rs.getString(10)==null||rs.getString(10).equals("")) {
+                    if (rs.getString(10) == null || rs.getString(10).equals("")) {
                         product = new Produkt(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
                     }
                 }
